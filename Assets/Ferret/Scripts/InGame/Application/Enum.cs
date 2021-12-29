@@ -7,4 +7,12 @@ namespace Ferret.InGame
         Main,
         Result,
     }
+
+    public enum PlayerColor
+    {
+        None,
+        White,
+        Gray,
+        Brown,
+    }
 }

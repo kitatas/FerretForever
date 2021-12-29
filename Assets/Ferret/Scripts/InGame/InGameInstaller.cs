@@ -1,7 +1,12 @@
+using Ferret.InGame.Data.DataStore;
 using Ferret.InGame.Data.Entity;
+using Ferret.InGame.Domain.Factory;
+using Ferret.InGame.Domain.Repository;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.Controller;
 using Ferret.InGame.Presentation.Presenter;
+using Ferret.InGame.Presentation.View;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -9,13 +14,27 @@ namespace Ferret.InGame
 {
     public sealed class InGameInstaller : LifetimeScope
     {
+        [SerializeField] private PlayerTable playerTable = default;
+
+        [SerializeField] private InputView inputView = default;
+
         protected override void Configure(IContainerBuilder builder)
         {
+            // DataStore
+            builder.RegisterInstance<PlayerTable>(playerTable);
+
             // Entity
             builder.Register<GameStateEntity>(Lifetime.Scoped);
 
-            // Domain
+            // Factory
+            builder.Register<PlayerFactory>(Lifetime.Scoped);
+
+            // Repository
+            builder.Register<PlayerRepository>(Lifetime.Scoped);
+
+            // UseCase
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
+            builder.Register<PlayerContainerUseCase>(Lifetime.Scoped);
 
             // Controller
             builder.Register<TitleState>(Lifetime.Scoped);
@@ -25,6 +44,9 @@ namespace Ferret.InGame
 
             // Presenter
             builder.RegisterEntryPoint<GameStatePresenter>(Lifetime.Scoped);
+
+            // View
+            builder.RegisterInstance<InputView>(inputView);
         }
     }
 }
