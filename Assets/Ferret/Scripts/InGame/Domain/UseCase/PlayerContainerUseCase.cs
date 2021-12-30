@@ -23,7 +23,23 @@ namespace Ferret.InGame.Domain.UseCase
         {
             _playerFactory.Set(_playerRepository.Get().player);
             var player = _playerFactory.Rent();
+            player.SetUp(HitBalloon);
             _players.Add(player);
+        }
+
+        private void HitBalloon(BalloonType balloonType)
+        {
+            var loop = balloonType switch
+            {
+                BalloonType.Five => 5,
+                BalloonType.Ten  => 10,
+                _ => throw new ArgumentOutOfRangeException(nameof(balloonType), balloonType, null)
+            };
+
+            for (int i = 0; i < loop; i++)
+            {
+                Generate();
+            }
         }
 
         public void JumpAll()

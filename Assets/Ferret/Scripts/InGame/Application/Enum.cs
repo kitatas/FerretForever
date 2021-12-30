@@ -15,4 +15,11 @@ namespace Ferret.InGame
         Gray,
         Brown,
     }
+
+    public enum BalloonType
+    {
+        None,
+        Five,
+        Ten,
+    }
 }
