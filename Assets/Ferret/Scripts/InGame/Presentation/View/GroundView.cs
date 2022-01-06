@@ -1,17 +1,26 @@
 using EFUK;
+using Ferret.InGame.Presentation.Controller;
 using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View
 {
+    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Collider2D))]
     public sealed class GroundView : MonoBehaviour
     {
+        private SpriteRenderer _sprite;
+        private Collider2D _collider;
+        private GimmickController _gimmickController;
+
         private float _moveSpeed = 10.0f;
         private float _startPositionX = 12.0f;
         private float _endPositionX = -20.0f;
 
-        public void Init()
+        public void Init(GimmickController gimmickController)
         {
-
+            _sprite = GetComponent<SpriteRenderer>();
+            _collider = GetComponent<Collider2D>();
+            _gimmickController = gimmickController;
         }
 
         public void Tick(float deltaTime)
@@ -24,9 +33,20 @@ namespace Ferret.InGame.Presentation.View
 
                 // TODO: main state
                 {
-                    // init gimmick
+                    _gimmickController.SetUp(this);
                 }
             }
+        }
+
+        public void Activate(bool value)
+        {
+            _sprite.enabled = value;
+            _collider.enabled = value;
+        }
+
+        public void ActivateChildren(bool value)
+        {
+            gameObject.SetActiveChildren(value);
         }
     }
 }

@@ -6,13 +6,16 @@ namespace Ferret.InGame.Presentation.Controller
 {
     public sealed class GroundController : MonoBehaviour
     {
+        [SerializeField] private GimmickController gimmickController = default;
         [SerializeField] private List<GroundView> groundViews = default;
 
         public void Init()
         {
+            gimmickController.Init();
+
             foreach (var ground in groundViews)
             {
-                ground.Init();
+                ground.Init(gimmickController);
             }
         }
 
