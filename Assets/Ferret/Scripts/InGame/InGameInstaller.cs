@@ -17,6 +17,7 @@ namespace Ferret.InGame
         [SerializeField] private PlayerTable playerTable = default;
 
         [SerializeField] private InputView inputView = default;
+        [SerializeField] private ScoreView scoreView = default;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -25,6 +26,7 @@ namespace Ferret.InGame
 
             // Entity
             builder.Register<GameStateEntity>(Lifetime.Scoped);
+            builder.Register<ScoreEntity>(Lifetime.Scoped);
 
             // Factory
             builder.Register<PlayerFactory>(Lifetime.Scoped);
@@ -35,6 +37,7 @@ namespace Ferret.InGame
             // UseCase
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
             builder.Register<PlayerContainerUseCase>(Lifetime.Scoped);
+            builder.Register<ScoreUseCase>(Lifetime.Scoped);
 
             // Controller
             builder.Register<TitleState>(Lifetime.Scoped);
@@ -44,9 +47,11 @@ namespace Ferret.InGame
 
             // Presenter
             builder.RegisterEntryPoint<GameStatePresenter>(Lifetime.Scoped);
+            builder.RegisterEntryPoint<ScorePresenter>(Lifetime.Scoped);
 
             // View
             builder.RegisterInstance<InputView>(inputView);
+            builder.RegisterInstance<ScoreView>(scoreView);
         }
     }
 }
