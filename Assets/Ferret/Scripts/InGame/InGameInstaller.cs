@@ -16,6 +16,8 @@ namespace Ferret.InGame
     {
         [SerializeField] private PlayerTable playerTable = default;
 
+        [SerializeField] private GroundController groundController = default;
+
         [SerializeField] private InputView inputView = default;
         [SerializeField] private ScoreView scoreView = default;
 
@@ -44,6 +46,7 @@ namespace Ferret.InGame
             builder.Register<MainState>(Lifetime.Scoped);
             builder.Register<ResultState>(Lifetime.Scoped);
             builder.Register<GameStateController>(Lifetime.Scoped);
+            builder.RegisterInstance<GroundController>(groundController);
 
             // Presenter
             builder.RegisterEntryPoint<GameStatePresenter>(Lifetime.Scoped);
