@@ -16,6 +16,16 @@ namespace Ferret.InGame
         Brown,
     }
 
+    public enum PlayerStatus
+    {
+        None,
+        Run,
+        Jump,
+        Jumping,
+        Bridge,
+        Blow,
+    }
+
     public enum BalloonType
     {
         None,
