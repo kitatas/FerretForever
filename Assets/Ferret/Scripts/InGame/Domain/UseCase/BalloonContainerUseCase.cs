@@ -1,6 +1,6 @@
 using Ferret.InGame.Domain.Factory;
 using Ferret.InGame.Domain.Repository;
-using UnityEngine;
+using Ferret.InGame.Presentation.Controller;
 
 namespace Ferret.InGame.Domain.UseCase
 {
@@ -15,11 +15,9 @@ namespace Ferret.InGame.Domain.UseCase
             _balloonRepository = balloonRepository;
         }
 
-        public GameObject Generate(BalloonType type)
+        public BalloonController Generate(BalloonType type)
         {
-            var balloon = _balloonFactory.Rent(_balloonRepository.Find(type).balloon);
-            balloon.SetUp();
-            return balloon.gameObject;
+            return _balloonFactory.Rent(_balloonRepository.Find(type).balloon);
         }
     }
 }

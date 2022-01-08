@@ -27,8 +27,9 @@ namespace Ferret.InGame.Presentation.Controller
                 .AddTo(this);
         }
 
-        public void SetUp()
+        public void SetUp(Vector3 position)
         {
+            transform.position = position;
             status = PlayerStatus.Jumping;
         }
 

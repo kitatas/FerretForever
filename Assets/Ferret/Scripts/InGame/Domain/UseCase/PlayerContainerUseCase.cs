@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Ferret.InGame.Domain.Factory;
 using Ferret.InGame.Domain.Repository;
 using Ferret.InGame.Presentation.Controller;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Ferret.InGame.Domain.UseCase
 {
@@ -19,26 +21,30 @@ namespace Ferret.InGame.Domain.UseCase
             _players = new List<PlayerController>();
         }
 
-        public void Generate()
+        public void Generate(Vector3 position)
         {
             _playerFactory.Set(_playerRepository.Get().player);
             var player = _playerFactory.Rent();
-            player.SetUp();
+            player.SetUp(position);
             _players.Add(player);
         }
 
-        private void HitBalloon(BalloonType balloonType)
+        public void HitBalloon(BalloonController balloon)
         {
-            var loop = balloonType switch
+            var loop = balloon.type switch
             {
                 BalloonType.Five => 5,
                 BalloonType.Ten  => 10,
-                _ => throw new ArgumentOutOfRangeException(nameof(balloonType), balloonType, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(balloon.type), balloon.type, null)
             };
 
+            var balloonX = balloon.position.x;
+            var y = balloon.position.y;
             for (int i = 0; i < loop; i++)
             {
-                Generate();
+                var x = Mathf.Clamp(Random.Range(balloonX - 2.0f, balloonX + 1.0f), -8.0f, 5.0f);
+                var z = Random.Range(-1.0f, -0.1f);
+                Generate(new Vector3(x, y, z));
             }
         }
 

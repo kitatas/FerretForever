@@ -9,16 +9,18 @@ namespace Ferret.InGame.Presentation.Controller
     {
         private readonly BalloonContainerUseCase _balloonContainerUseCase;
         private readonly EnemyContainerUseCase _enemyContainerUseCase;
+        private readonly PlayerContainerUseCase _playerContainerUseCase;
 
         private int _counter;
         private int _initCounter;
 
         private readonly int _interval = 86;
 
-        public GimmickController(BalloonContainerUseCase balloonContainerUseCase, EnemyContainerUseCase enemyContainerUseCase)
+        public GimmickController(BalloonContainerUseCase balloonContainerUseCase, EnemyContainerUseCase enemyContainerUseCase, PlayerContainerUseCase playerContainerUseCase)
         {
             _balloonContainerUseCase = balloonContainerUseCase;
             _enemyContainerUseCase = enemyContainerUseCase;
+            _playerContainerUseCase = playerContainerUseCase;
 
             _counter = 0;
             _initCounter = 0;
@@ -61,14 +63,14 @@ namespace Ferret.InGame.Presentation.Controller
             if (rand.IsBetween(0, 1))
             {
                 var balloon = _balloonContainerUseCase.Generate(BalloonType.Five);
-                ground.SetChild(balloon);
-                balloon.transform.SetLocalPositionX(0.0f);
+                ground.SetChild(balloon.gameObject);
+                balloon.SetUp(_playerContainerUseCase.HitBalloon);
             }
             else if (rand.IsBetween(2, 3))
             {
                 var balloon = _balloonContainerUseCase.Generate(BalloonType.Ten);
-                ground.SetChild(balloon);
-                balloon.transform.SetLocalPositionX(0.0f);
+                ground.SetChild(balloon.gameObject);
+                balloon.SetUp(_playerContainerUseCase.HitBalloon);
             }
             else if (rand.IsBetween(4, 5))
             {

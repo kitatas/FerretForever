@@ -11,19 +11,26 @@ namespace Ferret.InGame.Presentation.Controller
     {
         [SerializeField] private BalloonType balloonType = default;
 
+        private Action<BalloonController> _increase;
+        private bool _isActive;
+
         public BalloonType type => balloonType;
         public Vector3 position => transform.position;
 
         public void Init(Action release)
         {
             this.OnTriggerEnter2DAsObservable()
+                .Where(_ => _isActive)
                 .Subscribe(other =>
                 {
                     if (other.TryGetComponent<PlayerController>(out var player))
                     {
                         if (player.status != PlayerStatus.Blow)
                         {
-                            // TODO: player生成
+                            _isActive = false;
+
+                            // player生成
+                            _increase?.Invoke(this);
 
                             // back pool
                             release?.Invoke();
@@ -40,9 +47,14 @@ namespace Ferret.InGame.Presentation.Controller
                 .AddTo(this);
         }
 
-        public void SetUp()
+        public void SetUp(Action<BalloonController> increase)
         {
-            transform.SetPositionY(Random.Range(1.5f, 6.0f));
+            _increase = increase;
+            _isActive = true;
+
+            transform
+                .SetPositionY(Random.Range(1.5f, 6.0f))
+                .SetLocalPositionX(0.0f);
         }
     }
 }
