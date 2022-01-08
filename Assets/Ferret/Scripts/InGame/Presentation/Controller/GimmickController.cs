@@ -10,17 +10,21 @@ namespace Ferret.InGame.Presentation.Controller
         private readonly BalloonContainerUseCase _balloonContainerUseCase;
         private readonly EnemyContainerUseCase _enemyContainerUseCase;
         private readonly PlayerContainerUseCase _playerContainerUseCase;
+        private readonly BridgeView _bridgeView;
 
         private int _counter;
         private int _initCounter;
 
         private readonly int _interval = 86;
 
-        public GimmickController(BalloonContainerUseCase balloonContainerUseCase, EnemyContainerUseCase enemyContainerUseCase, PlayerContainerUseCase playerContainerUseCase)
+        public GimmickController(BalloonContainerUseCase balloonContainerUseCase,
+            EnemyContainerUseCase enemyContainerUseCase, PlayerContainerUseCase playerContainerUseCase,
+            BridgeView bridgeView)
         {
             _balloonContainerUseCase = balloonContainerUseCase;
             _enemyContainerUseCase = enemyContainerUseCase;
             _playerContainerUseCase = playerContainerUseCase;
+            _bridgeView = bridgeView;
 
             _counter = 0;
             _initCounter = 0;
@@ -28,13 +32,15 @@ namespace Ferret.InGame.Presentation.Controller
 
         public void SetUp(GroundView groundView)
         {
+            var ground = groundView.gameObject;
             groundView.Activate(true);
 
             _counter++;
             if (_counter % _interval == 0)
             {
                 _counter = 0;
-                // TODO: 橋の看板表示
+                ground.SetChild(_bridgeView.gameObject);
+                _bridgeView.SetUp();
                 return;
             }
 
@@ -52,13 +58,13 @@ namespace Ferret.InGame.Presentation.Controller
             }
 
             // 橋の前後にはギミックなし
-            if ((_counter % _interval).IsBetween(-3, 4))
+            if ((_counter % _interval).IsBetween(83, 85) ||
+                (_counter % _interval) == 4)
             {
                 return;
             }
 
             // ギミック生成
-            var ground = groundView.gameObject;
             var rand = Random.Range(0, 60);
             if (rand.IsBetween(0, 1))
             {
