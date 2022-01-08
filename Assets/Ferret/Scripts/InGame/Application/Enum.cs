@@ -32,4 +32,11 @@ namespace Ferret.InGame
         Five,
         Ten,
     }
+
+    public enum EnemyType
+    {
+        None,
+        Wolf,
+        Hawk,
+    }
 }

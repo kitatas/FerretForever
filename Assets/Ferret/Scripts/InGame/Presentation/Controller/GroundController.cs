@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
 using UnityEngine;
 
@@ -9,10 +8,8 @@ namespace Ferret.InGame.Presentation.Controller
     {
         [SerializeField] private List<GroundView> groundViews = default;
 
-        public void Init(BalloonContainerUseCase balloonContainerUseCase)
+        public void Init(GimmickController gimmickController)
         {
-            var gimmickController = new GimmickController(balloonContainerUseCase);
-
             foreach (var ground in groundViews)
             {
                 ground.Init(gimmickController);

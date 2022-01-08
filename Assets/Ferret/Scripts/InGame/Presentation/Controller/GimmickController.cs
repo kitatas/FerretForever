@@ -8,15 +8,17 @@ namespace Ferret.InGame.Presentation.Controller
     public sealed class GimmickController
     {
         private readonly BalloonContainerUseCase _balloonContainerUseCase;
+        private readonly EnemyContainerUseCase _enemyContainerUseCase;
 
         private int _counter;
         private int _initCounter;
 
         private readonly int _interval = 86;
 
-        public GimmickController(BalloonContainerUseCase balloonContainerUseCase)
+        public GimmickController(BalloonContainerUseCase balloonContainerUseCase, EnemyContainerUseCase enemyContainerUseCase)
         {
             _balloonContainerUseCase = balloonContainerUseCase;
+            _enemyContainerUseCase = enemyContainerUseCase;
 
             _counter = 0;
             _initCounter = 0;
@@ -53,7 +55,7 @@ namespace Ferret.InGame.Presentation.Controller
                 return;
             }
 
-            // TODO: ギミック生成
+            // ギミック生成
             var ground = groundView.gameObject;
             var rand = Random.Range(0, 60);
             if (rand.IsBetween(0, 1))
@@ -67,6 +69,18 @@ namespace Ferret.InGame.Presentation.Controller
                 var balloon = _balloonContainerUseCase.Generate(BalloonType.Ten);
                 ground.SetChild(balloon);
                 balloon.transform.SetLocalPositionX(0.0f);
+            }
+            else if (rand.IsBetween(4, 5))
+            {
+                var enemy = _enemyContainerUseCase.Generate(EnemyType.Wolf);
+                ground.SetChild(enemy);
+                enemy.transform.localPosition = new Vector3(0.0f, 1.3f, 0.0f);
+            }
+            else if (rand.IsBetween(6, 7))
+            {
+                var enemy = _enemyContainerUseCase.Generate(EnemyType.Hawk);
+                ground.SetChild(enemy);
+                enemy.transform.localPosition = new Vector3(0.0f, 6.0f, 0.0f);
             }
         }
     }

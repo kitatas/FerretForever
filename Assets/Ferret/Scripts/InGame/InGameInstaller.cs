@@ -15,6 +15,7 @@ namespace Ferret.InGame
     public sealed class InGameInstaller : LifetimeScope
     {
         [SerializeField] private BalloonTable balloonTable = default;
+        [SerializeField] private EnemyTable enemyTable = default;
         [SerializeField] private PlayerTable playerTable = default;
 
         [SerializeField] private GroundController groundController = default;
@@ -26,6 +27,7 @@ namespace Ferret.InGame
         {
             // DataStore
             builder.RegisterInstance<BalloonTable>(balloonTable);
+            builder.RegisterInstance<EnemyTable>(enemyTable);
             builder.RegisterInstance<PlayerTable>(playerTable);
 
             // Entity
@@ -34,14 +36,17 @@ namespace Ferret.InGame
 
             // Factory
             builder.Register<BalloonFactory>(Lifetime.Scoped);
+            builder.Register<EnemyFactory>(Lifetime.Scoped);
             builder.Register<PlayerFactory>(Lifetime.Scoped);
 
             // Repository
             builder.Register<BalloonRepository>(Lifetime.Scoped);
+            builder.Register<EnemyRepository>(Lifetime.Scoped);
             builder.Register<PlayerRepository>(Lifetime.Scoped);
 
             // UseCase
             builder.Register<BalloonContainerUseCase>(Lifetime.Scoped);
+            builder.Register<EnemyContainerUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
             builder.Register<PlayerContainerUseCase>(Lifetime.Scoped);
             builder.Register<ScoreUseCase>(Lifetime.Scoped);
@@ -51,6 +56,7 @@ namespace Ferret.InGame
             builder.Register<MainState>(Lifetime.Scoped);
             builder.Register<ResultState>(Lifetime.Scoped);
             builder.Register<GameStateController>(Lifetime.Scoped);
+            builder.Register<GimmickController>(Lifetime.Scoped);
             builder.RegisterInstance<GroundController>(groundController);
 
             // Presenter
