@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Ferret.InGame.Domain.Factory;
 using Ferret.InGame.Domain.Repository;
 using Ferret.InGame.Presentation.Controller;
+using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,14 +13,16 @@ namespace Ferret.InGame.Domain.UseCase
     {
         private readonly PlayerFactory _playerFactory;
         private readonly PlayerRepository _playerRepository;
-        private readonly List<PlayerController> _players;
+        private readonly ReactiveCollection<PlayerController> _players;
 
         public PlayerContainerUseCase(PlayerFactory playerFactory, PlayerRepository playerRepository)
         {
             _playerFactory = playerFactory;
             _playerRepository = playerRepository;
-            _players = new List<PlayerController>();
+            _players = new ReactiveCollection<PlayerController>();
         }
+
+        public IReadOnlyReactiveCollection<PlayerController> players => _players;
 
         public void Generate(Vector3 position)
         {

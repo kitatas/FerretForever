@@ -21,6 +21,7 @@ namespace Ferret.InGame
         [SerializeField] private GroundController groundController = default;
 
         [SerializeField] private InputView inputView = default;
+        [SerializeField] private PlayerCountView playerCountView = default;
         [SerializeField] private ScoreView scoreView = default;
 
         protected override void Configure(IContainerBuilder builder)
@@ -61,10 +62,12 @@ namespace Ferret.InGame
 
             // Presenter
             builder.RegisterEntryPoint<GameStatePresenter>(Lifetime.Scoped);
+            builder.RegisterEntryPoint<PlayerCountPresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<ScorePresenter>(Lifetime.Scoped);
 
             // View
             builder.RegisterInstance<InputView>(inputView);
+            builder.RegisterInstance<PlayerCountView>(playerCountView);
             builder.RegisterInstance<ScoreView>(scoreView);
         }
     }
