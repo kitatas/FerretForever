@@ -1,6 +1,6 @@
 using Ferret.InGame.Domain.Factory;
 using Ferret.InGame.Domain.Repository;
-using UnityEngine;
+using Ferret.InGame.Presentation.Controller;
 
 namespace Ferret.InGame.Domain.UseCase
 {
@@ -15,11 +15,9 @@ namespace Ferret.InGame.Domain.UseCase
             _enemyRepository = enemyRepository;
         }
 
-        public GameObject Generate(EnemyType type)
+        public EnemyController Generate(EnemyType type)
         {
-            var enemy = _enemyFactory.Rent(_enemyRepository.Find(type).enemy);
-            enemy.SetUp();
-            return enemy.gameObject;
+            return _enemyFactory.Rent(_enemyRepository.Find(type).enemy);
         }
     }
 }

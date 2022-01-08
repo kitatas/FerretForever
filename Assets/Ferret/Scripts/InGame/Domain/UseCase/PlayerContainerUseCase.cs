@@ -51,6 +51,12 @@ namespace Ferret.InGame.Domain.UseCase
             }
         }
 
+        public void Decrease(PlayerController player)
+        {
+            _players.Remove(player);
+            _playerFactory.Return(player);
+        }
+
         public void JumpAll()
         {
             foreach (var player in _players)

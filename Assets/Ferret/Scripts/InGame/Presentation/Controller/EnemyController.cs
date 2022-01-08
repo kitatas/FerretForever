@@ -9,6 +9,8 @@ namespace Ferret.InGame.Presentation.Controller
     {
         [SerializeField] private EnemyType enemyType = default;
 
+        private Action<PlayerController> _decrease;
+
         public EnemyType type => enemyType;
         public Vector3 position => transform.position;
 
@@ -22,6 +24,7 @@ namespace Ferret.InGame.Presentation.Controller
                         if (player.status != PlayerStatus.Blow)
                         {
                             // TODO: player吹っ飛ばす
+                            _decrease?.Invoke(player);
                         }
                     }
                 })
@@ -35,9 +38,17 @@ namespace Ferret.InGame.Presentation.Controller
                 .AddTo(this);
         }
 
-        public void SetUp()
+        public void SetUp(Action<PlayerController> decrease)
         {
+            _decrease = decrease;
 
+            var y = type switch
+            {
+                EnemyType.Wolf => 1.3f,
+                EnemyType.Hawk => 6.0f,
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+            transform.localPosition = new Vector3(0.0f, y, 0.0f);
         }
     }
 }

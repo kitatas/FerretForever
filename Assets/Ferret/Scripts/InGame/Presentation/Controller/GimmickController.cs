@@ -75,14 +75,14 @@ namespace Ferret.InGame.Presentation.Controller
             else if (rand.IsBetween(4, 5))
             {
                 var enemy = _enemyContainerUseCase.Generate(EnemyType.Wolf);
-                ground.SetChild(enemy);
-                enemy.transform.localPosition = new Vector3(0.0f, 1.3f, 0.0f);
+                ground.SetChild(enemy.gameObject);
+                enemy.SetUp(_playerContainerUseCase.Decrease);
             }
             else if (rand.IsBetween(6, 7))
             {
                 var enemy = _enemyContainerUseCase.Generate(EnemyType.Hawk);
-                ground.SetChild(enemy);
-                enemy.transform.localPosition = new Vector3(0.0f, 6.0f, 0.0f);
+                ground.SetChild(enemy.gameObject);
+                enemy.SetUp(_playerContainerUseCase.Decrease);
             }
         }
     }
