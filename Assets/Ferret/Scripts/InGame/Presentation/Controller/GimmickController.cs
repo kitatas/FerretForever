@@ -1,18 +1,23 @@
 using EFUK;
+using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
 using UnityEngine;
 
 namespace Ferret.InGame.Presentation.Controller
 {
-    public sealed class GimmickController : MonoBehaviour
+    public sealed class GimmickController
     {
+        private readonly BalloonContainerUseCase _balloonContainerUseCase;
+
         private int _counter;
         private int _initCounter;
 
         private readonly int _interval = 86;
 
-        public void Init()
+        public GimmickController(BalloonContainerUseCase balloonContainerUseCase)
         {
+            _balloonContainerUseCase = balloonContainerUseCase;
+
             _counter = 0;
             _initCounter = 0;
         }
@@ -20,7 +25,6 @@ namespace Ferret.InGame.Presentation.Controller
         public void SetUp(GroundView groundView)
         {
             groundView.Activate(true);
-            groundView.ActivateChildren(false);
 
             _counter++;
             if (_counter % _interval == 0)
@@ -50,6 +54,20 @@ namespace Ferret.InGame.Presentation.Controller
             }
 
             // TODO: ギミック生成
+            var ground = groundView.gameObject;
+            var rand = Random.Range(0, 60);
+            if (rand.IsBetween(0, 1))
+            {
+                var balloon = _balloonContainerUseCase.Generate(BalloonType.Five);
+                ground.SetChild(balloon);
+                balloon.transform.SetLocalPositionX(0.0f);
+            }
+            else if (rand.IsBetween(2, 3))
+            {
+                var balloon = _balloonContainerUseCase.Generate(BalloonType.Ten);
+                ground.SetChild(balloon);
+                balloon.transform.SetLocalPositionX(0.0f);
+            }
         }
     }
 }

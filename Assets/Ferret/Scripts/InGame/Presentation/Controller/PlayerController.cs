@@ -1,7 +1,5 @@
-using System;
 using EFUK;
 using Ferret.InGame.Domain.UseCase;
-using Ferret.InGame.Presentation.View;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -13,7 +11,6 @@ namespace Ferret.InGame.Presentation.Controller
     public sealed class PlayerController : MonoBehaviour
     {
         private PlayerMoveUseCase _playerMoveUseCase;
-        private Action<BalloonType> _increase;
 
         public PlayerStatus status { get; private set; }
 
@@ -28,21 +25,10 @@ namespace Ferret.InGame.Presentation.Controller
                 .Where(other => other.gameObject.CompareTag(TagConfig.GROUND))
                 .Subscribe(_ => status = PlayerStatus.Run)
                 .AddTo(this);
-
-            this.OnTriggerEnter2DAsObservable()
-                .Subscribe(other =>
-                {
-                    if (other.TryGetComponent<BalloonView>(out var balloon))
-                    {
-                        _increase?.Invoke(balloon.type);
-                    }
-                })
-                .AddTo(this);
         }
 
-        public void SetUp(Action<BalloonType> increase)
+        public void SetUp()
         {
-            _increase = increase;
             status = PlayerStatus.Jumping;
         }
 

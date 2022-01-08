@@ -23,7 +23,7 @@ namespace Ferret.InGame.Domain.UseCase
         {
             _playerFactory.Set(_playerRepository.Get().player);
             var player = _playerFactory.Rent();
-            player.SetUp(HitBalloon);
+            player.SetUp();
             _players.Add(player);
         }
 

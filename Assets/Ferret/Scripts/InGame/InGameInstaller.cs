@@ -14,6 +14,7 @@ namespace Ferret.InGame
 {
     public sealed class InGameInstaller : LifetimeScope
     {
+        [SerializeField] private BalloonTable balloonTable = default;
         [SerializeField] private PlayerTable playerTable = default;
 
         [SerializeField] private GroundController groundController = default;
@@ -24,6 +25,7 @@ namespace Ferret.InGame
         protected override void Configure(IContainerBuilder builder)
         {
             // DataStore
+            builder.RegisterInstance<BalloonTable>(balloonTable);
             builder.RegisterInstance<PlayerTable>(playerTable);
 
             // Entity
@@ -31,12 +33,15 @@ namespace Ferret.InGame
             builder.Register<ScoreEntity>(Lifetime.Scoped);
 
             // Factory
+            builder.Register<BalloonFactory>(Lifetime.Scoped);
             builder.Register<PlayerFactory>(Lifetime.Scoped);
 
             // Repository
+            builder.Register<BalloonRepository>(Lifetime.Scoped);
             builder.Register<PlayerRepository>(Lifetime.Scoped);
 
             // UseCase
+            builder.Register<BalloonContainerUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
             builder.Register<PlayerContainerUseCase>(Lifetime.Scoped);
             builder.Register<ScoreUseCase>(Lifetime.Scoped);
