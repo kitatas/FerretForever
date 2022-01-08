@@ -56,6 +56,7 @@ namespace Ferret.InGame
             // Controller
             builder.Register<TitleState>(Lifetime.Scoped);
             builder.Register<MainState>(Lifetime.Scoped);
+            builder.Register<BridgeState>(Lifetime.Scoped);
             builder.Register<ResultState>(Lifetime.Scoped);
             builder.Register<GameStateController>(Lifetime.Scoped);
             builder.Register<GimmickController>(Lifetime.Scoped);

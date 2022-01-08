@@ -8,12 +8,14 @@ namespace Ferret.InGame.Presentation.Controller
     {
         private readonly List<BaseGameState> _states;
 
-        public GameStateController(TitleState titleState, MainState mainState, ResultState resultState)
+        public GameStateController(TitleState titleState, MainState mainState, BridgeState bridgeState,
+            ResultState resultState)
         {
             _states = new List<BaseGameState>
             {
                 titleState,
                 mainState,
+                bridgeState,
                 resultState,
             };
         }

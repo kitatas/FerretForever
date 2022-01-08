@@ -5,6 +5,7 @@ namespace Ferret.InGame
         None,
         Title,
         Main,
+        Bridge,
         Result,
     }
 
