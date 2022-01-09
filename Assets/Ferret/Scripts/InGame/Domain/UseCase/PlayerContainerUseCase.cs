@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Ferret.InGame.Domain.Factory;
 using Ferret.InGame.Domain.Repository;
 using Ferret.InGame.Presentation.Controller;
@@ -28,7 +27,7 @@ namespace Ferret.InGame.Domain.UseCase
         {
             _playerFactory.Set(_playerRepository.Get().player);
             var player = _playerFactory.Rent();
-            player.SetUp(position);
+            player.SetUp(position, _playerFactory.Return);
             _players.Add(player);
         }
 
@@ -55,6 +54,13 @@ namespace Ferret.InGame.Domain.UseCase
         {
             _players.Remove(player);
             _playerFactory.Return(player);
+        }
+
+        public PlayerController GetVictim()
+        {
+            var player = _players[0];
+            _players.Remove(player);
+            return player;
         }
 
         public void JumpAll()

@@ -19,5 +19,15 @@ namespace Ferret.InGame.Domain.UseCase
             var rate = Random.Range(1f - _jumpRate, 1f + _jumpRate);
             _rigidbody.AddForce(rate * _jumpVector);
         }
+
+        public void SetSimulate(bool value)
+        {
+            _rigidbody.simulated = value;
+        }
+
+        public void SetConstraint(RigidbodyConstraints2D constraints)
+        {
+            _rigidbody.constraints = constraints;
+        }
     }
 }
