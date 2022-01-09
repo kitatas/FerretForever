@@ -1,5 +1,5 @@
+using System;
 using EFUK;
-using Ferret.InGame.Presentation.Controller;
 using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View
@@ -9,15 +9,15 @@ namespace Ferret.InGame.Presentation.View
         [SerializeField] private SpriteRenderer main = default;
         [SerializeField] private SpriteRenderer child = default;
 
-        private GimmickController _gimmickController;
+        private Action<GroundView> _setUp;
 
         private float _moveSpeed = 10.0f;
         private float _startPositionX = 12.0f;
         private float _endPositionX = -20.0f;
 
-        public void Init(GimmickController gimmickController)
+        public void Init(Action<GroundView> setUp)
         {
-            _gimmickController = gimmickController;
+            _setUp = setUp;
         }
 
         public void Tick(float deltaTime)
@@ -30,7 +30,7 @@ namespace Ferret.InGame.Presentation.View
 
                 // TODO: main state
                 {
-                    _gimmickController.SetUp(this);
+                    _setUp?.Invoke(this);
                 }
             }
         }

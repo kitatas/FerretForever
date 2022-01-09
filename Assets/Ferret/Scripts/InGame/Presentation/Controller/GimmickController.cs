@@ -10,6 +10,7 @@ namespace Ferret.InGame.Presentation.Controller
         private readonly BalloonContainerUseCase _balloonContainerUseCase;
         private readonly EnemyContainerUseCase _enemyContainerUseCase;
         private readonly PlayerContainerUseCase _playerContainerUseCase;
+        private readonly GroundController _groundController;
         private readonly BridgeView _bridgeView;
 
         private int _counter;
@@ -19,18 +20,31 @@ namespace Ferret.InGame.Presentation.Controller
 
         public GimmickController(BalloonContainerUseCase balloonContainerUseCase,
             EnemyContainerUseCase enemyContainerUseCase, PlayerContainerUseCase playerContainerUseCase,
-            BridgeView bridgeView)
+            GroundController groundController, BridgeView bridgeView)
         {
             _balloonContainerUseCase = balloonContainerUseCase;
             _enemyContainerUseCase = enemyContainerUseCase;
             _playerContainerUseCase = playerContainerUseCase;
+            _groundController = groundController;
             _bridgeView = bridgeView;
 
             _counter = 0;
             _initCounter = 0;
         }
 
-        public void SetUp(GroundView groundView)
+        public void Init()
+        {
+            for (int i = 0; i < InGameConfig.INIT_PLAYER_COUNT; i++)
+            {
+                var position = new Vector3(-3.0f - i, 2.0f, -0.01f * i);
+                _playerContainerUseCase.Generate(position);
+            }
+
+            _groundController.Init(SetUp);
+            _bridgeView.Init();
+        }
+
+        private void SetUp(GroundView groundView)
         {
             var ground = groundView.gameObject;
             groundView.Activate(true);
@@ -58,7 +72,7 @@ namespace Ferret.InGame.Presentation.Controller
             }
 
             // 橋の前後にはギミックなし
-            if ((_counter % _interval).IsBetween(83, 85) ||
+            if ((_counter % _interval).IsBetween(_interval - 3, _interval - 1) ||
                 (_counter % _interval) == 4)
             {
                 return;
@@ -90,6 +104,31 @@ namespace Ferret.InGame.Presentation.Controller
                 ground.SetChild(enemy.gameObject);
                 enemy.SetUp(_playerContainerUseCase.Decrease);
             }
+        }
+
+        public void Tick(float deltaTime)
+        {
+            _groundController.Tick(deltaTime);
+        }
+
+        public void SetUpNext()
+        {
+            _bridgeView.SetUpNext();
+        }
+
+        public bool IsNoPlayer()
+        {
+            return _playerContainerUseCase.IsNone();
+        }
+
+        public void JumpAll()
+        {
+            _playerContainerUseCase.JumpAll();
+        }
+
+        public bool IsArriveBridge()
+        {
+            return _bridgeView.isArrive;
         }
     }
 }
