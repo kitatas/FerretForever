@@ -29,8 +29,7 @@ namespace Ferret.InGame.Presentation.View
             _isPush = new ReactiveProperty<bool>(false);
             _isPush
                 .Where(x => x)
-                .DelayFrame(1) // TODO: delayではない、1フレ無視にする
-                // .ThrottleFirst()?
+                .DelayFrame(1)
                 .Subscribe(_ => _isPush.Value = false)
                 .AddTo(this);
         }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2123089525968461935}
   - component: {fileID: 6672989586795340546}
   - component: {fileID: 6516060252351925954}
+  - component: {fileID: 3022861116296755349}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -72,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1323945781
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 650773773007218252, guid: f4f2f9aba22f34e01b673e7ce761cb2c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -154,3 +155,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0b344842384ab7a33e26ea1dadbb28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3022861116296755349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5594234466559909852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b244e59fbc8d4b7b815bbbd1999a04f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collider2d: {fileID: 2123089525968461935}
+  sprite: {fileID: 1014794855762107050}

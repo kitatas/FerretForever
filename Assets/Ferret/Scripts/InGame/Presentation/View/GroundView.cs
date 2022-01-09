@@ -4,12 +4,11 @@ using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View
 {
-    [RequireComponent(typeof(SpriteRenderer))]
-    [RequireComponent(typeof(Collider2D))]
     public sealed class GroundView : MonoBehaviour
     {
-        private SpriteRenderer _sprite;
-        private Collider2D _collider;
+        [SerializeField] private SpriteRenderer main = default;
+        [SerializeField] private SpriteRenderer child = default;
+
         private GimmickController _gimmickController;
 
         private float _moveSpeed = 10.0f;
@@ -18,8 +17,6 @@ namespace Ferret.InGame.Presentation.View
 
         public void Init(GimmickController gimmickController)
         {
-            _sprite = GetComponent<SpriteRenderer>();
-            _collider = GetComponent<Collider2D>();
             _gimmickController = gimmickController;
         }
 
@@ -40,13 +37,8 @@ namespace Ferret.InGame.Presentation.View
 
         public void Activate(bool value)
         {
-            _sprite.enabled = value;
-            _collider.enabled = value;
-        }
-
-        public void ActivateChildren(bool value)
-        {
-            gameObject.SetActiveChildren(value);
+            main.enabled = value;
+            child.enabled = value;
         }
     }
 }

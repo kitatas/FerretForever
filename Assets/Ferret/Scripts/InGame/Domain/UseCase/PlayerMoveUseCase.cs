@@ -5,8 +5,9 @@ namespace Ferret.InGame.Domain.UseCase
     public sealed class PlayerMoveUseCase
     {
         private const float _jumpRate = 0.05f;
-        private const float _jumpPower = 800f;
+        private const float _jumpPower = 800.0f;
         private readonly Vector2 _jumpVector = _jumpPower * Vector2.up;
+
         private readonly Rigidbody2D _rigidbody;
 
         public PlayerMoveUseCase(Rigidbody2D rigidbody)
@@ -16,7 +17,7 @@ namespace Ferret.InGame.Domain.UseCase
 
         public void Jump()
         {
-            var rate = Random.Range(1f - _jumpRate, 1f + _jumpRate);
+            var rate = Random.Range(1.0f - _jumpRate, 1.0f + _jumpRate);
             _rigidbody.AddForce(rate * _jumpVector);
         }
 
