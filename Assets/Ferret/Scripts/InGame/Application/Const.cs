@@ -3,7 +3,7 @@ namespace Ferret.InGame
     public sealed class InGameConfig
     {
         public const int INIT_PLAYER_COUNT = 5;
-        public const int VICTIM_COUNT = 10;
+        public const int MAX_VICTIM_COUNT = 10;
     }
 
     public sealed class TagConfig

@@ -1,3 +1,4 @@
+using Ferret.InGame.Data.Container;
 using Ferret.InGame.Data.DataStore;
 using Ferret.InGame.Data.Entity;
 using Ferret.InGame.Domain.Factory;
@@ -28,6 +29,9 @@ namespace Ferret.InGame
 
         protected override void Configure(IContainerBuilder builder)
         {
+            // Container
+            builder.Register<PlayerContainer>(Lifetime.Scoped);
+
             // DataStore
             builder.RegisterInstance<BalloonTable>(balloonTable);
             builder.RegisterInstance<EnemyTable>(enemyTable);
@@ -35,6 +39,7 @@ namespace Ferret.InGame
 
             // Entity
             builder.Register<GameStateEntity>(Lifetime.Scoped);
+            builder.Register<PlayerCountEntity>(Lifetime.Scoped);
             builder.Register<ScoreEntity>(Lifetime.Scoped);
 
             // Factory
@@ -51,7 +56,9 @@ namespace Ferret.InGame
             builder.Register<BalloonContainerUseCase>(Lifetime.Scoped);
             builder.Register<EnemyContainerUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
+            builder.Register<PlayerPoolUseCase>(Lifetime.Scoped);
             builder.Register<PlayerContainerUseCase>(Lifetime.Scoped);
+            builder.Register<PlayerCountUseCase>(Lifetime.Scoped);
             builder.Register<ScoreUseCase>(Lifetime.Scoped);
 
             // Controller

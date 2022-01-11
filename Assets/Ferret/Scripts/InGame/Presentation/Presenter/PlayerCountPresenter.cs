@@ -8,21 +8,20 @@ namespace Ferret.InGame.Presentation.Presenter
 {
     public sealed class PlayerCountPresenter : IPostInitializable, IDisposable
     {
-        private readonly PlayerContainerUseCase _playerContainerUseCase;
+        private readonly PlayerCountUseCase _playerCountUseCase;
         private readonly PlayerCountView _playerCountView;
         private readonly CompositeDisposable _disposable;
 
-        public PlayerCountPresenter(PlayerContainerUseCase playerContainerUseCase, PlayerCountView playerCountView)
+        public PlayerCountPresenter(PlayerCountUseCase playerCountUseCase, PlayerCountView playerCountView)
         {
-            _playerContainerUseCase = playerContainerUseCase;
+            _playerCountUseCase = playerCountUseCase;
             _playerCountView = playerCountView;
             _disposable = new CompositeDisposable();
         }
 
         public void PostInitialize()
         {
-            _playerContainerUseCase.players
-                .ObserveCountChanged()
+            _playerCountUseCase.count
                 .Subscribe(_playerCountView.Display)
                 .AddTo(_disposable);
         }

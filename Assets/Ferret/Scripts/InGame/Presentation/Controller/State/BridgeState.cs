@@ -4,18 +4,20 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
-using UnityEngine;
 
 namespace Ferret.InGame.Presentation.Controller
 {
     public sealed class BridgeState : BaseGameState
     {
         private readonly PlayerContainerUseCase _playerContainerUseCase;
+        private readonly PlayerCountUseCase _playerCountUseCase;
         private readonly BridgeAxisView _bridgeAxisView;
 
-        public BridgeState(PlayerContainerUseCase playerContainerUseCase, BridgeAxisView bridgeAxisView)
+        public BridgeState(PlayerContainerUseCase playerContainerUseCase, PlayerCountUseCase playerCountUseCase,
+            BridgeAxisView bridgeAxisView)
         {
             _playerContainerUseCase = playerContainerUseCase;
+            _playerCountUseCase = playerCountUseCase;
             _bridgeAxisView = bridgeAxisView;
         }
 
@@ -32,10 +34,11 @@ namespace Ferret.InGame.Presentation.Controller
             _bridgeAxisView.SetUp();
 
             // 橋形成
-            var loop = Mathf.Min(_playerContainerUseCase.players.Count, InGameConfig.VICTIM_COUNT);
+            var victimCount = _playerContainerUseCase.GetVictimCount();
             var height = 0.0f;
-            for (int i = 0; i < loop; i++)
+            for (int i = 0; i < victimCount; i++)
             {
+                _playerCountUseCase.Decrease();
                 var victim = _playerContainerUseCase.GetVictim();
                 _bridgeAxisView.CreateBridge(victim);
 
@@ -52,7 +55,7 @@ namespace Ferret.InGame.Presentation.Controller
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
 
             // 橋を架ける
-            if (loop == InGameConfig.VICTIM_COUNT)
+            if (victimCount == InGameConfig.MAX_VICTIM_COUNT)
             {
                 await _bridgeAxisView.BuildBridgeAsync(token);
             }
