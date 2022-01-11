@@ -4,18 +4,18 @@ using Ferret.InGame.Presentation.Controller;
 
 namespace Ferret.InGame.Domain.UseCase
 {
-    public sealed class BalloonContainerUseCase
+    public sealed class BalloonPoolUseCase
     {
         private readonly BalloonFactory _balloonFactory;
         private readonly BalloonRepository _balloonRepository;
 
-        public BalloonContainerUseCase(BalloonFactory balloonFactory, BalloonRepository balloonRepository)
+        public BalloonPoolUseCase(BalloonFactory balloonFactory, BalloonRepository balloonRepository)
         {
             _balloonFactory = balloonFactory;
             _balloonRepository = balloonRepository;
         }
 
-        public BalloonController Generate(BalloonType type)
+        public BalloonController Rent(BalloonType type)
         {
             return _balloonFactory.Rent(_balloonRepository.Find(type).balloon);
         }

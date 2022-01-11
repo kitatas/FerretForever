@@ -53,8 +53,8 @@ namespace Ferret.InGame
             builder.Register<PlayerRepository>(Lifetime.Scoped);
 
             // UseCase
-            builder.Register<BalloonContainerUseCase>(Lifetime.Scoped);
-            builder.Register<EnemyContainerUseCase>(Lifetime.Scoped);
+            builder.Register<BalloonPoolUseCase>(Lifetime.Scoped);
+            builder.Register<EnemyPoolUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
             builder.Register<PlayerPoolUseCase>(Lifetime.Scoped);
             builder.Register<PlayerContainerUseCase>(Lifetime.Scoped);

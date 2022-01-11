@@ -20,7 +20,7 @@ namespace Ferret.InGame.Domain.UseCase
             _playerRepository = playerRepository;
         }
 
-        public void Generate(Vector3 position)
+        public void Rent(Vector3 position)
         {
             _playerFactory.Set(_playerRepository.Get().player);
             var player = _playerFactory.Rent();
@@ -28,7 +28,7 @@ namespace Ferret.InGame.Domain.UseCase
             _playerContainer.Add(player);
         }
 
-        public void HitBalloon(BalloonController balloon)
+        public void Increase(BalloonController balloon)
         {
             var balloonX = balloon.position.x;
             var y = balloon.position.y;
@@ -36,7 +36,7 @@ namespace Ferret.InGame.Domain.UseCase
             {
                 var x = Mathf.Clamp(Random.Range(balloonX - 2.0f, balloonX + 1.0f), -8.0f, 5.0f);
                 var z = Random.Range(-1.0f, -0.1f);
-                Generate(new Vector3(x, y, z));
+                Rent(new Vector3(x, y, z));
             }
         }
 

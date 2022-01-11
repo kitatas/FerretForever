@@ -7,8 +7,8 @@ namespace Ferret.InGame.Presentation.Controller
 {
     public sealed class GimmickController
     {
-        private readonly BalloonContainerUseCase _balloonContainerUseCase;
-        private readonly EnemyContainerUseCase _enemyContainerUseCase;
+        private readonly BalloonPoolUseCase _balloonPoolUseCase;
+        private readonly EnemyPoolUseCase _enemyPoolUseCase;
         private readonly PlayerPoolUseCase _playerPoolUseCase;
         private readonly PlayerContainerUseCase _playerContainerUseCase;
         private readonly PlayerCountUseCase _playerCountUseCase;
@@ -20,13 +20,13 @@ namespace Ferret.InGame.Presentation.Controller
 
         private readonly int _interval = 86;
 
-        public GimmickController(BalloonContainerUseCase balloonContainerUseCase,
-            EnemyContainerUseCase enemyContainerUseCase, PlayerPoolUseCase playerPoolUseCase,
+        public GimmickController(BalloonPoolUseCase balloonPoolUseCase,
+            EnemyPoolUseCase enemyPoolUseCase, PlayerPoolUseCase playerPoolUseCase,
             PlayerContainerUseCase playerContainerUseCase, PlayerCountUseCase playerCountUseCase,
             GroundController groundController, BridgeView bridgeView)
         {
-            _balloonContainerUseCase = balloonContainerUseCase;
-            _enemyContainerUseCase = enemyContainerUseCase;
+            _balloonPoolUseCase = balloonPoolUseCase;
+            _enemyPoolUseCase = enemyPoolUseCase;
             _playerPoolUseCase = playerPoolUseCase;
             _playerContainerUseCase = playerContainerUseCase;
             _playerCountUseCase = playerCountUseCase;
@@ -42,7 +42,7 @@ namespace Ferret.InGame.Presentation.Controller
             for (int i = 0; i < InGameConfig.INIT_PLAYER_COUNT; i++)
             {
                 var position = new Vector3(-3.0f - i, 2.0f, -0.01f * i);
-                _playerPoolUseCase.Generate(position);
+                _playerPoolUseCase.Rent(position);
             }
 
             _groundController.Init(SetUp);
@@ -87,27 +87,27 @@ namespace Ferret.InGame.Presentation.Controller
             var rand = Random.Range(0, 60);
             if (rand.IsBetween(0, 1))
             {
-                var balloon = _balloonContainerUseCase.Generate(BalloonType.Five);
+                var balloon = _balloonPoolUseCase.Rent(BalloonType.Five);
                 ground.SetChild(balloon.gameObject);
                 balloon.SetUp(x =>
                 {
-                    _playerPoolUseCase.HitBalloon(x);
+                    _playerPoolUseCase.Increase(x);
                     _playerCountUseCase.Increase(x.type.ConvertInt());
                 });
             }
             else if (rand.IsBetween(2, 3))
             {
-                var balloon = _balloonContainerUseCase.Generate(BalloonType.Ten);
+                var balloon = _balloonPoolUseCase.Rent(BalloonType.Ten);
                 ground.SetChild(balloon.gameObject);
                 balloon.SetUp(x =>
                 {
-                    _playerPoolUseCase.HitBalloon(x);
+                    _playerPoolUseCase.Increase(x);
                     _playerCountUseCase.Increase(x.type.ConvertInt());
                 });
             }
             else if (rand.IsBetween(4, 5))
             {
-                var enemy = _enemyContainerUseCase.Generate(EnemyType.Wolf);
+                var enemy = _enemyPoolUseCase.Rent(EnemyType.Wolf);
                 ground.SetChild(enemy.gameObject);
                 enemy.SetUp(x =>
                 {
@@ -117,7 +117,7 @@ namespace Ferret.InGame.Presentation.Controller
             }
             else if (rand.IsBetween(6, 7))
             {
-                var enemy = _enemyContainerUseCase.Generate(EnemyType.Hawk);
+                var enemy = _enemyPoolUseCase.Rent(EnemyType.Hawk);
                 ground.SetChild(enemy.gameObject);
                 enemy.SetUp(x =>
                 {
