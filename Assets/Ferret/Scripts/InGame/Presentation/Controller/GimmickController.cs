@@ -8,6 +8,7 @@ namespace Ferret.InGame.Presentation.Controller
     public sealed class GimmickController
     {
         private readonly BalloonPoolUseCase _balloonPoolUseCase;
+        private readonly EffectPoolUseCase _effectPoolUseCase;
         private readonly EnemyPoolUseCase _enemyPoolUseCase;
         private readonly PlayerPoolUseCase _playerPoolUseCase;
         private readonly PlayerContainerUseCase _playerContainerUseCase;
@@ -20,12 +21,13 @@ namespace Ferret.InGame.Presentation.Controller
 
         private readonly int _interval = 86;
 
-        public GimmickController(BalloonPoolUseCase balloonPoolUseCase,
+        public GimmickController(BalloonPoolUseCase balloonPoolUseCase, EffectPoolUseCase effectPoolUseCase,
             EnemyPoolUseCase enemyPoolUseCase, PlayerPoolUseCase playerPoolUseCase,
             PlayerContainerUseCase playerContainerUseCase, PlayerCountUseCase playerCountUseCase,
             GroundController groundController, BridgeView bridgeView)
         {
             _balloonPoolUseCase = balloonPoolUseCase;
+            _effectPoolUseCase = effectPoolUseCase;
             _enemyPoolUseCase = enemyPoolUseCase;
             _playerPoolUseCase = playerPoolUseCase;
             _playerContainerUseCase = playerContainerUseCase;
@@ -93,6 +95,9 @@ namespace Ferret.InGame.Presentation.Controller
                 {
                     _playerPoolUseCase.Increase(x);
                     _playerCountUseCase.Increase(x.type.ConvertInt());
+                    var effect = _effectPoolUseCase.Rent(EffectType.Crash);
+                    ground.SetChild(effect.gameObject);
+                    effect.Play(balloon.position, EffectColor.Green);
                 });
             }
             else if (rand.IsBetween(2, 3))
@@ -103,6 +108,9 @@ namespace Ferret.InGame.Presentation.Controller
                 {
                     _playerPoolUseCase.Increase(x);
                     _playerCountUseCase.Increase(x.type.ConvertInt());
+                    var effect = _effectPoolUseCase.Rent(EffectType.Crash);
+                    ground.SetChild(effect.gameObject);
+                    effect.Play(balloon.position, EffectColor.Magenta);
                 });
             }
             else if (rand.IsBetween(4, 5))
@@ -113,6 +121,9 @@ namespace Ferret.InGame.Presentation.Controller
                 {
                     _playerPoolUseCase.Decrease(x);
                     _playerCountUseCase.Decrease();
+                    var effect = _effectPoolUseCase.Rent(EffectType.Explode);
+                    ground.SetChild(effect.gameObject);
+                    effect.Play(x.position, EffectColor.White);
                 });
             }
             else if (rand.IsBetween(6, 7))
@@ -123,6 +134,9 @@ namespace Ferret.InGame.Presentation.Controller
                 {
                     _playerPoolUseCase.Decrease(x);
                     _playerCountUseCase.Decrease();
+                    var effect = _effectPoolUseCase.Rent(EffectType.Explode);
+                    ground.SetChild(effect.gameObject);
+                    effect.Play(x.position, EffectColor.White);
                 });
             }
         }

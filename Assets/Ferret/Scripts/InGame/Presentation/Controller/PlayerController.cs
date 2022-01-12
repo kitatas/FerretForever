@@ -19,6 +19,7 @@ namespace Ferret.InGame.Presentation.Controller
         private Action<PlayerController> _backPool;
 
         public PlayerStatus status { get; private set; }
+        public Vector3 position => transform.position;
 
         public void Init()
         {

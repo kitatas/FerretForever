@@ -40,4 +40,19 @@ namespace Ferret.InGame
         Wolf,
         Hawk,
     }
+
+    public enum EffectType
+    {
+        None,
+        Crash,
+        Explode,
+    }
+
+    public enum EffectColor
+    {
+        None,
+        White,
+        Green,
+        Magenta,
+    }
 }
