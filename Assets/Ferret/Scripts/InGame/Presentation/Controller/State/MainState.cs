@@ -8,12 +8,15 @@ namespace Ferret.InGame.Presentation.Controller
 {
     public sealed class MainState : BaseGameState
     {
+        private readonly PlayerContainerUseCase _playerContainerUseCase;
         private readonly ScoreUseCase _scoreUseCase;
         private readonly GimmickController _gimmickController;
         private readonly InputView _inputView;
 
-        public MainState(ScoreUseCase scoreUseCase, GimmickController gimmickController, InputView inputView)
+        public MainState(PlayerContainerUseCase playerContainerUseCase, ScoreUseCase scoreUseCase,
+            GimmickController gimmickController, InputView inputView)
         {
+            _playerContainerUseCase = playerContainerUseCase;
             _scoreUseCase = scoreUseCase;
             _gimmickController = gimmickController;
             _inputView = inputView;
@@ -39,7 +42,7 @@ namespace Ferret.InGame.Presentation.Controller
                 }
 
                 // 残機0になったら終了
-                if (_gimmickController.IsNoPlayer())
+                if (_playerContainerUseCase.IsNone())
                 {
                     return GameState.Result;
                 }
@@ -50,7 +53,7 @@ namespace Ferret.InGame.Presentation.Controller
 
                 if (_inputView.isPush)
                 {
-                    _gimmickController.JumpAll();
+                    _playerContainerUseCase.JumpAll();
                 }
 
                 await UniTask.Yield(token);

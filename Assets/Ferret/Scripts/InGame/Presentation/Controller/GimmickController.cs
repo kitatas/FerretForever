@@ -11,7 +11,6 @@ namespace Ferret.InGame.Presentation.Controller
         private readonly EffectPoolUseCase _effectPoolUseCase;
         private readonly EnemyPoolUseCase _enemyPoolUseCase;
         private readonly PlayerPoolUseCase _playerPoolUseCase;
-        private readonly PlayerContainerUseCase _playerContainerUseCase;
         private readonly PlayerCountUseCase _playerCountUseCase;
         private readonly GroundController _groundController;
         private readonly BridgeView _bridgeView;
@@ -23,14 +22,12 @@ namespace Ferret.InGame.Presentation.Controller
 
         public GimmickController(BalloonPoolUseCase balloonPoolUseCase, EffectPoolUseCase effectPoolUseCase,
             EnemyPoolUseCase enemyPoolUseCase, PlayerPoolUseCase playerPoolUseCase,
-            PlayerContainerUseCase playerContainerUseCase, PlayerCountUseCase playerCountUseCase,
-            GroundController groundController, BridgeView bridgeView)
+            PlayerCountUseCase playerCountUseCase, GroundController groundController, BridgeView bridgeView)
         {
             _balloonPoolUseCase = balloonPoolUseCase;
             _effectPoolUseCase = effectPoolUseCase;
             _enemyPoolUseCase = enemyPoolUseCase;
             _playerPoolUseCase = playerPoolUseCase;
-            _playerContainerUseCase = playerContainerUseCase;
             _playerCountUseCase = playerCountUseCase;
             _groundController = groundController;
             _bridgeView = bridgeView;
@@ -149,16 +146,6 @@ namespace Ferret.InGame.Presentation.Controller
         public void SetUpNext()
         {
             _bridgeView.SetUpNext();
-        }
-
-        public bool IsNoPlayer()
-        {
-            return _playerContainerUseCase.IsNone();
-        }
-
-        public void JumpAll()
-        {
-            _playerContainerUseCase.JumpAll();
         }
 
         public bool IsArriveBridge()
