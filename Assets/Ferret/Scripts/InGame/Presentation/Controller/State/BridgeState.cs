@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
 
@@ -40,14 +39,7 @@ namespace Ferret.InGame.Presentation.Controller
             {
                 _playerCountUseCase.Decrease();
                 var victim = _playerContainerUseCase.GetVictim();
-                _bridgeAxisView.CreateBridge(victim);
-
-                await DOTween.Sequence()
-                    .Append(victim.transform
-                        .DOLocalMoveX(0.0f, 0.05f))
-                    .Append(victim.transform
-                        .DOLocalMoveY(height, 0.05f))
-                    .WithCancellation(token);
+                await _bridgeAxisView.CreateBridgeAsync(victim, height, token);
 
                 height += 0.8f;
             }

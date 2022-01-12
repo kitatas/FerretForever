@@ -26,11 +26,18 @@ namespace Ferret.InGame.Presentation.View
             _victims.Clear();
         }
 
-        public void CreateBridge(PlayerController victim)
+        public async UniTask CreateBridgeAsync(PlayerController victim, float height, CancellationToken token)
         {
             gameObject.SetChild(victim.gameObject);
             _victims.Add(victim);
             victim.SetUpBridge();
+
+            await DOTween.Sequence()
+                .Append(victim.transform
+                    .DOLocalMoveX(0.0f, 0.05f))
+                .Append(victim.transform
+                    .DOLocalMoveY(height, 0.05f))
+                .WithCancellation(token);
         }
 
         public async UniTask BuildBridgeAsync(CancellationToken token)
@@ -57,7 +64,7 @@ namespace Ferret.InGame.Presentation.View
                     .DOLocalRotate(_rotateVector, 0.6f)
                     .SetEase(Ease.InCirc))
                 .Append(transform
-                    .DOLocalMoveY(-4.0f, 0.4f)
+                    .DOLocalMoveY(-4.5f, 0.4f)
                     .SetEase(Ease.InCirc))
                 .WithCancellation(token);
         }
