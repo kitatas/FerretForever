@@ -23,7 +23,7 @@ namespace Ferret.InGame.Presentation.Controller
                     {
                         if (player.status != PlayerStatus.Blow)
                         {
-                            // TODO: player吹っ飛ばす
+                            player.Blow();
                             _decrease?.Invoke(player);
                         }
                     }

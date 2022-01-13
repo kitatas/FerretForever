@@ -82,5 +82,11 @@ namespace Ferret.InGame.Presentation.Controller
             _playerMoveUseCase.SetSimulate(true);
             _playerMoveUseCase.SetConstraint(RigidbodyConstraints2D.FreezeAll);
         }
+
+        public void Blow()
+        {
+            status = PlayerStatus.Blow;
+            _playerMoveUseCase.Blow();
+        }
     }
 }

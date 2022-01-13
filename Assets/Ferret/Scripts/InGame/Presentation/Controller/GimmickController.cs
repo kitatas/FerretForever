@@ -116,11 +116,13 @@ namespace Ferret.InGame.Presentation.Controller
                 ground.SetChild(enemy.gameObject);
                 enemy.SetUp(x =>
                 {
-                    _playerPoolUseCase.Decrease(x);
-                    _playerCountUseCase.Decrease();
-                    var effect = _effectPoolUseCase.Rent(EffectType.Explode);
-                    ground.SetChild(effect.gameObject);
-                    effect.Play(x.position, EffectColor.White);
+                    if (_playerPoolUseCase.IsDecrease(x))
+                    {
+                        _playerCountUseCase.Decrease();
+                        var effect = _effectPoolUseCase.Rent(EffectType.Explode);
+                        ground.SetChild(effect.gameObject);
+                        effect.Play(x.position, EffectColor.White);
+                    }
                 });
             }
             else if (rand.IsBetween(6, 7))
@@ -129,11 +131,13 @@ namespace Ferret.InGame.Presentation.Controller
                 ground.SetChild(enemy.gameObject);
                 enemy.SetUp(x =>
                 {
-                    _playerPoolUseCase.Decrease(x);
-                    _playerCountUseCase.Decrease();
-                    var effect = _effectPoolUseCase.Rent(EffectType.Explode);
-                    ground.SetChild(effect.gameObject);
-                    effect.Play(x.position, EffectColor.White);
+                    if (_playerPoolUseCase.IsDecrease(x))
+                    {
+                        _playerCountUseCase.Decrease();
+                        var effect = _effectPoolUseCase.Rent(EffectType.Explode);
+                        ground.SetChild(effect.gameObject);
+                        effect.Play(x.position, EffectColor.White);
+                    }
                 });
             }
         }

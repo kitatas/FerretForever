@@ -40,10 +40,15 @@ namespace Ferret.InGame.Domain.UseCase
             }
         }
 
-        public void Decrease(PlayerController player)
+        public bool IsDecrease(PlayerController player)
         {
-            _playerContainer.Remove(player);
-            _playerFactory.Return(player);
+            if (_playerContainer.IsContain(player))
+            {
+                _playerContainer.Remove(player);
+                return true;
+            }
+
+            return false;
         }
     }
 }

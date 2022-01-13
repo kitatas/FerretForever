@@ -39,5 +39,10 @@ namespace Ferret.InGame.Data.Container
                 action?.Invoke(player);
             }
         }
+
+        public bool IsContain(PlayerController player)
+        {
+            return _players.Contains(player);
+        }
     }
 }
