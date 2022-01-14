@@ -45,6 +45,7 @@ namespace Ferret.InGame
             builder.Register<GameStateEntity>(Lifetime.Scoped);
             builder.Register<PlayerCountEntity>(Lifetime.Scoped);
             builder.Register<ScoreEntity>(Lifetime.Scoped);
+            builder.Register<VictimCountEntity>(Lifetime.Scoped);
 
             // Factory
             builder.Register<BalloonFactory>(Lifetime.Scoped);

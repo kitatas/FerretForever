@@ -21,8 +21,12 @@ namespace Ferret.InGame.Presentation.Presenter
 
         public void PostInitialize()
         {
-            _playerCountUseCase.count
-                .Subscribe(_playerCountView.Display)
+            _playerCountUseCase.playerCount
+                .Subscribe(_playerCountView.DisplayPlayerCount)
+                .AddTo(_disposable);
+
+            _playerCountUseCase.victimCount
+                .Subscribe(_playerCountView.DisplayVictimCount)
                 .AddTo(_disposable);
         }
 

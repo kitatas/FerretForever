@@ -9,17 +9,23 @@ namespace Ferret.InGame.Domain.UseCase
     public sealed class PlayerCountUseCase : IDisposable
     {
         private readonly PlayerCountEntity _playerCountEntity;
-        private readonly ReactiveProperty<int> _count;
+        private readonly VictimCountEntity _victimCountEntity;
+        private readonly ReactiveProperty<int> _playerCount;
+        private readonly ReactiveProperty<int> _victimCount;
         private readonly CancellationTokenSource _tokenSource;
 
-        public PlayerCountUseCase(PlayerCountEntity playerCountEntity)
+        public PlayerCountUseCase(PlayerCountEntity playerCountEntity, VictimCountEntity victimCountEntity)
         {
             _playerCountEntity = playerCountEntity;
-            _count = new ReactiveProperty<int>(_playerCountEntity.Get());
+            _victimCountEntity = victimCountEntity;
+            _playerCount = new ReactiveProperty<int>(_playerCountEntity.Get());
+            _victimCount = new ReactiveProperty<int>(_victimCountEntity.Get());
             _tokenSource = new CancellationTokenSource();
         }
 
-        public IReadOnlyReactiveProperty<int> count => _count;
+        public IReadOnlyReactiveProperty<int> playerCount => _playerCount;
+
+        public IReadOnlyReactiveProperty<int> victimCount => _victimCount;
 
         public void Increase(int value)
         {
@@ -31,7 +37,7 @@ namespace Ferret.InGame.Domain.UseCase
             for (int i = 0; i < value; i++)
             {
                 _playerCountEntity.Add(1);
-                _count.Value = _playerCountEntity.Get();
+                _playerCount.Value = _playerCountEntity.Get();
                 await UniTask.Yield(token);
             }
         }
@@ -39,7 +45,10 @@ namespace Ferret.InGame.Domain.UseCase
         public void Decrease()
         {
             _playerCountEntity.Add(-1);
-            _count.Value = _playerCountEntity.Get();
+            _playerCount.Value = _playerCountEntity.Get();
+
+            _victimCountEntity.Add(1);
+            _victimCount.Value = _victimCountEntity.Get();
         }
 
         public void Dispose()
