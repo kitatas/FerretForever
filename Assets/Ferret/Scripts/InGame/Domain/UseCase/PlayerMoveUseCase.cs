@@ -42,5 +42,15 @@ namespace Ferret.InGame.Domain.UseCase
             _rigidbody.AddForce(_blowVector);
             _rigidbody.AddTorque(_torquePower);
         }
+
+        public void Collapse()
+        {
+            SetSimulate(true);
+            SetConstraint(RigidbodyConstraints2D.None);
+            _rigidbody.velocity = Vector2.zero;
+            var x = Random.Range(-800f, 800f);
+            _rigidbody.AddForce(new Vector2(x, 750f));
+            _rigidbody.AddTorque(_torquePower * Mathf.Sign(x) * -1);
+        }
     }
 }

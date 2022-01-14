@@ -72,6 +72,11 @@ namespace Ferret.InGame.Presentation.Controller
             _playerMoveUseCase.SetConstraint(RigidbodyConstraints2D.FreezeAll);
         }
 
+        public void CollapseBridge()
+        {
+            _playerMoveUseCase.Collapse();
+        }
+
         public void Blow()
         {
             status = PlayerStatus.Blow;

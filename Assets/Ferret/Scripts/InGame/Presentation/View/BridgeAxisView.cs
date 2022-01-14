@@ -63,10 +63,12 @@ namespace Ferret.InGame.Presentation.View
                 .Append(transform
                     .DOLocalRotate(_rotateVector, 0.6f)
                     .SetEase(Ease.InCirc))
-                .Append(transform
-                    .DOLocalMoveY(-4.5f, 0.4f)
-                    .SetEase(Ease.InCirc))
                 .WithCancellation(token);
+
+            foreach (var victim in _victims)
+            {
+                victim.CollapseBridge();
+            }
         }
 
         public void Release()
