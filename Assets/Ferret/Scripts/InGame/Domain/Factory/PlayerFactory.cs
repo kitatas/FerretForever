@@ -16,7 +16,7 @@ namespace Ferret.InGame.Domain.Factory
         protected override PlayerController CreateInstance()
         {
             var player = Object.Instantiate(_player);
-            player.Init();
+            player.Init(() => Return(player));
             return player;
         }
     }

@@ -24,14 +24,11 @@ namespace Ferret.InGame.Presentation.Controller
 
         public override async UniTask InitAsync(CancellationToken token)
         {
-            _bridgeAxisView.Init();
             await UniTask.Yield(token);
         }
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
-            _bridgeAxisView.SetUp();
-
             // 橋形成
             var victimCount = _playerContainerUseCase.GetVictimCount();
             var height = 0.0f;

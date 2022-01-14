@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View
 {
-    public sealed class BridgeAxisView : MonoBehaviour
+    public sealed class BridgeAxisView : MonoBehaviour, IPoolObject
     {
         private List<PlayerController> _victims;
         private readonly Vector3 _setUpPosition = new Vector3(0.5f, -1.4f, 0.0f);
@@ -23,7 +23,7 @@ namespace Ferret.InGame.Presentation.View
         {
             transform.eulerAngles = Vector3.zero;
             transform.localPosition = _setUpPosition;
-            _victims.Clear();
+            Release();
         }
 
         public async UniTask CreateBridgeAsync(PlayerController victim, float height, CancellationToken token)
@@ -67,6 +67,16 @@ namespace Ferret.InGame.Presentation.View
                     .DOLocalMoveY(-4.5f, 0.4f)
                     .SetEase(Ease.InCirc))
                 .WithCancellation(token);
+        }
+
+        public void Release()
+        {
+            foreach (var victim in _victims)
+            {
+                victim.Release();
+            }
+
+            _victims.Clear();
         }
     }
 }

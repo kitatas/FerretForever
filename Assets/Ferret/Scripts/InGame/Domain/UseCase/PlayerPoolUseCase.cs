@@ -24,7 +24,7 @@ namespace Ferret.InGame.Domain.UseCase
         {
             _playerFactory.Set(_playerRepository.Get().player);
             var player = _playerFactory.Rent();
-            player.SetUp(position, _playerFactory.Return);
+            player.SetUp(position);
             _playerContainer.Add(player);
         }
 

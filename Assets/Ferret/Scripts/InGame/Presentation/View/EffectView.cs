@@ -1,10 +1,10 @@
 using System;
-using EFUK;
+using Ferret.InGame.Presentation.Controller;
 using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View
 {
-    public sealed class EffectView : MonoBehaviour
+    public sealed class EffectView : MonoBehaviour, IPoolObject
     {
         [SerializeField] private EffectType effectType = default;
         [SerializeField] private ParticleSystem particle = default;
@@ -24,8 +24,12 @@ namespace Ferret.InGame.Presentation.View
         {
             transform.position = position;
             _mainModule.startColor = color.ConvertColor();
+        }
 
-            this.Delay(2.0f, () => _release?.Invoke());
+        public void Release()
+        {
+            _release?.Invoke();
+            transform.SetParent(null);
         }
     }
 }

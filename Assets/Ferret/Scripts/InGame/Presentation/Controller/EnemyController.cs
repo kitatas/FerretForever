@@ -5,10 +5,11 @@ using UnityEngine;
 
 namespace Ferret.InGame.Presentation.Controller
 {
-    public sealed class EnemyController : MonoBehaviour
+    public sealed class EnemyController : MonoBehaviour, IPoolObject
     {
         [SerializeField] private EnemyType enemyType = default;
 
+        private Action _release;
         private Action<PlayerController> _decrease;
 
         public EnemyType type => enemyType;
@@ -16,6 +17,8 @@ namespace Ferret.InGame.Presentation.Controller
 
         public void Init(Action release)
         {
+            _release = release;
+
             this.OnTriggerEnter2DAsObservable()
                 .Subscribe(other =>
                 {
@@ -28,13 +31,6 @@ namespace Ferret.InGame.Presentation.Controller
                         }
                     }
                 })
-                .AddTo(this);
-
-            // 画面外に出たら強制的にpoolに戻す
-            this.UpdateAsObservable()
-                .Where(_ => position.x < -11.0f)
-                .Where(_ => gameObject.activeSelf)
-                .Subscribe(_ => release?.Invoke())
                 .AddTo(this);
         }
 
@@ -49,6 +45,12 @@ namespace Ferret.InGame.Presentation.Controller
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
             transform.localPosition = new Vector3(0.0f, y, 0.0f);
+        }
+
+        public void Release()
+        {
+            transform.SetParent(null);
+            _release?.Invoke();
         }
     }
 }

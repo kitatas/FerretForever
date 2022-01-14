@@ -11,20 +11,21 @@ namespace Ferret.InGame.Presentation.Controller
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(PlayerView))]
-    public sealed class PlayerController : MonoBehaviour
+    public sealed class PlayerController : MonoBehaviour, IPoolObject
     {
         private PlayerMoveUseCase _playerMoveUseCase;
         private PlayerView _playerView;
 
-        private Action<PlayerController> _backPool;
+        private Action _release;
 
         public PlayerStatus status { get; private set; }
         public Vector3 position => transform.position;
 
-        public void Init()
+        public void Init(Action release)
         {
             _playerMoveUseCase = new PlayerMoveUseCase(GetComponent<Rigidbody2D>());
             _playerView = GetComponent<PlayerView>();
+            _release = release;
             status = PlayerStatus.None;
 
             _playerView.Init();
@@ -35,24 +36,12 @@ namespace Ferret.InGame.Presentation.Controller
                 .Where(other => other.gameObject.CompareTag(TagConfig.GROUND))
                 .Subscribe(_ => status = PlayerStatus.Run)
                 .AddTo(this);
-
-            // 画面外に出たら強制的にpoolに戻す
-            this.UpdateAsObservable()
-                .Where(_ => transform.position.x < -10.0f)
-                .Where(_ => gameObject.activeSelf)
-                .Subscribe(_ =>
-                {
-                    gameObject.transform.SetParent(null);
-                    _backPool?.Invoke(this);
-                })
-                .AddTo(this);
         }
 
-        public void SetUp(Vector3 position, Action<PlayerController> backPool)
+        public void SetUp(Vector3 position)
         {
             transform.position = position;
             transform.eulerAngles = Vector3.zero;
-            _backPool = backPool;
             status = PlayerStatus.Jumping;
             _playerMoveUseCase.SetConstraint(RigidbodyConstraints2D.FreezeRotation);
             _playerView.SetUp();
@@ -87,6 +76,13 @@ namespace Ferret.InGame.Presentation.Controller
         {
             status = PlayerStatus.Blow;
             _playerMoveUseCase.Blow();
+            this.Delay(5.0f, Release);
+        }
+
+        public void Release()
+        {
+            transform.SetParent(null);
+            _release?.Invoke();
         }
     }
 }

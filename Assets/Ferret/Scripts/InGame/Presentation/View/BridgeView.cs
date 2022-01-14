@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View
 {
-    public sealed class BridgeView : MonoBehaviour
+    public sealed class BridgeView : MonoBehaviour, IPoolObject
     {
         [SerializeField] private Collider2D collider2d = default;
 
@@ -14,8 +14,6 @@ namespace Ferret.InGame.Presentation.View
 
         public void Init()
         {
-            Activate(false);
-
             this.OnTriggerEnter2DAsObservable()
                 .Where(_ => isArrive == false)
                 .Subscribe(other =>
@@ -26,13 +24,6 @@ namespace Ferret.InGame.Presentation.View
                         collider2d.enabled = false;
                     }
                 })
-                .AddTo(this);
-
-            // 画面外に出たら強制的にpoolに戻す
-            this.UpdateAsObservable()
-                .Where(_ => transform.position.x < -18.0f)
-                .Where(_ => gameObject.activeSelf)
-                .Subscribe(_ => Activate(false))
                 .AddTo(this);
         }
 
@@ -45,12 +36,11 @@ namespace Ferret.InGame.Presentation.View
         {
             transform.SetLocalPositionX(0.0f);
             collider2d.enabled = true;
-            Activate(true);
         }
 
-        private void Activate(bool value)
+        public void Release()
         {
-            gameObject.SetActive(value);
+            transform.SetParent(null);
         }
     }
 }

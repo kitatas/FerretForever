@@ -7,10 +7,11 @@ using Random = UnityEngine.Random;
 
 namespace Ferret.InGame.Presentation.Controller
 {
-    public sealed class BalloonController : MonoBehaviour
+    public sealed class BalloonController : MonoBehaviour, IPoolObject
     {
         [SerializeField] private BalloonType balloonType = default;
 
+        private Action _release;
         private Action<BalloonController> _increase;
         private bool _isActive;
 
@@ -19,6 +20,8 @@ namespace Ferret.InGame.Presentation.Controller
 
         public void Init(Action release)
         {
+            _release = release;
+
             this.OnTriggerEnter2DAsObservable()
                 .Where(_ => _isActive)
                 .Subscribe(other =>
@@ -33,17 +36,10 @@ namespace Ferret.InGame.Presentation.Controller
                             _increase?.Invoke(this);
 
                             // back pool
-                            release?.Invoke();
+                            Release();
                         }
                     }
                 })
-                .AddTo(this);
-
-            // 画面外に出たら強制的にpoolに戻す
-            this.UpdateAsObservable()
-                .Where(_ => position.x < -11.0f)
-                .Where(_ => gameObject.activeSelf)
-                .Subscribe(_ => release?.Invoke())
                 .AddTo(this);
         }
 
@@ -55,6 +51,12 @@ namespace Ferret.InGame.Presentation.Controller
             transform
                 .SetPositionY(Random.Range(1.0f, 5.5f))
                 .SetLocalPositionX(0.0f);
+        }
+
+        public void Release()
+        {
+            transform.SetParent(null);
+            _release?.Invoke();
         }
     }
 }

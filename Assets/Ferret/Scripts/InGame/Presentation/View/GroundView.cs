@@ -1,5 +1,6 @@
 using System;
 using EFUK;
+using Ferret.InGame.Presentation.Controller;
 using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View
@@ -18,6 +19,18 @@ namespace Ferret.InGame.Presentation.View
         public void Init(Action<GroundView> setUp)
         {
             _setUp = setUp;
+        }
+
+        public void SetUp()
+        {
+            Activate(true);
+            gameObject.ControlChildren(x =>
+            {
+                if (x.TryGetComponent<IPoolObject>(out var poolObject))
+                {
+                    poolObject.Release();
+                }
+            });
         }
 
         public void Tick(float deltaTime)

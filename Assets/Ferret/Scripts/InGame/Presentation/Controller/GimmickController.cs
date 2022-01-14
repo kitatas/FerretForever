@@ -14,6 +14,7 @@ namespace Ferret.InGame.Presentation.Controller
         private readonly PlayerCountUseCase _playerCountUseCase;
         private readonly GroundController _groundController;
         private readonly BridgeView _bridgeView;
+        private readonly BridgeAxisView _bridgeAxisView;
 
         private int _counter;
         private int _initCounter;
@@ -21,8 +22,8 @@ namespace Ferret.InGame.Presentation.Controller
         private readonly int _interval = 86;
 
         public GimmickController(BalloonPoolUseCase balloonPoolUseCase, EffectPoolUseCase effectPoolUseCase,
-            EnemyPoolUseCase enemyPoolUseCase, PlayerPoolUseCase playerPoolUseCase,
-            PlayerCountUseCase playerCountUseCase, GroundController groundController, BridgeView bridgeView)
+            EnemyPoolUseCase enemyPoolUseCase, PlayerPoolUseCase playerPoolUseCase, PlayerCountUseCase playerCountUseCase,
+            GroundController groundController, BridgeView bridgeView, BridgeAxisView bridgeAxisView)
         {
             _balloonPoolUseCase = balloonPoolUseCase;
             _effectPoolUseCase = effectPoolUseCase;
@@ -31,6 +32,7 @@ namespace Ferret.InGame.Presentation.Controller
             _playerCountUseCase = playerCountUseCase;
             _groundController = groundController;
             _bridgeView = bridgeView;
+            _bridgeAxisView = bridgeAxisView;
 
             _counter = 0;
             _initCounter = 0;
@@ -46,12 +48,13 @@ namespace Ferret.InGame.Presentation.Controller
 
             _groundController.Init(SetUp);
             _bridgeView.Init();
+            _bridgeAxisView.Init();
         }
 
         private void SetUp(GroundView groundView)
         {
             var ground = groundView.gameObject;
-            groundView.Activate(true);
+            groundView.SetUp();
 
             _counter++;
             if (_counter % _interval == 0)
@@ -59,6 +62,7 @@ namespace Ferret.InGame.Presentation.Controller
                 _counter = 0;
                 ground.SetChild(_bridgeView.gameObject);
                 _bridgeView.SetUp();
+                _bridgeAxisView.SetUp();
                 return;
             }
 
