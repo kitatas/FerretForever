@@ -26,6 +26,7 @@ namespace Ferret.InGame
         [SerializeField] private BridgeView bridgeView = default;
         [SerializeField] private InputView inputView = default;
         [SerializeField] private PlayerCountView playerCountView = default;
+        [SerializeField] private ResultView resultView = default;
         [SerializeField] private ScoreView scoreView = default;
         [SerializeField] private TitleView titleView = default;
 
@@ -86,6 +87,7 @@ namespace Ferret.InGame
             builder.RegisterInstance<BridgeView>(bridgeView);
             builder.RegisterInstance<InputView>(inputView);
             builder.RegisterInstance<PlayerCountView>(playerCountView);
+            builder.RegisterInstance<ResultView>(resultView);
             builder.RegisterInstance<ScoreView>(scoreView);
             builder.RegisterInstance<TitleView>(titleView);
         }
