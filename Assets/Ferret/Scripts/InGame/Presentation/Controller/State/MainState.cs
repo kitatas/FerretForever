@@ -49,7 +49,7 @@ namespace Ferret.InGame.Presentation.Controller
 
                 var deltaTime = Time.deltaTime;
                 _scoreUseCase.Update(deltaTime);
-                _gimmickController.Tick(deltaTime);
+                _gimmickController.Tick(state, deltaTime);
 
                 if (_inputView.isPush)
                 {

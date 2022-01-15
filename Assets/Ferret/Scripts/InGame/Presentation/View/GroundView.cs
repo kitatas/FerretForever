@@ -33,7 +33,7 @@ namespace Ferret.InGame.Presentation.View
             });
         }
 
-        public void Tick(float deltaTime)
+        public void Tick(GameState state, float deltaTime)
         {
             transform.TranslateX(_moveSpeed * deltaTime * -1);
 
@@ -41,7 +41,7 @@ namespace Ferret.InGame.Presentation.View
             {
                 transform.TranslateX(_startPositionX - _endPositionX);
 
-                // TODO: main state
+                if (state == GameState.Main)
                 {
                     _setUp?.Invoke(this);
                 }

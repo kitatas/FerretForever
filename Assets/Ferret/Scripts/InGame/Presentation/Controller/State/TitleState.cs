@@ -1,6 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Ferret.InGame.Presentation.View;
+using UnityEngine;
 
 namespace Ferret.InGame.Presentation.Controller
 {
@@ -8,11 +9,13 @@ namespace Ferret.InGame.Presentation.Controller
     {
         private readonly InputView _inputView;
         private readonly TitleView _titleView;
+        private readonly GroundController _groundController;
 
-        public TitleState(InputView inputView, TitleView titleView)
+        public TitleState(InputView inputView, TitleView titleView, GroundController groundController)
         {
             _inputView = inputView;
             _titleView = titleView;
+            _groundController = groundController;
         }
 
         public override GameState state => GameState.Title;
@@ -25,7 +28,18 @@ namespace Ferret.InGame.Presentation.Controller
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
-            await _inputView.OnPush().ToUniTask(true, token);
+            while (true)
+            {
+                if (_inputView.isPush)
+                {
+                    break;
+                }
+
+                var deltaTime = Time.deltaTime;
+                _groundController.Tick(state, deltaTime);
+
+                await UniTask.Yield(token);
+            }
 
             _titleView.SetUp();
 

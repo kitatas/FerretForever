@@ -146,9 +146,9 @@ namespace Ferret.InGame.Presentation.Controller
             }
         }
 
-        public void Tick(float deltaTime)
+        public void Tick(GameState state, float deltaTime)
         {
-            _groundController.Tick(deltaTime);
+            _groundController.Tick(state, deltaTime);
         }
 
         public void SetUpNext()

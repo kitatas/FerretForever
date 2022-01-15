@@ -17,11 +17,11 @@ namespace Ferret.InGame.Presentation.Controller
             }
         }
 
-        public void Tick(float deltaTime)
+        public void Tick(GameState state, float deltaTime)
         {
             foreach (var ground in groundViews)
             {
-                ground.Tick(deltaTime);
+                ground.Tick(state, deltaTime);
             }
         }
     }
