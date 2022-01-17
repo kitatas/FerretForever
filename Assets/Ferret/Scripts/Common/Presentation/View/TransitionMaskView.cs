@@ -9,19 +9,22 @@ namespace Ferret.Common.Presentation.View
     public sealed class TransitionMaskView : MonoBehaviour
     {
         [SerializeField] private Image mask = default;
+        [SerializeField] private Image raycastBlocker = default;
 
-        private readonly float _animationTime = 0.5f;
+        private readonly float _animationTime = 0.1f;
 
         public void Init()
         {
-
+            raycastBlocker.raycastTarget = false;
         }
 
         public async UniTask FadeInAsync(CancellationToken token)
         {
+            raycastBlocker.raycastTarget = true;
+
             await DOTween.Sequence()
                 .Append(mask.rectTransform
-                    .DOAnchorPosX(-1066.0f, 0.0f)
+                    .DOAnchorPosX(-1140.0f, 0.0f)
                     .SetEase(Ease.Linear))
                 .Append(mask.rectTransform
                     .DOAnchorPosX(0.0f, _animationTime)
@@ -33,9 +36,11 @@ namespace Ferret.Common.Presentation.View
         {
             await DOTween.Sequence()
                 .Append(mask.rectTransform
-                    .DOAnchorPosX(1066.0f, _animationTime)
+                    .DOAnchorPosX(1140.0f, _animationTime)
                     .SetEase(Ease.Linear))
                 .WithCancellation(token);
+
+            raycastBlocker.raycastTarget = false;
         }
     }
 }

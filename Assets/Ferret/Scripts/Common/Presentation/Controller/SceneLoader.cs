@@ -36,6 +36,8 @@ namespace Ferret.Common.Presentation.Controller
 
             await SceneManager.LoadSceneAsync(sceneName.ToString()).WithCancellation(token);
 
+            await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
+
             await _transitionMaskView.FadeOutAsync(token);
         }
     }
