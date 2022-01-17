@@ -38,9 +38,9 @@ namespace Ferret.InGame.Presentation.Controller
                 .AddTo(this);
         }
 
-        public void SetUp(Vector3 position)
+        public void SetUp(Vector3 setUpPosition)
         {
-            transform.position = position;
+            transform.position = setUpPosition;
             transform.eulerAngles = Vector3.zero;
             status = PlayerStatus.Jumping;
             _playerMoveUseCase.SetConstraint(RigidbodyConstraints2D.FreezeRotation);
@@ -68,8 +68,7 @@ namespace Ferret.InGame.Presentation.Controller
 
         public void ConvertBridge()
         {
-            _playerMoveUseCase.SetSimulate(true);
-            _playerMoveUseCase.SetConstraint(RigidbodyConstraints2D.FreezeAll);
+            _playerMoveUseCase.ConvertBridge();
         }
 
         public void CollapseBridge()

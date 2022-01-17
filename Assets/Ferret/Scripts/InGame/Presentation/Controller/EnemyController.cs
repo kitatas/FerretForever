@@ -11,6 +11,7 @@ namespace Ferret.InGame.Presentation.Controller
 
         private Action _release;
         private Action<PlayerController> _decrease;
+        private Vector3 _setUpPosition;
 
         public EnemyType type => enemyType;
         public Vector3 position => transform.position;
@@ -18,6 +19,13 @@ namespace Ferret.InGame.Presentation.Controller
         public void Init(Action release)
         {
             _release = release;
+            var y = type switch
+            {
+                EnemyType.Wolf => 0.8f,
+                EnemyType.Hawk => 5.5f,
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+            _setUpPosition = new Vector3(0.0f, y, 0.0f);
 
             this.OnTriggerEnter2DAsObservable()
                 .Subscribe(other =>
@@ -37,14 +45,7 @@ namespace Ferret.InGame.Presentation.Controller
         public void SetUp(Action<PlayerController> decrease)
         {
             _decrease = decrease;
-
-            var y = type switch
-            {
-                EnemyType.Wolf => 0.8f,
-                EnemyType.Hawk => 5.5f,
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-            };
-            transform.localPosition = new Vector3(0.0f, y, 0.0f);
+            transform.localPosition = _setUpPosition;
         }
 
         public void Release()

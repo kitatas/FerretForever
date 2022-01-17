@@ -9,7 +9,7 @@ namespace Ferret.InGame.Presentation.View
 
         public void Show(float value)
         {
-            scoreText.text = $"{value: 0.00}";
+            scoreText.text = $"{value.ToString("F2")}";
         }
     }
 }

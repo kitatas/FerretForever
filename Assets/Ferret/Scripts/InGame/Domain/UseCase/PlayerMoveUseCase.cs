@@ -43,6 +43,12 @@ namespace Ferret.InGame.Domain.UseCase
             _rigidbody.AddTorque(_torquePower);
         }
 
+        public void ConvertBridge()
+        {
+            SetSimulate(true);
+            SetConstraint(RigidbodyConstraints2D.FreezeAll);
+        }
+
         public void Collapse()
         {
             SetSimulate(true);
