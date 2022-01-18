@@ -20,6 +20,7 @@ namespace Ferret.InGame.Presentation.Controller
 
         public PlayerStatus status { get; private set; }
         public Vector3 position => transform.position;
+        public GameObject self => gameObject;
 
         public void Init(Action release)
         {

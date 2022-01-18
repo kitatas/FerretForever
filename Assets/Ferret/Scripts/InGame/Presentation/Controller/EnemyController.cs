@@ -15,6 +15,7 @@ namespace Ferret.InGame.Presentation.Controller
 
         public EnemyType type => enemyType;
         public Vector3 position => transform.position;
+        public GameObject self => gameObject;
 
         public void Init(Action release)
         {

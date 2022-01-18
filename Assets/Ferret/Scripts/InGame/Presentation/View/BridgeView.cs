@@ -10,6 +10,8 @@ namespace Ferret.InGame.Presentation.View
     {
         [SerializeField] private Collider2D collider2d = default;
 
+        public GameObject self => gameObject;
+
         public bool isArrive { get; private set; }
 
         public void Init()

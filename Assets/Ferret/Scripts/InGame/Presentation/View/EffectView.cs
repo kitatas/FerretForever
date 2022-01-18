@@ -13,6 +13,7 @@ namespace Ferret.InGame.Presentation.View
         private ParticleSystem.MainModule _mainModule;
 
         public EffectType type => effectType;
+        public GameObject self => gameObject;
 
         public void Init(Action release)
         {

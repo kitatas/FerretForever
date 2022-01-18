@@ -17,6 +17,7 @@ namespace Ferret.InGame.Presentation.Controller
 
         public BalloonType type => balloonType;
         public Vector3 position => transform.position;
+        public GameObject self => gameObject;
 
         public void Init(Action release)
         {

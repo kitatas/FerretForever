@@ -14,6 +14,8 @@ namespace Ferret.InGame.Presentation.View
         private readonly Vector3 _setUpPosition = new Vector3(0.5f, -1.4f, 0.0f);
         private readonly Vector3 _rotateVector = new Vector3(0.0f, 0.0f, -90.0f);
 
+        public GameObject self => gameObject;
+
         public void Init()
         {
             _victims = new List<PlayerController>();
@@ -69,6 +71,8 @@ namespace Ferret.InGame.Presentation.View
             {
                 victim.CollapseBridge();
             }
+
+            this.Delay(2.0f, Release);
         }
 
         public void Release()

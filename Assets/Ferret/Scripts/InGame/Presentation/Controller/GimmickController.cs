@@ -53,14 +53,13 @@ namespace Ferret.InGame.Presentation.Controller
 
         private void SetUp(GroundView groundView)
         {
-            var ground = groundView.gameObject;
             groundView.SetUp();
 
             _counter++;
             if (_counter % _interval == 0)
             {
                 _counter = 0;
-                ground.SetChild(_bridgeView.gameObject);
+                groundView.SavePool(_bridgeView);
                 _bridgeView.SetUp();
                 _bridgeAxisView.SetUp();
                 return;
@@ -91,40 +90,40 @@ namespace Ferret.InGame.Presentation.Controller
             if (rand.IsBetween(0, 1))
             {
                 var balloon = _balloonPoolUseCase.Rent(BalloonType.Five);
-                ground.SetChild(balloon.gameObject);
+                groundView.SavePool(balloon);
                 balloon.SetUp(x =>
                 {
                     _playerPoolUseCase.Increase(x);
                     _playerCountUseCase.Increase(x.type.ConvertInt());
                     var effect = _effectPoolUseCase.Rent(EffectType.Crash);
-                    ground.SetChild(effect.gameObject);
+                    groundView.SavePool(effect);
                     effect.Play(balloon.position, EffectColor.Green);
                 });
             }
             else if (rand.IsBetween(2, 3))
             {
                 var balloon = _balloonPoolUseCase.Rent(BalloonType.Ten);
-                ground.SetChild(balloon.gameObject);
+                groundView.SavePool(balloon);
                 balloon.SetUp(x =>
                 {
                     _playerPoolUseCase.Increase(x);
                     _playerCountUseCase.Increase(x.type.ConvertInt());
                     var effect = _effectPoolUseCase.Rent(EffectType.Crash);
-                    ground.SetChild(effect.gameObject);
+                    groundView.SavePool(effect);
                     effect.Play(balloon.position, EffectColor.Magenta);
                 });
             }
             else if (rand.IsBetween(4, 5))
             {
                 var enemy = _enemyPoolUseCase.Rent(EnemyType.Wolf);
-                ground.SetChild(enemy.gameObject);
+                groundView.SavePool(enemy);
                 enemy.SetUp(x =>
                 {
                     if (_playerPoolUseCase.IsDecrease(x))
                     {
                         _playerCountUseCase.Decrease();
                         var effect = _effectPoolUseCase.Rent(EffectType.Explode);
-                        ground.SetChild(effect.gameObject);
+                        groundView.SavePool(effect);
                         effect.Play(x.position, EffectColor.White);
                     }
                 });
@@ -132,14 +131,14 @@ namespace Ferret.InGame.Presentation.Controller
             else if (rand.IsBetween(6, 7))
             {
                 var enemy = _enemyPoolUseCase.Rent(EnemyType.Hawk);
-                ground.SetChild(enemy.gameObject);
+                groundView.SavePool(enemy);
                 enemy.SetUp(x =>
                 {
                     if (_playerPoolUseCase.IsDecrease(x))
                     {
                         _playerCountUseCase.Decrease();
                         var effect = _effectPoolUseCase.Rent(EffectType.Explode);
-                        ground.SetChild(effect.gameObject);
+                        groundView.SavePool(effect);
                         effect.Play(x.position, EffectColor.White);
                     }
                 });
