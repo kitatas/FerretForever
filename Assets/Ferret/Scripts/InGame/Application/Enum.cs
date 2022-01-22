@@ -55,4 +55,12 @@ namespace Ferret.InGame
         Green,
         Magenta,
     }
+
+    public enum WebviewType
+    {
+        None,
+        Credit,
+        License,
+        Policy,
+    }
 }
