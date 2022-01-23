@@ -65,6 +65,7 @@ crashlytics-build.properties
 Assets/ConsolePro*
 Assets/Doozy*
 Assets/MPUIKit*
+Assets/PlayFabSDK*
 Assets/Plugins*
 Assets/QHierarchy*
 Assets/TextMesh Pro*
