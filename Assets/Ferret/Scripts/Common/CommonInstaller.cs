@@ -1,3 +1,4 @@
+using Ferret.Common.Domain.Repository;
 using Ferret.Common.Presentation.Controller;
 using Ferret.Common.Presentation.View;
 using VContainer;
@@ -9,6 +10,9 @@ namespace Ferret.Common
     {
         protected override void Configure(IContainerBuilder builder)
         {
+            // Repository
+            builder.Register<SaveDataRepository>(Lifetime.Singleton);
+
             // Controller
             builder.Register<SceneLoader>(Lifetime.Singleton);
 

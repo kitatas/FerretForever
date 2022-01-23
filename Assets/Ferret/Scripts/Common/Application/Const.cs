@@ -1,5 +1,11 @@
 namespace Ferret.Common
 {
+    public sealed class MasterConfig
+    {
+        public const string TITLE_ID = "";
+        public const string SAVE_KEY = "";
+    }
+
     public sealed class UiConfig
     {
         public const float POPUP_ANIMATION_TIME = 2.5f;
