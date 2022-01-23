@@ -11,6 +11,7 @@ namespace Ferret.Common
         protected override void Configure(IContainerBuilder builder)
         {
             // Repository
+            builder.Register<PlayFabRepository>(Lifetime.Singleton);
             builder.Register<SaveDataRepository>(Lifetime.Singleton);
 
             // Controller
