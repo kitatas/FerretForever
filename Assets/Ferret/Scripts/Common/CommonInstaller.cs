@@ -1,3 +1,4 @@
+using Ferret.Common.Data.Entity;
 using Ferret.Common.Domain.Repository;
 using Ferret.Common.Presentation.Controller;
 using Ferret.Common.Presentation.View;
@@ -10,6 +11,9 @@ namespace Ferret.Common
     {
         protected override void Configure(IContainerBuilder builder)
         {
+            // Entity
+            builder.Register<UserRecordEntity>(Lifetime.Singleton);
+
             // Repository
             builder.Register<PlayFabRepository>(Lifetime.Singleton);
             builder.Register<SaveDataRepository>(Lifetime.Singleton);

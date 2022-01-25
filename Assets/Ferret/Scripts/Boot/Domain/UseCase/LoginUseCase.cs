@@ -1,5 +1,7 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Ferret.Common.Data.Entity;
 using Ferret.Common.Domain.Repository;
 using PlayFab.ClientModels;
 
@@ -7,11 +9,13 @@ namespace Ferret.Boot.Domain.UseCase
 {
     public sealed class LoginUseCase
     {
+        private readonly UserRecordEntity _userRecordEntity;
         private readonly SaveDataRepository _saveDataRepository;
         private readonly PlayFabRepository _playFabRepository;
 
-        public LoginUseCase(SaveDataRepository saveDataRepository, PlayFabRepository playFabRepository)
+        public LoginUseCase(UserRecordEntity userRecordEntity, SaveDataRepository saveDataRepository, PlayFabRepository playFabRepository)
         {
+            _userRecordEntity = userRecordEntity;
             _saveDataRepository = saveDataRepository;
             _playFabRepository = playFabRepository;
         }
@@ -32,6 +36,25 @@ namespace Ferret.Boot.Domain.UseCase
             {
                 return await _playFabRepository.LoadUserDataAsync(saveData.uid, token);
             }
+        }
+
+        public bool SyncUserRecord(LoginResult response)
+        {
+            if (response.InfoResultPayload == null)
+            {
+                throw new Exception($"response.InfoResultPayload is null.");
+            }
+
+            var userRecord = _playFabRepository.FetchUserRecord(response.InfoResultPayload.UserData);
+            _userRecordEntity.Set(userRecord);
+
+            return _userRecordEntity.IsSync();
+        }
+
+        public async UniTask RegisterUserNameAsync(string userName, CancellationToken token)
+        {
+            _userRecordEntity.UpdateName(userName);
+            await _playFabRepository.UpdateUserRecordAsync(_userRecordEntity.Get(), token);
         }
     }
 }

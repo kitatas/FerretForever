@@ -4,6 +4,7 @@ namespace Ferret.Common
     {
         public const string TITLE_ID = "";
         public const string SAVE_KEY = "";
+        public const string USER_KEY = "";
     }
 
     public sealed class UiConfig

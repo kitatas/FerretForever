@@ -32,7 +32,7 @@ namespace Ferret.Boot.Presentation.Controller
                 {
                     var response = await _loginUseCase.LoginAsync(_tokenSource.Token);
 
-                    // TODO: 新規ユーザーの場合
+                    // TODO: 新規IDの場合
                     if (response.NewlyCreated)
                     {
                         Debug.Log($"new data: {response.PlayFabId}");
@@ -40,6 +40,21 @@ namespace Ferret.Boot.Presentation.Controller
                     else
                     {
                         Debug.Log($"success: {response.PlayFabId}");
+                    }
+
+                    // 既存ユーザーの場合
+                    if (_loginUseCase.SyncUserRecord(response))
+                    {
+
+                    }
+                    // 新規ユーザーの場合
+                    else
+                    {
+                        // TODO: 入力待ち
+
+                        // 名前登録
+                        // TODO: viewから受け取る
+                        await _loginUseCase.RegisterUserNameAsync("test user", _tokenSource.Token);
                     }
 
                 }, _tokenSource.Token);
