@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Ferret.Boot.Domain.UseCase;
+using Ferret.Boot.Presentation.View;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -12,15 +13,18 @@ namespace Ferret.Boot.Presentation.Controller
         private readonly LoginUseCase _loginUseCase;
 
         private readonly CancellationTokenSource _tokenSource;
+        private readonly NameRegistrationView _nameRegistrationView;
 
-        public BootController(LoginUseCase loginUseCase)
+        public BootController(LoginUseCase loginUseCase, NameRegistrationView nameRegistrationView)
         {
             _loginUseCase = loginUseCase;
+            _nameRegistrationView = nameRegistrationView;
             _tokenSource = new CancellationTokenSource();
         }
 
         public void PostInitialize()
         {
+            _nameRegistrationView.Init();
             Load();
         }
 
@@ -50,11 +54,11 @@ namespace Ferret.Boot.Presentation.Controller
                     // 新規ユーザーの場合
                     else
                     {
-                        // TODO: 入力待ち
+                        // 入力完了待ち
+                        await _nameRegistrationView.DecisionNameAsync(_tokenSource.Token);
 
                         // 名前登録
-                        // TODO: viewから受け取る
-                        await _loginUseCase.RegisterUserNameAsync("test user", _tokenSource.Token);
+                        await _loginUseCase.RegisterUserNameAsync(_nameRegistrationView.inputName, _tokenSource.Token);
                     }
 
                 }, _tokenSource.Token);
