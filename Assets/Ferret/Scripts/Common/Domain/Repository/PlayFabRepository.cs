@@ -68,6 +68,20 @@ namespace Ferret.Common.Domain.Repository
                 : new UserRecord();
         }
 
+        public async UniTask UpdateDisplayNameAsync(string name, CancellationToken token)
+        {
+            var request = new UpdateUserTitleDisplayNameRequest
+            {
+                DisplayName = name,
+            };
+
+            var response = await PlayFabClientAPI.UpdateUserTitleDisplayNameAsync(request);
+            if (response.Error != null)
+            {
+                throw new Exception($"{response.Error.GenerateErrorReport()}");
+            }
+        }
+
         public async UniTask<UpdateUserDataResult> UpdateUserRecordAsync(UserRecord userRecord, CancellationToken token)
         {
             var jsonData = JsonConvert.SerializeObject(userRecord);
