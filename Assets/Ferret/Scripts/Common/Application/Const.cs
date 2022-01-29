@@ -5,6 +5,8 @@ namespace Ferret.Common
         public const string TITLE_ID = "";
         public const string SAVE_KEY = "";
         public const string USER_KEY = "";
+        public const string RANKING_NAME = "";
+        public const int SCORE_RATE = 1000;
     }
 
     public sealed class UiConfig

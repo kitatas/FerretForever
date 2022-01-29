@@ -68,6 +68,7 @@ namespace Ferret.InGame
             builder.Register<PlayerContainerUseCase>(Lifetime.Scoped);
             builder.Register<PlayerCountUseCase>(Lifetime.Scoped);
             builder.Register<ScoreUseCase>(Lifetime.Scoped);
+            builder.Register<UserRecordUseCase>(Lifetime.Scoped);
 
             // Controller
             builder.Register<TitleState>(Lifetime.Scoped);

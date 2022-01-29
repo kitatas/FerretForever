@@ -101,5 +101,26 @@ namespace Ferret.Common.Domain.Repository
 
             return response.Result;
         }
+
+        public async UniTask SendRankDataAsync(float score, CancellationToken token)
+        {
+            var request = new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate>
+                {
+                    new StatisticUpdate
+                    {
+                        StatisticName = MasterConfig.RANKING_NAME,
+                        Value = (int)(score * MasterConfig.SCORE_RATE), // intしか扱えないので型変換を行う
+                    },
+                },
+            };
+
+            var response = await PlayFabClientAPI.UpdatePlayerStatisticsAsync(request);
+            if (response.Error != null)
+            {
+                throw new Exception($"{response.Error.GenerateErrorReport()}");
+            }
+        }
     }
 }
