@@ -9,6 +9,7 @@ namespace Ferret.Boot
 {
     public sealed class BootInstaller : LifetimeScope
     {
+        [SerializeField] private LoadingView loadingView = default;
         [SerializeField] private NameRegistrationView nameRegistrationView = default;
 
         protected override void Configure(IContainerBuilder builder)
@@ -20,6 +21,7 @@ namespace Ferret.Boot
             builder.RegisterEntryPoint<BootController>(Lifetime.Scoped);
 
             // View
+            builder.RegisterInstance<LoadingView>(loadingView);
             builder.RegisterInstance<NameRegistrationView>(nameRegistrationView);
         }
     }
