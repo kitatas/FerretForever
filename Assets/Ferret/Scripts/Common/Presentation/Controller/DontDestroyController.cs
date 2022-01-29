@@ -7,6 +7,7 @@ namespace Ferret.Common.Presentation.Controller
     {
         public static DontDestroyController Instance { get; private set; }
 
+        public LoadingView loadingView { get; private set; }
         public TransitionMaskView maskView { get; private set; }
 
         private void Start()
@@ -20,6 +21,7 @@ namespace Ferret.Common.Presentation.Controller
         public void Init()
         {
             Instance = this;
+            loadingView = GetComponentInChildren<LoadingView>();
             maskView = GetComponentInChildren<TransitionMaskView>();
 
             DontDestroyOnLoad(gameObject);

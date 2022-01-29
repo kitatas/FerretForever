@@ -2,7 +2,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-namespace Ferret.Boot.Presentation.View
+namespace Ferret.Common.Presentation.View
 {
     public sealed class LoadingView : MonoBehaviour
     {
@@ -33,7 +33,8 @@ namespace Ferret.Boot.Presentation.View
 
         public void Activate(bool value)
         {
-            loadText.gameObject.SetActive(value);
+            var color = value ? Color.white : Color.clear;
+            loadText.color = color;
             icon.SetActive(value);
         }
     }

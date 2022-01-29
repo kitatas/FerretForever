@@ -24,6 +24,7 @@ namespace Ferret.Common
             // MonoBehaviour
             FindObjectOfType<DontDestroyController>().Init();
             builder.RegisterInstance<TransitionMaskView>(DontDestroyController.Instance.maskView);
+            builder.RegisterInstance<LoadingView>(DontDestroyController.Instance.loadingView);
         }
     }
 }

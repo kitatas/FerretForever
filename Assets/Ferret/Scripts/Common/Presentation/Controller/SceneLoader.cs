@@ -8,14 +8,17 @@ namespace Ferret.Common.Presentation.Controller
 {
     public sealed class SceneLoader : IDisposable
     {
+        private readonly LoadingView _loadingView;
         private readonly TransitionMaskView _transitionMaskView;
         private readonly CancellationTokenSource _tokenSource;
 
-        public SceneLoader(TransitionMaskView transitionMaskView)
+        public SceneLoader(LoadingView loadingView, TransitionMaskView transitionMaskView)
         {
+            _loadingView = loadingView;
             _transitionMaskView = transitionMaskView;
             _tokenSource = new CancellationTokenSource();
 
+            _loadingView.Activate(false);
             _transitionMaskView.Init();
         }
 
@@ -33,6 +36,27 @@ namespace Ferret.Common.Presentation.Controller
         private async UniTask LoadSceneAsync(SceneName sceneName, CancellationToken token)
         {
             await _transitionMaskView.FadeInAsync(token);
+
+            await SceneManager.LoadSceneAsync(sceneName.ToString()).WithCancellation(token);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
+
+            await _transitionMaskView.FadeOutAsync(token);
+        }
+
+        public void LoadingScene(SceneName sceneName, UniTask loadTask)
+        {
+            LoadingSceneAsync(sceneName, loadTask, _tokenSource.Token).Forget();
+        }
+
+        private async UniTask LoadingSceneAsync(SceneName sceneName, UniTask loadTask, CancellationToken token)
+        {
+            await _transitionMaskView.FadeInAsync(token);
+
+            _loadingView.Activate(true);
+            await loadTask;
+
+            _loadingView.Activate(false);
 
             await SceneManager.LoadSceneAsync(sceneName.ToString()).WithCancellation(token);
 

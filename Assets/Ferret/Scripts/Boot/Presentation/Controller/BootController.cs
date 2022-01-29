@@ -48,6 +48,8 @@ namespace Ferret.Boot.Presentation.Controller
             {
                 UniTask.Void(async _ =>
                 {
+                    _loadingView.Activate(true);
+
                     var response = await _loginUseCase.LoginAsync(_tokenSource.Token);
 
                     // 既存ユーザーの場合
