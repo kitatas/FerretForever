@@ -7,6 +7,7 @@ namespace Ferret.Common.Data.DataStore
     {
         public string userName;
         public int playCount;
+        public RecordData currentRecord;
         public RecordData highRecord;
         public RecordData totalRecord;
 
@@ -14,6 +15,11 @@ namespace Ferret.Common.Data.DataStore
         {
             userName = "";
             playCount = 0;
+            currentRecord = new RecordData
+            {
+                score = 0,
+                victimCount = 0,
+            };
             highRecord = new RecordData
             {
                 score = 0,

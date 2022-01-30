@@ -16,6 +16,11 @@ namespace Ferret.Common.Data.Entity
             {
                 userName = userName,
                 playCount = Get().playCount,
+                currentRecord = new RecordData
+                {
+                    score = Get().currentRecord.score,
+                    victimCount = Get().currentRecord.victimCount,
+                },
                 highRecord = new RecordData
                 {
                     score = Get().highRecord.score,
@@ -37,6 +42,11 @@ namespace Ferret.Common.Data.Entity
             {
                 userName = Get().userName,
                 playCount = Get().playCount + 1,
+                currentRecord = new RecordData
+                {
+                    score = score,
+                    victimCount = victimCount,
+                },
                 highRecord = new RecordData
                 {
                     score = Mathf.Max(Get().highRecord.score, score),
