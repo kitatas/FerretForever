@@ -1,3 +1,6 @@
+using System.Linq;
+using PlayFab.ClientModels;
+
 namespace Ferret.Common.Data.DataStore
 {
     public sealed class UserRecord
@@ -28,5 +31,21 @@ namespace Ferret.Common.Data.DataStore
     {
         public float score;
         public int victimCount;
+    }
+
+    public sealed class RankingData
+    {
+        public string playerId;
+        public int playerRank;
+        public string playerName;
+        public float highScore;
+
+        public RankingData(PlayerLeaderboardEntry entry)
+        {
+            playerId = entry.PlayFabId;
+            playerRank = entry.Position + 1;
+            playerName = entry.DisplayName;
+            highScore = entry.Profile.Statistics?.FirstOrDefault(x => x.Name == MasterConfig.RANKING_NAME)?.Value ?? 0;
+        }
     }
 }

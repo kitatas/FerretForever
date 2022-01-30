@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Ferret.Common.Data.DataStore;
@@ -121,6 +122,27 @@ namespace Ferret.Common.Domain.Repository
             {
                 throw new Exception($"{response.Error.GenerateErrorReport()}");
             }
+        }
+
+        public async UniTask<RankingData[]> GetRankDataAsync(CancellationToken token)
+        {
+            var request = new GetLeaderboardRequest
+            {
+                StatisticName = MasterConfig.RANKING_NAME,
+                ProfileConstraints = new PlayerProfileViewConstraints
+                {
+                    ShowDisplayName = true,
+                    ShowStatistics = true
+                }
+            };
+
+            var response = await PlayFabClientAPI.GetLeaderboardAsync(request);
+            if (response.Error != null)
+            {
+                throw new Exception($"{response.Error.GenerateErrorReport()}");
+            }
+
+            return response.Result.Leaderboard.Select(x => new RankingData(x)).ToArray();
         }
     }
 }
