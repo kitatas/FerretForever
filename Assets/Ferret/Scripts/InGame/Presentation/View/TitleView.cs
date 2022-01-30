@@ -19,7 +19,7 @@ namespace Ferret.InGame.Presentation.View
         public void Init()
         {
             titleName
-                .DOAnchorPosY(-150.0f, 0.0f);
+                .DOAnchorPosY(-135.0f, 0.0f);
 
             sideButton
                 .DOAnchorPosX(-50.0f, 0.0f);
@@ -40,7 +40,7 @@ namespace Ferret.InGame.Presentation.View
         public void SetUp()
         {
             titleName
-                .DOAnchorPosY(150.0f, _animationTime);
+                .DOAnchorPosY(135.0f, _animationTime);
 
             sideButton
                 .DOAnchorPosX(50.0f, _animationTime);

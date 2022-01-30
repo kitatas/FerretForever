@@ -39,7 +39,7 @@ namespace Ferret.Common.Presentation.Controller
 
             await SceneManager.LoadSceneAsync(sceneName.ToString()).WithCancellation(token);
 
-            await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
 
             await _transitionMaskView.FadeOutAsync(token);
         }
@@ -53,7 +53,7 @@ namespace Ferret.Common.Presentation.Controller
         {
             await _transitionMaskView.FadeInAsync(token);
 
-            await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
 
             _loadingView.Activate(true);
             await loadTask;
@@ -68,7 +68,7 @@ namespace Ferret.Common.Presentation.Controller
 
         private async UniTask LoadingFadeOutAsync(CancellationToken token)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
 
             _loadingView.Activate(false);
             await _transitionMaskView.FadeOutAsync(token);

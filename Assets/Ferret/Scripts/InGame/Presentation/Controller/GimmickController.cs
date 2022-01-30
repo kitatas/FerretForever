@@ -42,7 +42,7 @@ namespace Ferret.InGame.Presentation.Controller
         {
             for (int i = 0; i < InGameConfig.INIT_PLAYER_COUNT; i++)
             {
-                var position = new Vector3(-3.0f - i, 2.0f, -0.01f * i);
+                var position = new Vector3(-3.0f - i, 1.0f, -0.01f * i);
                 _playerPoolUseCase.Rent(position);
             }
 

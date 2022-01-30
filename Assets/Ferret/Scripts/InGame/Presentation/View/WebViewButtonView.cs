@@ -29,7 +29,7 @@ namespace Ferret.InGame.Presentation.View
                 webViewObject.LoadURL(type.ConvertUrl());
                 webViewObject.SetMargins(left, top, right, bottom);
 
-                this.Delay(UiConfig.POPUP_ANIMATION_TIME, () =>
+                this.Delay(UiConfig.POPUP_ANIMATION_TIME + 0.1f, () =>
                 {
                     // ポップアップ完了後に表示する
                     webViewObject.SetVisibility(true);
