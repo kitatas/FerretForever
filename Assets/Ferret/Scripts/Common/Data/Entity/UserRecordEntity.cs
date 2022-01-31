@@ -15,6 +15,7 @@ namespace Ferret.Common.Data.Entity
             var updateRecord = new UserRecord
             {
                 userName = userName,
+                uid = Get().uid,
                 playCount = Get().playCount,
                 currentRecord = new RecordData
                 {
@@ -41,6 +42,7 @@ namespace Ferret.Common.Data.Entity
             var updateRecord = new UserRecord
             {
                 userName = Get().userName,
+                uid = Get().uid,
                 playCount = Get().playCount + 1,
                 currentRecord = new RecordData
                 {

@@ -46,6 +46,10 @@ namespace Ferret.Boot.Domain.UseCase
             }
 
             var userRecord = _playFabRepository.FetchUserRecord(response.InfoResultPayload.UserData);
+            if (string.IsNullOrEmpty(userRecord.uid))
+            {
+                userRecord.uid = response.PlayFabId;
+            }
             _userRecordEntity.Set(userRecord);
 
             return _userRecordEntity.IsSync();

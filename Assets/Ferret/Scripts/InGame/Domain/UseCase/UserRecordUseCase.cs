@@ -1,5 +1,6 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Ferret.Common.Data.DataStore;
 using Ferret.Common.Data.Entity;
 using Ferret.Common.Domain.Repository;
 using Ferret.InGame.Data.Entity;
@@ -20,6 +21,11 @@ namespace Ferret.InGame.Domain.UseCase
             _scoreEntity = scoreEntity;
             _victimCountEntity = victimCountEntity;
             _playFabRepository = playFabRepository;
+        }
+
+        public UserRecord GetUserRecord()
+        {
+            return _userRecordEntity.Get();
         }
 
         public async UniTask UpdateRecordAsync(CancellationToken token)

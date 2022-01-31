@@ -1,13 +1,14 @@
 using System;
 using DG.Tweening;
+using Doozy.Runtime.UIManager.Components;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Ferret.Common.Presentation.View
 {
-    [RequireComponent(typeof(Button))]
-    public sealed class BaseButtonView : MonoBehaviour
+    [RequireComponent(typeof(UIButton))]
+    public class BaseUiButtonView : MonoBehaviour
     {
         public Action push;
 
@@ -15,21 +16,21 @@ namespace Ferret.Common.Presentation.View
 
         public void Init()
         {
-            var button = GetComponent<Button>();
+            var button = GetComponent<UIButton>();
             var scale = transform.localScale;
 
             push += () =>
             {
                 DOTween.Sequence()
-                    .Append(button.image.rectTransform
+                    .Append(button.rectTransform
                         .DOScale(scale * 0.8f, _animationTime))
-                    .Append(button.image.rectTransform
+                    .Append(button.rectTransform
                         .DOScale(scale, _animationTime))
                     .SetLink(gameObject);
             };
 
             button
-                .OnClickAsObservable()
+                .OnPointerClickAsObservable()
                 .Subscribe(_ => push?.Invoke())
                 .AddTo(this);
         }

@@ -29,6 +29,7 @@ namespace Ferret.InGame
         [SerializeField] private ResultView resultView = default;
         [SerializeField] private ScoreView scoreView = default;
         [SerializeField] private TitleView titleView = default;
+        [SerializeField] private UserInfoView userInfoView = default;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -75,6 +76,7 @@ namespace Ferret.InGame
             builder.Register<MainState>(Lifetime.Scoped);
             builder.Register<BridgeState>(Lifetime.Scoped);
             builder.Register<ResultState>(Lifetime.Scoped);
+            builder.RegisterEntryPoint<InGameController>(Lifetime.Scoped);
             builder.Register<GameStateController>(Lifetime.Scoped);
             builder.Register<GimmickController>(Lifetime.Scoped);
             builder.RegisterInstance<GroundController>(groundController);
@@ -92,6 +94,7 @@ namespace Ferret.InGame
             builder.RegisterInstance<ResultView>(resultView);
             builder.RegisterInstance<ScoreView>(scoreView);
             builder.RegisterInstance<TitleView>(titleView);
+            builder.RegisterInstance<UserInfoView>(userInfoView);
         }
     }
 }

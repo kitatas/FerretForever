@@ -6,6 +6,7 @@ namespace Ferret.Common.Data.DataStore
     public sealed class UserRecord
     {
         public string userName;
+        public string uid;
         public int playCount;
         public RecordData currentRecord;
         public RecordData highRecord;
@@ -14,6 +15,7 @@ namespace Ferret.Common.Data.DataStore
         public UserRecord()
         {
             userName = "";
+            uid = "";
             playCount = 0;
             currentRecord = new RecordData
             {
