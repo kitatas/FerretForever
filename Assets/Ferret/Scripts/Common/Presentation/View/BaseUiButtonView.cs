@@ -34,5 +34,10 @@ namespace Ferret.Common.Presentation.View
                 .Subscribe(_ => push?.Invoke())
                 .AddTo(this);
         }
+
+        public void Activate(bool value)
+        {
+            gameObject.SetActive(value);
+        }
     }
 }
