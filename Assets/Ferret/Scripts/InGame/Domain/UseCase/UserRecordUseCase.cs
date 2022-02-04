@@ -28,14 +28,17 @@ namespace Ferret.InGame.Domain.UseCase
             return _userRecordEntity.Get();
         }
 
-        public async UniTask UpdateUserNameAsync(string userName, CancellationToken token)
+        public async UniTask<bool> UpdateUserNameAsync(string userName, CancellationToken token)
         {
-            _userRecordEntity.UpdateName(userName);
+            var isSuccess = await _playFabRepository.UpdateDisplayNameAsync(userName, token);
+            if (isSuccess == false)
+            {
+                return false;
+            }
 
-            await UniTask.WhenAll(
-                _playFabRepository.UpdateUserRecordAsync(_userRecordEntity.Get(), token),
-                _playFabRepository.UpdateDisplayNameAsync(userName, token)
-            );
+            _userRecordEntity.UpdateName(userName);
+            await _playFabRepository.UpdateUserRecordAsync(_userRecordEntity.Get(), token);
+            return true;
         }
 
         public async UniTask UpdateScoreAsync(CancellationToken token)

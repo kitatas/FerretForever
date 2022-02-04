@@ -15,11 +15,13 @@ namespace Ferret.InGame.Presentation.View
         [SerializeField] private BaseUiButtonView changeButton = default;
         [SerializeField] private BaseUiButtonView closeButton = default;
         [SerializeField] private TextMeshProUGUI noticeText = default;
+        private string _prevUserName;
 
         public void SetUserData(UserRecord record)
         {
+            _prevUserName = record.userName;
             uidText.text = $"{record.uid}";
-            nameField.text = $"{record.userName}";
+            nameField.text = _prevUserName;
         }
 
         public void InitButton(Action<string> action)
@@ -40,10 +42,18 @@ namespace Ferret.InGame.Presentation.View
             };
         }
 
-        public void UpdateUserName()
+        public void UpdateSuccessUserName()
         {
             closeButton.Activate(true);
             noticeText.text = $"Update Success!!";
+            _prevUserName = nameField.text;
+        }
+
+        public void UpdateFailedUserName()
+        {
+            closeButton.Activate(true);
+            noticeText.text = $"Update Failed...";
+            nameField.text = _prevUserName;
         }
     }
 }

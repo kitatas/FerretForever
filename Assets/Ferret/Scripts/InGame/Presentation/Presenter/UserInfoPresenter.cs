@@ -27,8 +27,16 @@ namespace Ferret.InGame.Presentation.Presenter
             {
                 UniTask.Void(async _ =>
                 {
-                    await _userRecordUseCase.UpdateUserNameAsync(x, _tokenSource.Token);
-                    _userInfoView.UpdateUserName();
+                    var isSuccess = await _userRecordUseCase.UpdateUserNameAsync(x, _tokenSource.Token);
+                    if (isSuccess)
+                    {
+                        _userInfoView.UpdateSuccessUserName();
+                    }
+                    else
+                    {
+                        _userInfoView.UpdateFailedUserName();
+                    }
+
                 }, _tokenSource.Token);
             });
         }
