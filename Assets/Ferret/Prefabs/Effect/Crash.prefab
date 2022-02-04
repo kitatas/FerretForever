@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4000012166036088}
   - component: {fileID: 6254296933410141920}
   - component: {fileID: 6458539028358408809}
-  - component: {fileID: 2531543205291928617}
   - component: {fileID: 4695643239878145327}
   m_Layer: 0
   m_Name: Crash
@@ -4722,8 +4721,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1470473839
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -4750,17 +4749,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!210 &2531543205291928617
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000011671376998}
-  m_Enabled: 1
-  m_SortingLayerID: -329291971
-  m_SortingLayer: 5
-  m_SortingOrder: 0
 --- !u!114 &4695643239878145327
 MonoBehaviour:
   m_ObjectHideFlags: 0
