@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -11,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
@@ -40,4 +41,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 1405485747
+    locked: 0
+  - name: Bridge
+    uniqueID: 3205049473
+    locked: 0
+  - name: Victim
+    uniqueID: 3513719947
+    locked: 0
+  - name: Chara
+    uniqueID: 341646087
+    locked: 0
+  - name: Effect
+    uniqueID: 1470473839
+    locked: 0
+  - name: UI
+    uniqueID: 1074435645
     locked: 0
