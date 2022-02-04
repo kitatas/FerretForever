@@ -55,13 +55,17 @@ namespace Ferret.Boot.Domain.UseCase
             return _userRecordEntity.IsSync();
         }
 
-        public async UniTask RegisterUserNameAsync(string userName, CancellationToken token)
+        public async UniTask<bool> RegisterUserNameAsync(string userName, CancellationToken token)
         {
+            var isSuccess = await _playFabRepository.UpdateDisplayNameAsync(userName, token);
+            if (isSuccess == false)
+            {
+                return false;
+            }
+
             _userRecordEntity.UpdateName(userName);
-            await UniTask.WhenAll(
-                _playFabRepository.UpdateUserRecordAsync(_userRecordEntity.Get(), token),
-                _playFabRepository.UpdateDisplayNameAsync(userName, token)
-            );
+            await _playFabRepository.UpdateUserRecordAsync(_userRecordEntity.Get(), token);
+            return true;
         }
     }
 }

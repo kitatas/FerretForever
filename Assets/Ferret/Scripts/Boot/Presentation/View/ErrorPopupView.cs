@@ -2,19 +2,15 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Ferret.Common;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Ferret.Boot.Presentation.View
 {
-    public sealed class NameRegistrationView : MonoBehaviour
+    public sealed class ErrorPopupView : MonoBehaviour
     {
         [SerializeField] private CanvasGroup panel = default;
-        [SerializeField] private TMP_InputField inputField = default;
-        [SerializeField] private Button decisionButton = default;
-
-        public string inputName => inputField.text;
+        [SerializeField] private Button closeButton = default;
 
         public void Init()
         {
@@ -23,7 +19,7 @@ namespace Ferret.Boot.Presentation.View
             transform.localScale = Vector3.one * 0.9f;
         }
 
-        public async UniTask DecisionNameAsync(CancellationToken token)
+        public async UniTask PopupAsync(CancellationToken token)
         {
             await DOTween.Sequence()
                 .Append(DOTween.To(
@@ -40,7 +36,7 @@ namespace Ferret.Boot.Presentation.View
 
             panel.blocksRaycasts = true;
 
-            await decisionButton.OnClickAsync(token);
+            await closeButton.OnClickAsync(token);
 
             await DOTween.Sequence()
                 .Append(DOTween.To(
@@ -54,11 +50,8 @@ namespace Ferret.Boot.Presentation.View
                     .SetEase(Ease.OutQuart))
                 .SetLink(panel.gameObject)
                 .WithCancellation(token);
-        }
 
-        public void ResetName()
-        {
-            inputField.text = "";
+            Init();
         }
     }
 }

@@ -6,7 +6,6 @@ using Ferret.Boot.Presentation.View;
 using Ferret.Common;
 using Ferret.Common.Presentation.Controller;
 using Ferret.Common.Presentation.View;
-using UnityEngine;
 using VContainer.Unity;
 using Object = UnityEngine.Object;
 
@@ -15,17 +14,18 @@ namespace Ferret.Boot.Presentation.Controller
     public sealed class BootController : IPostInitializable, IDisposable
     {
         private readonly LoginUseCase _loginUseCase;
-
-        private readonly CancellationTokenSource _tokenSource;
         private readonly LoadingView _loadingView;
+        private readonly ErrorPopupView _errorPopupView;
         private readonly NameRegistrationView _nameRegistrationView;
         private readonly SceneLoader _sceneLoader;
+        private readonly CancellationTokenSource _tokenSource;
 
-        public BootController(LoginUseCase loginUseCase, LoadingView loadingView,
+        public BootController(LoginUseCase loginUseCase, LoadingView loadingView, ErrorPopupView errorPopupView,
             NameRegistrationView nameRegistrationView, SceneLoader sceneLoader)
         {
             _loginUseCase = loginUseCase;
             _loadingView = loadingView;
+            _errorPopupView = errorPopupView;
             _nameRegistrationView = nameRegistrationView;
             _sceneLoader = sceneLoader;
             _tokenSource = new CancellationTokenSource();
@@ -33,56 +33,75 @@ namespace Ferret.Boot.Presentation.Controller
 
         public void PostInitialize()
         {
+            _errorPopupView.Init();
             _nameRegistrationView.Init();
             foreach (var buttonView in Object.FindObjectsOfType<BaseButtonView>())
             {
                 buttonView.Init();
             }
 
-            Load();
+            Boot();
+        }
+
+        private void Boot()
+        {
+            try
+            {
+                Load();
+            }
+            catch (Exception e)
+            {
+                Boot();
+                throw;
+            }
         }
 
         private void Load()
         {
-            try
+            UniTask.Void(async _ =>
             {
-                UniTask.Void(async _ =>
+                _loadingView.Activate(true);
+
+                var response = await _loginUseCase.LoginAsync(_tokenSource.Token);
+                _loadingView.Activate(false);
+
+                // 既存ユーザーの場合
+                if (_loginUseCase.SyncUserRecord(response))
                 {
-                    _loadingView.Activate(true);
 
-                    var response = await _loginUseCase.LoginAsync(_tokenSource.Token);
+                }
+                // 新規ユーザーの場合
+                else
+                {
+                    await CheckNameAsync(_tokenSource.Token);
+                }
 
-                    // 既存ユーザーの場合
-                    if (_loginUseCase.SyncUserRecord(response))
-                    {
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _tokenSource.Token);
 
-                    }
-                    // 新規ユーザーの場合
-                    else
-                    {
-                        _loadingView.Activate(false);
+                _sceneLoader.LoadScene(SceneName.Main);
 
-                        // 入力完了待ち
-                        await _nameRegistrationView.DecisionNameAsync(_tokenSource.Token);
-                        _loadingView.Activate(true);
+            }, _tokenSource.Token);
+        }
 
-                        // 名前登録
-                        await _loginUseCase.RegisterUserNameAsync(_nameRegistrationView.inputName, _tokenSource.Token);
-                    }
-
-                    await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: _tokenSource.Token);
-
-                    _loadingView.Activate(false);
-                    _sceneLoader.LoadScene(SceneName.Main);
-
-                }, _tokenSource.Token);
-            }
-            catch (Exception e)
+        private async UniTask CheckNameAsync(CancellationToken token)
+        {
+            while (true)
             {
-                // TODO: viewに反映
-                // TODO: viewから再ロード
-                Debug.LogError($"{e}");
-                throw;
+                // 入力完了待ち
+                await _nameRegistrationView.DecisionNameAsync(token);
+                _loadingView.Activate(true);
+
+                // 名前登録
+                var isSuccess = await _loginUseCase.RegisterUserNameAsync(_nameRegistrationView.inputName, token);
+                _loadingView.Activate(false);
+
+                if (isSuccess)
+                {
+                    break;
+                }
+
+                await _errorPopupView.PopupAsync(token);
+                _nameRegistrationView.ResetName();
             }
         }
 
