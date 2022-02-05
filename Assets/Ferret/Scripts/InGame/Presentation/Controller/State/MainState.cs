@@ -1,5 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Ferret.Common;
+using Ferret.Common.Presentation.Controller.Interface;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
 using UnityEngine;
@@ -11,14 +13,16 @@ namespace Ferret.InGame.Presentation.Controller
         private readonly PlayerContainerUseCase _playerContainerUseCase;
         private readonly ScoreUseCase _scoreUseCase;
         private readonly GimmickController _gimmickController;
+        private readonly IBgmController _bgmController;
         private readonly InputView _inputView;
 
         public MainState(PlayerContainerUseCase playerContainerUseCase, ScoreUseCase scoreUseCase,
-            GimmickController gimmickController, InputView inputView)
+            GimmickController gimmickController, IBgmController bgmController, InputView inputView)
         {
             _playerContainerUseCase = playerContainerUseCase;
             _scoreUseCase = scoreUseCase;
             _gimmickController = gimmickController;
+            _bgmController = bgmController;
             _inputView = inputView;
         }
 
@@ -34,6 +38,8 @@ namespace Ferret.InGame.Presentation.Controller
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
+            _bgmController.Play(BgmType.Main, false);
+
             while (true)
             {
                 if (_gimmickController.IsArriveBridge())

@@ -2,6 +2,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Ferret.Common;
 using Ferret.Common.Presentation.Controller;
+using Ferret.Common.Presentation.Controller.Interface;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
 
@@ -10,14 +11,16 @@ namespace Ferret.InGame.Presentation.Controller
     public sealed class ResultState : BaseGameState
     {
         private readonly UserRecordUseCase _userRecordUseCase;
+        private readonly IBgmController _bgmController;
         private readonly SceneLoader _sceneLoader;
         private readonly InputView _inputView;
         private readonly ResultView _resultView;
 
-        public ResultState(UserRecordUseCase userRecordUseCase, SceneLoader sceneLoader, InputView inputView,
-            ResultView resultView)
+        public ResultState(UserRecordUseCase userRecordUseCase, IBgmController bgmController, SceneLoader sceneLoader,
+            InputView inputView, ResultView resultView)
         {
             _userRecordUseCase = userRecordUseCase;
+            _bgmController = bgmController;
             _sceneLoader = sceneLoader;
             _inputView = inputView;
             _resultView = resultView;
@@ -36,6 +39,8 @@ namespace Ferret.InGame.Presentation.Controller
             await _resultView.SetUpAsync(token);
 
             await _inputView.OnPush().ToUniTask(true, token);
+
+            _bgmController.Stop();
 
             _sceneLoader.LoadingScene(
                 SceneName.Ranking,

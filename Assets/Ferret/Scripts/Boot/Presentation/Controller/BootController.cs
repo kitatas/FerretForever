@@ -5,6 +5,7 @@ using Ferret.Boot.Domain.UseCase;
 using Ferret.Boot.Presentation.View;
 using Ferret.Common;
 using Ferret.Common.Presentation.Controller;
+using Ferret.Common.Presentation.Controller.Interface;
 using Ferret.Common.Presentation.View;
 using VContainer.Unity;
 using Object = UnityEngine.Object;
@@ -17,16 +18,18 @@ namespace Ferret.Boot.Presentation.Controller
         private readonly LoadingView _loadingView;
         private readonly ErrorPopupView _errorPopupView;
         private readonly NameRegistrationView _nameRegistrationView;
+        private readonly IBgmController _bgmController;
         private readonly SceneLoader _sceneLoader;
         private readonly CancellationTokenSource _tokenSource;
 
         public BootController(LoginUseCase loginUseCase, LoadingView loadingView, ErrorPopupView errorPopupView,
-            NameRegistrationView nameRegistrationView, SceneLoader sceneLoader)
+            NameRegistrationView nameRegistrationView, IBgmController bgmController, SceneLoader sceneLoader)
         {
             _loginUseCase = loginUseCase;
             _loadingView = loadingView;
             _errorPopupView = errorPopupView;
             _nameRegistrationView = nameRegistrationView;
+            _bgmController = bgmController;
             _sceneLoader = sceneLoader;
             _tokenSource = new CancellationTokenSource();
         }
@@ -77,6 +80,7 @@ namespace Ferret.Boot.Presentation.Controller
                 }
 
                 await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _tokenSource.Token);
+                await _bgmController.InitAsync(_tokenSource.Token);
 
                 _sceneLoader.LoadScene(SceneName.Main);
 
