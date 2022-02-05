@@ -21,4 +21,12 @@ namespace Ferret.Common
         public const string URL_LICENSE = URL_BASE + "license";
         public const string URL_POLICY = URL_BASE + "policy";
     }
+
+    public sealed class BgmConfig
+    {
+        public const string CUE_SHEET_NAME = "BGM";
+        public const string CUE_NAME_TITLE = "title";
+        public const string CUE_NAME_MAIN = "main";
+        public const string CUE_NAME_RESULT = "result";
+    }
 }

@@ -6,4 +6,12 @@ namespace Ferret.Common
         Main,
         Ranking,
     }
+
+    public enum BgmType
+    {
+        None,
+        Title,
+        Main,
+        Result,
+    }
 }
