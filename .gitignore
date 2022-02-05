@@ -63,9 +63,11 @@ crashlytics-build.properties
 
 # Assets
 Assets/ConsolePro*
+Assets/CRIMW*
 Assets/Doozy*
 Assets/MPUIKit*
 Assets/PlayFabSDK*
 Assets/Plugins*
 Assets/QHierarchy*
+Assets/StreamingAssets*
 Assets/TextMesh Pro*
