@@ -14,5 +14,21 @@ namespace Ferret.Common.Utility
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
+
+        public static string ConvertCueName(this SeType type)
+        {
+            return type switch
+            {
+                SeType.Button  => SeConfig.CUE_NAME_BUTTON,
+                SeType.Jump    => SeConfig.CUE_NAME_JUMP,
+                SeType.Crash   => SeConfig.CUE_NAME_CRASH,
+                SeType.Scream  => SeConfig.CUE_NAME_SCREAM,
+                SeType.Explode => SeConfig.CUE_NAME_EXPLODE,
+                SeType.Build   => SeConfig.CUE_NAME_BUILD,
+                SeType.Fall    => SeConfig.CUE_NAME_FALL,
+                SeType.Ground  => SeConfig.CUE_NAME_GROUND,
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+        }
     }
 }

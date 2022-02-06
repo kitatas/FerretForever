@@ -29,4 +29,17 @@ namespace Ferret.Common
         public const string CUE_NAME_MAIN = "main";
         public const string CUE_NAME_RESULT = "result";
     }
+
+    public sealed class SeConfig
+    {
+        public const string CUE_SHEET_NAME = "SE";
+        public const string CUE_NAME_BUTTON = "button";
+        public const string CUE_NAME_JUMP = "jump";
+        public const string CUE_NAME_CRASH = "crash";
+        public const string CUE_NAME_SCREAM = "scream";
+        public const string CUE_NAME_EXPLODE = "explode";
+        public const string CUE_NAME_BUILD = "build";
+        public const string CUE_NAME_FALL = "fall";
+        public const string CUE_NAME_GROUND = "ground";
+    }
 }

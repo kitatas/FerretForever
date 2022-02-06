@@ -21,6 +21,7 @@ namespace Ferret.Common
             // Controller
             builder.Register<SceneLoader>(Lifetime.Singleton);
             builder.Register<CriBgmController>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<CriSeController>(Lifetime.Singleton).AsImplementedInterfaces();
 
             // MonoBehaviour
             FindObjectOfType<DontDestroyController>().Init();
