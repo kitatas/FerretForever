@@ -19,17 +19,20 @@ namespace Ferret.Boot.Presentation.Controller
         private readonly ErrorPopupView _errorPopupView;
         private readonly NameRegistrationView _nameRegistrationView;
         private readonly IBgmController _bgmController;
+        private readonly ISeController _seController;
         private readonly SceneLoader _sceneLoader;
         private readonly CancellationTokenSource _tokenSource;
 
         public BootController(LoginUseCase loginUseCase, LoadingView loadingView, ErrorPopupView errorPopupView,
-            NameRegistrationView nameRegistrationView, IBgmController bgmController, SceneLoader sceneLoader)
+            NameRegistrationView nameRegistrationView, IBgmController bgmController, ISeController seController,
+            SceneLoader sceneLoader)
         {
             _loginUseCase = loginUseCase;
             _loadingView = loadingView;
             _errorPopupView = errorPopupView;
             _nameRegistrationView = nameRegistrationView;
             _bgmController = bgmController;
+            _seController = seController;
             _sceneLoader = sceneLoader;
             _tokenSource = new CancellationTokenSource();
         }
@@ -38,9 +41,10 @@ namespace Ferret.Boot.Presentation.Controller
         {
             _errorPopupView.Init();
             _nameRegistrationView.Init();
-            foreach (var buttonView in Object.FindObjectsOfType<BaseButtonView>())
+            foreach (var button in Object.FindObjectsOfType<BaseButtonView>())
             {
-                buttonView.Init();
+                button.Init();
+                button.push += () => _seController.Play(SeType.Button);
             }
 
             Boot();
@@ -66,6 +70,12 @@ namespace Ferret.Boot.Presentation.Controller
                 _loadingView.Activate(true);
 
                 var response = await _loginUseCase.LoginAsync(_tokenSource.Token);
+
+                await (
+                    _bgmController.InitAsync(_tokenSource.Token),
+                    _seController.InitAsync(_tokenSource.Token)
+                );
+
                 _loadingView.Activate(false);
 
                 // 既存ユーザーの場合
@@ -80,7 +90,6 @@ namespace Ferret.Boot.Presentation.Controller
                 }
 
                 await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _tokenSource.Token);
-                await _bgmController.InitAsync(_tokenSource.Token);
 
                 _sceneLoader.LoadScene(SceneName.Main);
 

@@ -1,4 +1,6 @@
 using EFUK;
+using Ferret.Common;
+using Ferret.Common.Presentation.Controller.Interface;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
 using UnityEngine;
@@ -12,6 +14,7 @@ namespace Ferret.InGame.Presentation.Controller
         private readonly EnemyPoolUseCase _enemyPoolUseCase;
         private readonly PlayerPoolUseCase _playerPoolUseCase;
         private readonly PlayerCountUseCase _playerCountUseCase;
+        private readonly ISeController _seController;
         private readonly GroundController _groundController;
         private readonly BridgeView _bridgeView;
         private readonly BridgeAxisView _bridgeAxisView;
@@ -23,13 +26,14 @@ namespace Ferret.InGame.Presentation.Controller
 
         public GimmickController(BalloonPoolUseCase balloonPoolUseCase, EffectPoolUseCase effectPoolUseCase,
             EnemyPoolUseCase enemyPoolUseCase, PlayerPoolUseCase playerPoolUseCase, PlayerCountUseCase playerCountUseCase,
-            GroundController groundController, BridgeView bridgeView, BridgeAxisView bridgeAxisView)
+            ISeController seController, GroundController groundController, BridgeView bridgeView, BridgeAxisView bridgeAxisView)
         {
             _balloonPoolUseCase = balloonPoolUseCase;
             _effectPoolUseCase = effectPoolUseCase;
             _enemyPoolUseCase = enemyPoolUseCase;
             _playerPoolUseCase = playerPoolUseCase;
             _playerCountUseCase = playerCountUseCase;
+            _seController = seController;
             _groundController = groundController;
             _bridgeView = bridgeView;
             _bridgeAxisView = bridgeAxisView;
@@ -93,6 +97,7 @@ namespace Ferret.InGame.Presentation.Controller
                 groundView.SavePool(balloon);
                 balloon.SetUp(x =>
                 {
+                    _seController.Play(SeType.Crash);
                     _playerPoolUseCase.Increase(x);
                     _playerCountUseCase.Increase(x.type.ConvertInt());
                     var effect = _effectPoolUseCase.Rent(EffectType.Crash);
@@ -106,6 +111,7 @@ namespace Ferret.InGame.Presentation.Controller
                 groundView.SavePool(balloon);
                 balloon.SetUp(x =>
                 {
+                    _seController.Play(SeType.Crash);
                     _playerPoolUseCase.Increase(x);
                     _playerCountUseCase.Increase(x.type.ConvertInt());
                     var effect = _effectPoolUseCase.Rent(EffectType.Crash);
@@ -121,6 +127,8 @@ namespace Ferret.InGame.Presentation.Controller
                 {
                     if (_playerPoolUseCase.IsDecrease(x))
                     {
+                        _seController.Play(SeType.Explode);
+                        _seController.Play(SeType.Scream);
                         _playerCountUseCase.Decrease();
                         var effect = _effectPoolUseCase.Rent(EffectType.Explode);
                         groundView.SavePool(effect);
@@ -136,6 +144,8 @@ namespace Ferret.InGame.Presentation.Controller
                 {
                     if (_playerPoolUseCase.IsDecrease(x))
                     {
+                        _seController.Play(SeType.Explode);
+                        _seController.Play(SeType.Scream);
                         _playerCountUseCase.Decrease();
                         var effect = _effectPoolUseCase.Rent(EffectType.Explode);
                         groundView.SavePool(effect);

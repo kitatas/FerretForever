@@ -1,5 +1,7 @@
 using System;
 using EFUK;
+using Ferret.Common;
+using Ferret.Common.Presentation.Controller.Interface;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
 using UniRx;
@@ -15,6 +17,7 @@ namespace Ferret.InGame.Presentation.Controller
     {
         private PlayerMoveUseCase _playerMoveUseCase;
         private PlayerView _playerView;
+        private ISeController _seController;
 
         private Action _release;
 
@@ -22,11 +25,12 @@ namespace Ferret.InGame.Presentation.Controller
         public Vector3 position => transform.position;
         public GameObject self => gameObject;
 
-        public void Init(Action release)
+        public void Init(Action release, ISeController seController)
         {
             _playerMoveUseCase = new PlayerMoveUseCase(GetComponent<Rigidbody2D>());
             _playerView = GetComponent<PlayerView>();
             _release = release;
+            _seController = seController;
             status = PlayerStatus.None;
 
             _playerView.Init();
@@ -57,6 +61,7 @@ namespace Ferret.InGame.Presentation.Controller
 
                 status = PlayerStatus.Jump;
                 this.DelayFrame(10, () => status = PlayerStatus.Jumping);
+                _seController.Play(SeType.Jump);
             }
         }
 

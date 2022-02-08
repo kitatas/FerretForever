@@ -4,9 +4,11 @@ using Cysharp.Threading.Tasks;
 using Ferret.Common;
 using Ferret.Common.Presentation.Controller;
 using Ferret.Common.Presentation.Controller.Interface;
+using Ferret.Common.Presentation.View;
 using Ferret.OutGame.Domain.UseCase;
 using Ferret.OutGame.Presentation.View;
 using VContainer.Unity;
+using Object = UnityEngine.Object;
 
 namespace Ferret.OutGame.Presentation.Controller
 {
@@ -15,6 +17,7 @@ namespace Ferret.OutGame.Presentation.Controller
         private readonly RankingDataUseCase _rankingDataUseCase;
         private readonly UserRecordUseCase _userRecordUseCase;
         private readonly IBgmController _bgmController;
+        private readonly ISeController _seController;
         private readonly SceneLoader _sceneLoader;
         private readonly InputView _inputView;
         private readonly RankingView _rankingView;
@@ -23,11 +26,13 @@ namespace Ferret.OutGame.Presentation.Controller
         private readonly CancellationTokenSource _tokenSource;
 
         public OutGameController(RankingDataUseCase rankingDataUseCase, UserRecordUseCase userRecordUseCase,
-            IBgmController bgmController, SceneLoader sceneLoader, InputView inputView, RankingView rankingView, RecordView recordView)
+            IBgmController bgmController, ISeController seController, SceneLoader sceneLoader, InputView inputView,
+            RankingView rankingView, RecordView recordView)
         {
             _rankingDataUseCase = rankingDataUseCase;
             _userRecordUseCase = userRecordUseCase;
             _bgmController = bgmController;
+            _seController = seController;
             _sceneLoader = sceneLoader;
             _inputView = inputView;
             _rankingView = rankingView;
@@ -37,6 +42,12 @@ namespace Ferret.OutGame.Presentation.Controller
 
         public void PostInitialize()
         {
+            foreach (var button in Object.FindObjectsOfType<BaseButtonView>())
+            {
+                button.Init();
+                button.push += () => _seController.Play(SeType.Button);
+            }
+            
             InitAsync(_tokenSource.Token).Forget();
         }
 

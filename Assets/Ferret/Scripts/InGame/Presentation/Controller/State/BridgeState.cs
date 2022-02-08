@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Ferret.Common;
+using Ferret.Common.Presentation.Controller.Interface;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
 
@@ -10,13 +12,15 @@ namespace Ferret.InGame.Presentation.Controller
     {
         private readonly PlayerContainerUseCase _playerContainerUseCase;
         private readonly PlayerCountUseCase _playerCountUseCase;
+        private readonly ISeController _serController;
         private readonly BridgeAxisView _bridgeAxisView;
 
         public BridgeState(PlayerContainerUseCase playerContainerUseCase, PlayerCountUseCase playerCountUseCase,
-            BridgeAxisView bridgeAxisView)
+            ISeController seController, BridgeAxisView bridgeAxisView)
         {
             _playerContainerUseCase = playerContainerUseCase;
             _playerCountUseCase = playerCountUseCase;
+            _serController = seController;
             _bridgeAxisView = bridgeAxisView;
         }
 
@@ -29,6 +33,8 @@ namespace Ferret.InGame.Presentation.Controller
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
+            _serController.Play(SeType.Fall);
+
             // 橋形成
             var victimCount = _playerContainerUseCase.GetVictimCount();
             var height = 0.0f;
@@ -38,6 +44,7 @@ namespace Ferret.InGame.Presentation.Controller
                 var victim = _playerContainerUseCase.GetVictim();
                 await _bridgeAxisView.CreateBridgeAsync(victim, height, token);
 
+                _serController.Play(SeType.Build);
                 height += 0.8f;
             }
 
@@ -47,6 +54,7 @@ namespace Ferret.InGame.Presentation.Controller
             if (victimCount == InGameConfig.MAX_VICTIM_COUNT)
             {
                 await _bridgeAxisView.BuildBridgeAsync(token);
+                _serController.Play(SeType.Ground);
             }
             else
             {
