@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +30,7 @@ namespace Ferret.Common.Presentation.View
             };
 
             button
-                .OnClickAsObservable()
+                .OnPointerDownAsObservable()
                 .Subscribe(_ => push?.Invoke())
                 .AddTo(this);
         }

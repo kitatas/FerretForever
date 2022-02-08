@@ -1,5 +1,6 @@
 using System;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,7 @@ namespace Ferret.InGame.Presentation.View
         public void Init()
         {
             mainButton
-                .OnClickAsObservable()
+                .OnPointerDownAsObservable()
                 .Subscribe(_ =>
                 {
                     _push.OnNext(Unit.Default);

@@ -30,7 +30,7 @@ namespace Ferret.Common.Presentation.View
             };
 
             button
-                .OnPointerClickAsObservable()
+                .OnPointerDownAsObservable()
                 .Subscribe(_ => push?.Invoke())
                 .AddTo(this);
         }
