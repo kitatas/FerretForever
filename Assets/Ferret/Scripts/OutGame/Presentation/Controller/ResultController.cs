@@ -12,14 +12,16 @@ namespace Ferret.OutGame.Presentation.Controller
         private readonly UserRecordUseCase _userRecordUseCase;
         private readonly RankingView _rankingView;
         private readonly RecordView _recordView;
+        private readonly TweetButtonView _tweetButtonView;
 
         public ResultController(RankingDataUseCase rankingDataUseCase, UserRecordUseCase userRecordUseCase,
-            RankingView rankingView, RecordView recordView)
+            RankingView rankingView, RecordView recordView, TweetButtonView tweetButtonView)
         {
             _rankingDataUseCase = rankingDataUseCase;
             _userRecordUseCase = userRecordUseCase;
             _rankingView = rankingView;
             _recordView = recordView;
+            _tweetButtonView = tweetButtonView;
         }
 
         public async UniTask InitViewAsync(CancellationToken token)
@@ -31,6 +33,7 @@ namespace Ferret.OutGame.Presentation.Controller
             _rankingView.SetData(rankingData);
 
             _recordView.SetRecord(_userRecordUseCase.GetHighRecord(), _userRecordUseCase.GetCurrentRecord());
+            _tweetButtonView.Init(_userRecordUseCase.GetCurrentRecord().score);
         }
     }
 }

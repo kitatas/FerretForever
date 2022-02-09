@@ -12,6 +12,7 @@ namespace Ferret.OutGame
         [SerializeField] private InputView inputView = default;
         [SerializeField] private RankingView rankingView = default;
         [SerializeField] private RecordView recordView = default;
+        [SerializeField] private TweetButtonView tweetButtonView = default;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -27,6 +28,7 @@ namespace Ferret.OutGame
             builder.RegisterInstance<InputView>(inputView);
             builder.RegisterInstance<RankingView>(rankingView);
             builder.RegisterInstance<RecordView>(recordView);
+            builder.RegisterInstance<TweetButtonView>(tweetButtonView);
         }
     }
 }

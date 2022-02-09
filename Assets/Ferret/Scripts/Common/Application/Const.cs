@@ -1,5 +1,11 @@
 namespace Ferret.Common
 {
+    public sealed class GameConfig
+    {
+        public const string GAME_ID = "FerretForever";
+        public const string APP_URL = "https://play.google.com/store/apps/details?id=com.KitaLab.FerretForever";
+    }
+
     public sealed class MasterConfig
     {
         public const string TITLE_ID = "";

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace Ferret.Common.Presentation.View
 {
     [RequireComponent(typeof(Button))]
-    public sealed class BaseButtonView : MonoBehaviour
+    public class BaseButtonView : MonoBehaviour
     {
         public Action push;
 
