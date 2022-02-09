@@ -12,8 +12,6 @@ namespace Ferret.Common.Presentation.View
     {
         public Action push;
 
-        private const float _animationTime = 0.1f;
-
         public void Init()
         {
             var button = GetComponent<Button>();
@@ -23,14 +21,14 @@ namespace Ferret.Common.Presentation.View
             {
                 DOTween.Sequence()
                     .Append(button.image.rectTransform
-                        .DOScale(scale * 0.8f, _animationTime))
+                        .DOScale(scale * 0.8f, UiConfig.BUTTON_ANIMATION_TIME))
                     .Append(button.image.rectTransform
-                        .DOScale(scale, _animationTime))
+                        .DOScale(scale, UiConfig.BUTTON_ANIMATION_TIME))
                     .SetLink(gameObject);
             };
 
             button
-                .OnPointerDownAsObservable()
+                .OnPointerClickAsObservable()
                 .Subscribe(_ => push?.Invoke())
                 .AddTo(this);
         }

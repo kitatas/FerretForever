@@ -18,6 +18,7 @@ namespace Ferret.Common
     public sealed class UiConfig
     {
         public const float POPUP_ANIMATION_TIME = 0.25f;
+        public const float BUTTON_ANIMATION_TIME = 0.1f;
     }
 
     public sealed class WebviewConfig

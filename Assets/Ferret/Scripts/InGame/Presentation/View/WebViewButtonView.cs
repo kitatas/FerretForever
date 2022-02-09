@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View
 {
-    public sealed class WebViewButtonView : BaseButtonView
+    public sealed class WebViewButtonView : BaseUiButtonView
     {
         [SerializeField] private WebviewType type = default;
         [SerializeField] private RectTransform panel = default;
         [SerializeField] private Canvas canvas = default;
-        [SerializeField] private BaseButtonView closeButton = default;
+        [SerializeField] private BaseUiButtonView closeButton = default;
 
         private void Start()
         {
