@@ -1,4 +1,4 @@
-namespace Ferret.OutGame.Application
+namespace Ferret.OutGame
 {
     public sealed class RankingConfig
     {

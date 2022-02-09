@@ -1,5 +1,4 @@
 using Ferret.Common.Data.DataStore;
-using Ferret.OutGame.Application;
 using UnityEngine;
 
 namespace Ferret.OutGame.Presentation.View

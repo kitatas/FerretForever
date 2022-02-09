@@ -5,7 +5,6 @@ using Ferret.Common;
 using Ferret.Common.Presentation.Controller;
 using Ferret.Common.Presentation.Controller.Interface;
 using Ferret.Common.Presentation.View;
-using Ferret.OutGame.Domain.UseCase;
 using Ferret.OutGame.Presentation.View;
 using VContainer.Unity;
 using Object = UnityEngine.Object;
@@ -14,29 +13,22 @@ namespace Ferret.OutGame.Presentation.Controller
 {
     public sealed class OutGameController : IPostInitializable, IDisposable
     {
-        private readonly RankingDataUseCase _rankingDataUseCase;
-        private readonly UserRecordUseCase _userRecordUseCase;
         private readonly IBgmController _bgmController;
         private readonly ISeController _seController;
         private readonly SceneLoader _sceneLoader;
+        private readonly ResultController _resultController;
         private readonly InputView _inputView;
-        private readonly RankingView _rankingView;
-        private readonly RecordView _recordView;
 
         private readonly CancellationTokenSource _tokenSource;
 
-        public OutGameController(RankingDataUseCase rankingDataUseCase, UserRecordUseCase userRecordUseCase,
-            IBgmController bgmController, ISeController seController, SceneLoader sceneLoader, InputView inputView,
-            RankingView rankingView, RecordView recordView)
+        public OutGameController(IBgmController bgmController, ISeController seController, SceneLoader sceneLoader,
+            ResultController resultController, InputView inputView)
         {
-            _rankingDataUseCase = rankingDataUseCase;
-            _userRecordUseCase = userRecordUseCase;
             _bgmController = bgmController;
             _seController = seController;
             _sceneLoader = sceneLoader;
+            _resultController = resultController;
             _inputView = inputView;
-            _rankingView = rankingView;
-            _recordView = recordView;
             _tokenSource = new CancellationTokenSource();
         }
 
@@ -47,17 +39,13 @@ namespace Ferret.OutGame.Presentation.Controller
                 button.Init();
                 button.push += () => _seController.Play(SeType.Button);
             }
-            
+
             InitAsync(_tokenSource.Token).Forget();
         }
 
         private async UniTask InitAsync(CancellationToken token)
         {
-            var rankingData = await _rankingDataUseCase.GetRankDataAsync(token);
-            _rankingView.SetData(rankingData);
-
-            _recordView.SetHighRecord(_userRecordUseCase.GetHighRecord());
-            _recordView.SetCurrentRecord(_userRecordUseCase.GetCurrentRecord());
+            await _resultController.InitViewAsync(token);
 
             _sceneLoader.LoadingFadeOut();
 

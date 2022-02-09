@@ -21,6 +21,7 @@ namespace Ferret.OutGame
 
             // Controller
             builder.RegisterEntryPoint<OutGameController>(Lifetime.Scoped);
+            builder.Register<ResultController>(Lifetime.Scoped);
 
             // View
             builder.RegisterInstance<InputView>(inputView);

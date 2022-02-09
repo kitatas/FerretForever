@@ -1,3 +1,4 @@
+using EFUK;
 using Ferret.Common.Data.DataStore;
 using TMPro;
 using UnityEngine;
@@ -6,17 +7,19 @@ namespace Ferret.OutGame.Presentation.View
 {
     public sealed class RecordView : MonoBehaviour
     {
+        [SerializeField] private GameObject newRecordLabel = default;
         [SerializeField] private TextMeshProUGUI highScore = default;
         [SerializeField] private TextMeshProUGUI score = default;
 
-        public void SetHighRecord(RecordData recordData)
+        public void SetRecord(RecordData highRecord, RecordData currentRecord)
         {
-            highScore.text = $"{recordData.score.ToString("F2")}";
-        }
+            var highScoreValue = highRecord.score;
+            var scoreValue = currentRecord.score;
 
-        public void SetCurrentRecord(RecordData recordData)
-        {
-            score.text = $"{recordData.score.ToString("F2")}";
+            newRecordLabel.SetActive(scoreValue.Equal(highScoreValue));
+
+            highScore.text = $"{highScoreValue.ToString("F2")}";
+            score.text = $"{scoreValue.ToString("F2")}";
         }
     }
 }
