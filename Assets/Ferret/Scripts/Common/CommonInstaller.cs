@@ -1,5 +1,6 @@
 using Ferret.Common.Data.Entity;
 using Ferret.Common.Domain.Repository;
+using Ferret.Common.Domain.UseCase;
 using Ferret.Common.Presentation.Controller;
 using Ferret.Common.Presentation.View;
 using VContainer;
@@ -17,6 +18,9 @@ namespace Ferret.Common
             // Repository
             builder.Register<PlayFabRepository>(Lifetime.Singleton);
             builder.Register<SaveDataRepository>(Lifetime.Singleton);
+
+            // UseCase
+            builder.Register<SaveDataUseCase>(Lifetime.Singleton);
 
             // Controller
             builder.Register<SceneLoader>(Lifetime.Singleton);

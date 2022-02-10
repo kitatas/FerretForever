@@ -30,6 +30,11 @@ namespace Ferret.Common.Presentation.Controller
             _criAtomExPlayer.Start();
         }
 
+        public void SetVolume(float value)
+        {
+            _criAtomExPlayer.SetVolume(value);
+        }
+
         public void Dispose()
         {
             _criAtomExPlayer?.Dispose();

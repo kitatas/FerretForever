@@ -7,5 +7,6 @@ namespace Ferret.Common.Presentation.Controller.Interface
     {
         UniTask InitAsync(CancellationToken token);
         void Play(SeType seType);
+        void SetVolume(float value);
     }
 }

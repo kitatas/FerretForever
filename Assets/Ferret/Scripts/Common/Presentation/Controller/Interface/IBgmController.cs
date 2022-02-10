@@ -8,5 +8,6 @@ namespace Ferret.Common.Presentation.Controller.Interface
         UniTask InitAsync(CancellationToken token);
         void Play(BgmType bgmType, bool isLoop);
         void Stop();
+        void SetVolume(float value);
     }
 }

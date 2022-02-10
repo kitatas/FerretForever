@@ -22,6 +22,8 @@ namespace Ferret.Common.Domain.Repository
             var newData = new SaveData
             {
                 uid = "",
+                bgmVolume = 0.5f,
+                seVolume = 0.5f,
             };
             Save(newData);
 
