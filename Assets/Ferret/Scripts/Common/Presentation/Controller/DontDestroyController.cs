@@ -7,6 +7,8 @@ namespace Ferret.Common.Presentation.Controller
     {
         public static DontDestroyController Instance { get; private set; }
 
+        public CriBgmController bgmController { get; private set; }
+        public CriSeController seController { get; private set; }
         public LoadingView loadingView { get; private set; }
         public TransitionMaskView maskView { get; private set; }
 
@@ -21,6 +23,8 @@ namespace Ferret.Common.Presentation.Controller
         public void Init()
         {
             Instance = this;
+            bgmController = FindObjectOfType<CriBgmController>();
+            seController = FindObjectOfType<CriSeController>();
             loadingView = GetComponentInChildren<LoadingView>();
             maskView = GetComponentInChildren<TransitionMaskView>();
 

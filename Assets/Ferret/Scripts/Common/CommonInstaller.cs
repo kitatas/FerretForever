@@ -24,11 +24,11 @@ namespace Ferret.Common
 
             // Controller
             builder.Register<SceneLoader>(Lifetime.Singleton);
-            builder.Register<CriBgmController>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<CriSeController>(Lifetime.Singleton).AsImplementedInterfaces();
 
             // MonoBehaviour
             FindObjectOfType<DontDestroyController>().Init();
+            builder.RegisterInstance<CriBgmController>(DontDestroyController.Instance.bgmController).AsImplementedInterfaces();
+            builder.RegisterInstance<CriSeController>(DontDestroyController.Instance.seController).AsImplementedInterfaces();
             builder.RegisterInstance<TransitionMaskView>(DontDestroyController.Instance.maskView);
             builder.RegisterInstance<LoadingView>(DontDestroyController.Instance.loadingView);
         }
