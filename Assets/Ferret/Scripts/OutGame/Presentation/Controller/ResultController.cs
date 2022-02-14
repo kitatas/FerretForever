@@ -30,7 +30,7 @@ namespace Ferret.OutGame.Presentation.Controller
             await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
 
             var rankingData = await _rankingDataUseCase.GetRankDataAsync(token);
-            _rankingView.SetData(rankingData);
+            _rankingView.SetData(rankingData, _userRecordUseCase.GetUid());
 
             _recordView.SetRecord(_userRecordUseCase.GetHighRecord(), _userRecordUseCase.GetCurrentRecord());
             _tweetButtonView.Init(_userRecordUseCase.GetCurrentRecord().score);

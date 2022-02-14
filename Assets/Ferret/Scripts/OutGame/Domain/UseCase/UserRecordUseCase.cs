@@ -12,6 +12,11 @@ namespace Ferret.OutGame.Domain.UseCase
             _userRecordEntity = userRecordEntity;
         }
 
+        public string GetUid()
+        {
+            return _userRecordEntity.Get().uid;
+        }
+
         public RecordData GetCurrentRecord()
         {
             return _userRecordEntity.Get().currentRecord;
