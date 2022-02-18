@@ -9,7 +9,6 @@ namespace Ferret.InGame.Presentation.View
     public sealed class GroundView : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer main = default;
-        [SerializeField] private SpriteRenderer child = default;
 
         private Action<GroundView> _setUp;
         private List<IPoolObject> _poolList;
@@ -61,7 +60,6 @@ namespace Ferret.InGame.Presentation.View
         public void Activate(bool value)
         {
             main.enabled = value;
-            child.enabled = value;
         }
     }
 }

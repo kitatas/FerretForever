@@ -22,8 +22,8 @@ namespace Ferret.InGame.Presentation.Controller
             _release = release;
             var y = type switch
             {
-                EnemyType.Wolf => 0.8f,
-                EnemyType.Hawk => 5.5f,
+                EnemyType.Wolf => 1.8f,
+                EnemyType.Hawk => 6.3f,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
             _setUpPosition = new Vector3(0.0f, y, 0.0f);
