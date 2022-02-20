@@ -27,10 +27,11 @@ namespace Ferret.Common
 
             // MonoBehaviour
             FindObjectOfType<DontDestroyController>().Init();
-            builder.RegisterInstance<CriBgmController>(DontDestroyController.Instance.bgmController).AsImplementedInterfaces();
-            builder.RegisterInstance<CriSeController>(DontDestroyController.Instance.seController).AsImplementedInterfaces();
-            builder.RegisterInstance<TransitionMaskView>(DontDestroyController.Instance.maskView);
-            builder.RegisterInstance<LoadingView>(DontDestroyController.Instance.loadingView);
+            builder.RegisterInstance<CriBgmController>(FindObjectOfType<CriBgmController>()).AsImplementedInterfaces();
+            builder.RegisterInstance<CriSeController>(FindObjectOfType<CriSeController>()).AsImplementedInterfaces();
+            builder.RegisterInstance<ErrorPopupView>(FindObjectOfType<ErrorPopupView>());
+            builder.RegisterInstance<LoadingView>(FindObjectOfType<LoadingView>());
+            builder.RegisterInstance<TransitionMaskView>(FindObjectOfType<TransitionMaskView>());
         }
     }
 }
