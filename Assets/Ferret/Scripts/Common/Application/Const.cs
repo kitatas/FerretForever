@@ -49,4 +49,9 @@ namespace Ferret.Common
         public const string CUE_NAME_FALL = "fall";
         public const string CUE_NAME_GROUND = "ground";
     }
+
+    public sealed class ErrorConfig
+    {
+        public const string REGISTRATION_NAME = "Registration Failure...";
+    }
 }

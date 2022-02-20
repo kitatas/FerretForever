@@ -1,15 +1,16 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using Ferret.Common;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Ferret.Boot.Presentation.View
+namespace Ferret.Common.Presentation.View
 {
     public sealed class ErrorPopupView : MonoBehaviour
     {
         [SerializeField] private CanvasGroup panel = default;
+        [SerializeField] private TextMeshProUGUI errorMessage = default;
         [SerializeField] private Button closeButton = default;
 
         public void Init()
@@ -19,8 +20,10 @@ namespace Ferret.Boot.Presentation.View
             transform.localScale = Vector3.one * 0.9f;
         }
 
-        public async UniTask PopupAsync(CancellationToken token)
+        public async UniTask PopupAsync(string message, CancellationToken token)
         {
+            errorMessage.text = $"{message}";
+
             await DOTween.Sequence()
                 .Append(DOTween.To(
                         () => panel.alpha,

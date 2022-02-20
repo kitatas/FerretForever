@@ -113,7 +113,7 @@ namespace Ferret.Boot.Presentation.Controller
                     break;
                 }
 
-                await _errorPopupView.PopupAsync(token);
+                await _errorPopupView.PopupAsync(ErrorConfig.REGISTRATION_NAME, token);
                 _nameRegistrationView.ResetName();
             }
         }
