@@ -1,6 +1,6 @@
 using System;
 
-namespace Ferret.Common.Utility
+namespace Ferret.Common
 {
     public static class CustomExtension
     {
