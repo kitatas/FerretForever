@@ -22,5 +22,7 @@ namespace Ferret.InGame.Domain.UseCase
             _gameStateEntity.Set(state);
             _gameState.Value = _gameStateEntity.Get();
         }
+
+        public GameState currentState => _gameStateEntity.Get();
     }
 }

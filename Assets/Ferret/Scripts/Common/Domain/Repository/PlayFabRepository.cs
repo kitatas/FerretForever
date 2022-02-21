@@ -56,7 +56,7 @@ namespace Ferret.Common.Domain.Repository
             var response = await PlayFabClientAPI.LoginWithCustomIDAsync(request);
             if (response.Error != null)
             {
-                throw new Exception($"{response.Error.GenerateErrorReport()}");
+                throw new CustomPlayFabException(response.Error);
             }
 
             return response.Result;
@@ -99,7 +99,7 @@ namespace Ferret.Common.Domain.Repository
             var response = await PlayFabClientAPI.UpdateUserDataAsync(request);
             if (response.Error != null)
             {
-                throw new Exception($"{response.Error.GenerateErrorReport()}");
+                throw new CustomPlayFabException(response.Error);
             }
 
             return response.Result;
@@ -122,7 +122,7 @@ namespace Ferret.Common.Domain.Repository
             var response = await PlayFabClientAPI.UpdatePlayerStatisticsAsync(request);
             if (response.Error != null)
             {
-                throw new Exception($"{response.Error.GenerateErrorReport()}");
+                throw new CustomPlayFabException(response.Error);
             }
         }
 
@@ -141,7 +141,7 @@ namespace Ferret.Common.Domain.Repository
             var response = await PlayFabClientAPI.GetLeaderboardAsync(request);
             if (response.Error != null)
             {
-                throw new Exception($"{response.Error.GenerateErrorReport()}");
+                throw new CustomPlayFabException(response.Error);
             }
 
             return response.Result.Leaderboard.Select(x => new RankingData(x)).ToArray();
