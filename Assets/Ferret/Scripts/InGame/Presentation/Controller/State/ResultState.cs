@@ -42,10 +42,7 @@ namespace Ferret.InGame.Presentation.Controller
 
             _bgmController.Stop();
 
-            _sceneLoader.LoadingScene(
-                SceneName.Ranking,
-                _userRecordUseCase.UpdateScoreAsync(token)
-            );
+            await _sceneLoader.LoadingSceneAsync(SceneName.Ranking, _userRecordUseCase.UpdateScoreAsync(token), token);
 
             return GameState.None;
         }
