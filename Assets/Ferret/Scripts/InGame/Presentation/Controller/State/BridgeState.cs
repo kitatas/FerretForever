@@ -63,7 +63,7 @@ namespace Ferret.InGame.Presentation.Controller
 
             if (_playerContainerUseCase.IsNone())
             {
-                return GameState.Result;
+                return GameState.Finish;
             }
             else
             {

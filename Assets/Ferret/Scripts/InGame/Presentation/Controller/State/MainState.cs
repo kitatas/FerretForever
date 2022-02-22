@@ -50,7 +50,7 @@ namespace Ferret.InGame.Presentation.Controller
                 // 残機0になったら終了
                 if (_playerContainerUseCase.IsNone())
                 {
-                    return GameState.Result;
+                    return GameState.Finish;
                 }
 
                 var deltaTime = Time.deltaTime;
