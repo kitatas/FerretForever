@@ -47,33 +47,20 @@ namespace Ferret.Boot.Presentation.Controller
                 button.push += () => _seController.Play(SeType.Button);
             }
 
-            Boot();
+            BootAsync(_tokenSource.Token).Forget();
         }
 
-        private void Boot()
+        private async UniTask BootAsync(CancellationToken token)
         {
             try
             {
-                Load();
-            }
-            catch (Exception e)
-            {
-                Boot();
-                throw;
-            }
-        }
-
-        private void Load()
-        {
-            UniTask.Void(async _ =>
-            {
                 _loadingView.Activate(true);
 
-                var response = await _loginUseCase.LoginAsync(_tokenSource.Token);
+                var response = await _loginUseCase.LoginAsync(token);
 
                 await (
-                    _bgmController.InitAsync(_tokenSource.Token),
-                    _seController.InitAsync(_tokenSource.Token)
+                    _bgmController.InitAsync(token),
+                    _seController.InitAsync(token)
                 );
 
                 _loadingView.Activate(false);
@@ -86,14 +73,27 @@ namespace Ferret.Boot.Presentation.Controller
                 // 新規ユーザーの場合
                 else
                 {
-                    await CheckNameAsync(_tokenSource.Token);
+                    await CheckNameAsync(token);
                 }
 
-                await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _tokenSource.Token);
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
 
                 _sceneLoader.LoadScene(SceneName.Main);
-
-            }, _tokenSource.Token);
+            }
+            catch (CustomPlayFabException e)
+            {
+                // TODO: エラーメッセージの修正
+                UnityEngine.Debug.LogWarning($"[CustomPlayFabException]: {e}");
+                await _errorPopupView.PopupAsync($"[CustomPlayFabException]: {e}", token);
+                await BootAsync(token);
+            }
+            catch (Exception e)
+            {
+                // TODO: エラーメッセージの修正
+                UnityEngine.Debug.LogWarning($"[Exception]: {e}");
+                await _errorPopupView.PopupAsync($"[Exception]: {e}", token);
+                await BootAsync(token);
+            }
         }
 
         private async UniTask CheckNameAsync(CancellationToken token)
