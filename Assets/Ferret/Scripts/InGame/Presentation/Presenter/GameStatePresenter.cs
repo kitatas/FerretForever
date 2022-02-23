@@ -15,15 +15,17 @@ namespace Ferret.InGame.Presentation.Presenter
         private readonly GameStateUseCase _gameStateUseCase;
         private readonly GameStateController _gameStateController;
         private readonly ErrorPopupView _errorPopupView;
+        private readonly LoadingView _loadingView;
         private readonly CompositeDisposable _disposable;
         private readonly CancellationTokenSource _tokenSource;
 
         public GameStatePresenter(GameStateUseCase gameStateUseCase, GameStateController gameStateController,
-            ErrorPopupView errorPopupView)
+            ErrorPopupView errorPopupView, LoadingView loadingView)
         {
             _gameStateUseCase = gameStateUseCase;
             _gameStateController = gameStateController;
             _errorPopupView = errorPopupView;
+            _loadingView = loadingView;
             _disposable = new CompositeDisposable();
             _tokenSource = new CancellationTokenSource();
         }
@@ -47,18 +49,10 @@ namespace Ferret.InGame.Presentation.Presenter
                 var nextState = await _gameStateController.TickAsync(state, token);
                 _gameStateUseCase.SetState(nextState);
             }
-            catch (CustomPlayFabException e)
-            {
-                // TODO: エラーメッセージの修正
-                UnityEngine.Debug.LogWarning($"[CustomPlayFabException]: {e}");
-                await _errorPopupView.PopupAsync($"[CustomPlayFabException]: {e}", token);
-                await ExecStateAsync(_gameStateUseCase.currentState, token);
-            }
             catch (Exception e)
             {
-                // TODO: エラーメッセージの修正
-                UnityEngine.Debug.LogWarning($"[Exception]: {e}");
-                await _errorPopupView.PopupAsync($"[Exception]: {e}", token);
+                _loadingView.Activate(false);
+                await _errorPopupView.PopupAsync($"{e.ConvertErrorMessage()}", token);
                 await ExecStateAsync(_gameStateUseCase.currentState, token);
             }
         }

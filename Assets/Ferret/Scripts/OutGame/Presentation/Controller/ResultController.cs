@@ -16,9 +16,11 @@ namespace Ferret.OutGame.Presentation.Controller
         private readonly RecordView _recordView;
         private readonly TweetButtonView _tweetButtonView;
         private readonly ErrorPopupView _errorPopupView;
+        private readonly LoadingView _loadingView;
 
         public ResultController(RankingDataUseCase rankingDataUseCase, UserRecordUseCase userRecordUseCase,
-            RankingView rankingView, RecordView recordView, TweetButtonView tweetButtonView, ErrorPopupView errorPopupView)
+            RankingView rankingView, RecordView recordView, TweetButtonView tweetButtonView,
+            ErrorPopupView errorPopupView, LoadingView loadingView)
         {
             _rankingDataUseCase = rankingDataUseCase;
             _userRecordUseCase = userRecordUseCase;
@@ -26,6 +28,7 @@ namespace Ferret.OutGame.Presentation.Controller
             _recordView = recordView;
             _tweetButtonView = tweetButtonView;
             _errorPopupView = errorPopupView;
+            _loadingView = loadingView;
         }
 
         public async UniTask InitViewAsync(CancellationToken token)
@@ -41,18 +44,10 @@ namespace Ferret.OutGame.Presentation.Controller
                 _recordView.SetRecord(_userRecordUseCase.GetHighRecord(), _userRecordUseCase.GetCurrentRecord());
                 _tweetButtonView.Init(_userRecordUseCase.GetCurrentRecord().score);
             }
-            catch (CustomPlayFabException e)
-            {
-                // TODO: エラーメッセージの修正
-                UnityEngine.Debug.LogWarning($"[CustomPlayFabException]: {e}");
-                await _errorPopupView.PopupAsync($"[CustomPlayFabException]: {e}", token);
-                await InitViewAsync(token);
-            }
             catch (Exception e)
             {
-                // TODO: エラーメッセージの修正
-                UnityEngine.Debug.LogWarning($"[Exception]: {e}");
-                await _errorPopupView.PopupAsync($"[Exception]: {e}", token);
+                _loadingView.Activate(false);
+                await _errorPopupView.PopupAsync($"{e.ConvertErrorMessage()}", token);
                 await InitViewAsync(token);
             }
         }

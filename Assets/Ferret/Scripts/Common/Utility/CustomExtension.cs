@@ -30,5 +30,11 @@ namespace Ferret.Common
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
+
+        public static string ConvertErrorMessage(this Exception exception)
+        {
+            if (exception is CustomPlayFabException) return ErrorConfig.CONNECTION;
+            return ErrorConfig.DEFAULT_ERROR;
+        }
     }
 }

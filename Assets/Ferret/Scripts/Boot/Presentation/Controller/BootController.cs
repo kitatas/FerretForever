@@ -80,18 +80,10 @@ namespace Ferret.Boot.Presentation.Controller
 
                 _sceneLoader.LoadScene(SceneName.Main);
             }
-            catch (CustomPlayFabException e)
-            {
-                // TODO: エラーメッセージの修正
-                UnityEngine.Debug.LogWarning($"[CustomPlayFabException]: {e}");
-                await _errorPopupView.PopupAsync($"[CustomPlayFabException]: {e}", token);
-                await BootAsync(token);
-            }
             catch (Exception e)
             {
-                // TODO: エラーメッセージの修正
-                UnityEngine.Debug.LogWarning($"[Exception]: {e}");
-                await _errorPopupView.PopupAsync($"[Exception]: {e}", token);
+                _loadingView.Activate(false);
+                await _errorPopupView.PopupAsync($"{e.ConvertErrorMessage()}", token);
                 await BootAsync(token);
             }
         }

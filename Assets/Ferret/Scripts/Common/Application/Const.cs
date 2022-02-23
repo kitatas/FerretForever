@@ -52,6 +52,8 @@ namespace Ferret.Common
 
     public sealed class ErrorConfig
     {
-        public const string REGISTRATION_NAME = "Registration Failure...";
+        public const string REGISTRATION_NAME = "Registration Failed...";
+        public const string CONNECTION = "Connection Failed...";
+        public const string DEFAULT_ERROR = "Error Occurred...";
     }
 }
