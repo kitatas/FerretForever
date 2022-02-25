@@ -25,20 +25,29 @@ namespace Ferret.InGame.Presentation.Presenter
             _userInfoView.SetUserData(_userRecordUseCase.GetUserRecord());
             _userInfoView.InitButton(x =>
             {
-                UniTask.Void(async _ =>
-                {
-                    var isSuccess = await _userRecordUseCase.UpdateUserNameAsync(x, _tokenSource.Token);
-                    if (isSuccess)
-                    {
-                        _userInfoView.UpdateSuccessUserName();
-                    }
-                    else
-                    {
-                        _userInfoView.UpdateFailedUserName();
-                    }
-
-                }, _tokenSource.Token);
+                UpdateNameAsync(x, _tokenSource.Token).Forget();
             });
+        }
+
+        private async UniTaskVoid UpdateNameAsync(string name,  CancellationToken token)
+        {
+            try
+            {
+                var isSuccess = await _userRecordUseCase.UpdateUserNameAsync(name, token);
+                if (isSuccess)
+                {
+                    _userInfoView.UpdateSuccessUserName();
+                }
+                else
+                {
+                    _userInfoView.UpdateFailedUserName();
+                }
+            }
+            catch (Exception e)
+            {
+                _userInfoView.UpdateFailedUserName();
+                throw;
+            }
         }
 
         public void Dispose()
