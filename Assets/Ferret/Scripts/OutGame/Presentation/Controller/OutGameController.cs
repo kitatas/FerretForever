@@ -18,17 +18,19 @@ namespace Ferret.OutGame.Presentation.Controller
         private readonly SceneLoader _sceneLoader;
         private readonly ResultController _resultController;
         private readonly InputView _inputView;
+        private readonly LoadingView _loadingView;
 
         private readonly CancellationTokenSource _tokenSource;
 
         public OutGameController(IBgmController bgmController, ISeController seController, SceneLoader sceneLoader,
-            ResultController resultController, InputView inputView)
+            ResultController resultController, InputView inputView, LoadingView loadingView)
         {
             _bgmController = bgmController;
             _seController = seController;
             _sceneLoader = sceneLoader;
             _resultController = resultController;
             _inputView = inputView;
+            _loadingView = loadingView;
             _tokenSource = new CancellationTokenSource();
         }
 
@@ -47,9 +49,11 @@ namespace Ferret.OutGame.Presentation.Controller
         {
             await _resultController.InitViewAsync(token);
 
-            _sceneLoader.LoadingFadeOut();
-
             _bgmController.Play(BgmType.Result, true);
+
+            _loadingView.Activate(false);
+
+            await _sceneLoader.LoadingFadeOutAsync(token);
 
             await _inputView.OnClickAsync(token);
 

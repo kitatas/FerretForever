@@ -8,17 +8,13 @@ namespace Ferret.Common.Presentation.Controller
 {
     public sealed class SceneLoader : IDisposable
     {
-        private readonly LoadingView _loadingView;
         private readonly TransitionMaskView _transitionMaskView;
         private readonly CancellationTokenSource _tokenSource;
 
-        public SceneLoader(LoadingView loadingView, TransitionMaskView transitionMaskView)
+        public SceneLoader(TransitionMaskView transitionMaskView)
         {
-            _loadingView = loadingView;
             _transitionMaskView = transitionMaskView;
             _tokenSource = new CancellationTokenSource();
-
-            _loadingView.Activate(false);
             _transitionMaskView.Init();
         }
 
@@ -30,42 +26,36 @@ namespace Ferret.Common.Presentation.Controller
 
         public void LoadScene(SceneName sceneName)
         {
-            LoadSceneAsync(sceneName, _tokenSource.Token).Forget();
+            FadeLoadSceneAsync(sceneName, _tokenSource.Token).Forget();
         }
 
-        private async UniTask LoadSceneAsync(SceneName sceneName, CancellationToken token)
+        private async UniTask FadeLoadSceneAsync(SceneName sceneName, CancellationToken token)
         {
             await _transitionMaskView.FadeInAsync(token);
 
-            await SceneManager.LoadSceneAsync(sceneName.ToString()).WithCancellation(token);
+            await LoadSceneAsync(sceneName, token);
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
 
             await _transitionMaskView.FadeOutAsync(token);
         }
 
-        public async UniTask LoadingSceneAsync(SceneName sceneName, UniTask loadTask, CancellationToken token)
+        public async UniTask FadeInAsync(CancellationToken token)
         {
             await _transitionMaskView.FadeInAsync(token);
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
+        }
 
-            _loadingView.Activate(true);
-            await loadTask;
-
+        public async UniTask LoadSceneAsync(SceneName sceneName, CancellationToken token)
+        {
             await SceneManager.LoadSceneAsync(sceneName.ToString()).WithCancellation(token);
         }
 
-        public void LoadingFadeOut()
-        {
-            LoadingFadeOutAsync(_tokenSource.Token).Forget();
-        }
-
-        private async UniTask LoadingFadeOutAsync(CancellationToken token)
+        public async UniTask LoadingFadeOutAsync(CancellationToken token)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
 
-            _loadingView.Activate(false);
             await _transitionMaskView.FadeOutAsync(token);
         }
     }
