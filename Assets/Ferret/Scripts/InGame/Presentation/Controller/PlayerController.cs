@@ -37,7 +37,7 @@ namespace Ferret.InGame.Presentation.Controller
 
             // 接地
             this.OnCollisionEnter2DAsObservable()
-                .Where(_ => status == PlayerStatus.Jumping)
+                .Where(_ => status == PlayerStatus.Jump)
                 .Where(other => other.gameObject.CompareTag(TagConfig.GROUND))
                 .Subscribe(_ => status = PlayerStatus.Run)
                 .AddTo(this);
@@ -47,7 +47,7 @@ namespace Ferret.InGame.Presentation.Controller
         {
             transform.position = setUpPosition;
             transform.eulerAngles = Vector3.zero;
-            status = PlayerStatus.Jumping;
+            status = PlayerStatus.Jump;
             _playerMoveUseCase.SetConstraint(RigidbodyConstraints2D.FreezeRotation);
             _playerView.SetUp();
         }
@@ -60,7 +60,6 @@ namespace Ferret.InGame.Presentation.Controller
                 this.Delay(delayTime, _playerMoveUseCase.Jump);
 
                 status = PlayerStatus.Jump;
-                this.DelayFrame(10, () => status = PlayerStatus.Jumping);
                 _seController.Play(SeType.Jump);
             }
         }

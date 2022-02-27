@@ -23,7 +23,6 @@ namespace Ferret.InGame
         None,
         Run,
         Jump,
-        Jumping,
         Bridge,
         Blow,
     }
