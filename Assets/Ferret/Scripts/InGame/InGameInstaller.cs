@@ -22,6 +22,7 @@ namespace Ferret.InGame
 
         [SerializeField] private GroundController groundController = default;
 
+        [SerializeField] private AchievementView achievementView = default;
         [SerializeField] private BridgeAxisView bridgeAxisView = default;
         [SerializeField] private BridgeView bridgeView = default;
         [SerializeField] private InputView inputView = default;
@@ -62,6 +63,7 @@ namespace Ferret.InGame
             builder.Register<PlayerRepository>(Lifetime.Scoped);
 
             // UseCase
+            builder.Register<AchievementUseCase>(Lifetime.Scoped);
             builder.Register<BalloonPoolUseCase>(Lifetime.Scoped);
             builder.Register<EffectPoolUseCase>(Lifetime.Scoped);
             builder.Register<EnemyPoolUseCase>(Lifetime.Scoped);
@@ -84,12 +86,14 @@ namespace Ferret.InGame
             builder.RegisterInstance<GroundController>(groundController);
 
             // Presenter
+            builder.RegisterEntryPoint<AchievementPresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<GameStatePresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<PlayerCountPresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<ScorePresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<UserInfoPresenter>(Lifetime.Scoped);
 
             // View
+            builder.RegisterInstance<AchievementView>(achievementView);
             builder.RegisterInstance<BridgeAxisView>(bridgeAxisView);
             builder.RegisterInstance<BridgeView>(bridgeView);
             builder.RegisterInstance<InputView>(inputView);
