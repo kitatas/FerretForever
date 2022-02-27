@@ -69,6 +69,13 @@ namespace Ferret.Common.Domain.Repository
                 : new UserRecord();
         }
 
+        public IEnumerable<AchievementData> FetchAchievementMaster(Dictionary<string, string> titleData)
+        {
+            return JsonConvert
+                .DeserializeObject<AchievementData[]>(titleData[MasterConfig.ACHIEVEMENT_NAME])
+                .ToList();
+        }
+
         public async UniTask<bool> UpdateDisplayNameAsync(string name, CancellationToken token)
         {
             var request = new UpdateUserTitleDisplayNameRequest

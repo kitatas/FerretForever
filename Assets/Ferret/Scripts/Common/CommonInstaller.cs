@@ -13,6 +13,7 @@ namespace Ferret.Common
         protected override void Configure(IContainerBuilder builder)
         {
             // Entity
+            builder.Register<AchievementMasterEntity>(Lifetime.Singleton);
             builder.Register<UserRecordEntity>(Lifetime.Singleton);
 
             // Repository

@@ -1,6 +1,6 @@
 namespace Ferret.Common.Data.Entity
 {
-    public abstract class BaseEntity<T> where T : new()
+    public abstract class BaseEntity<T>
     {
         private T _t;
 

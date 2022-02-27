@@ -56,4 +56,13 @@ namespace Ferret.Common.Data.DataStore
             highScore = entry.Profile.Statistics?.FirstOrDefault(x => x.Name == MasterConfig.RANKING_NAME)?.Value ?? 0;
         }
     }
+
+    public sealed class AchievementData
+    {
+        public AchievementType type;
+        public AchievementRank rank;
+        public int value;
+        public bool isAchieve;
+        public string detail;
+    }
 }

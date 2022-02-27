@@ -10,12 +10,14 @@ namespace Ferret.Boot.Domain.UseCase
     public sealed class LoginUseCase
     {
         private readonly UserRecordEntity _userRecordEntity;
+        private readonly AchievementMasterEntity _achievementMasterEntity;
         private readonly SaveDataRepository _saveDataRepository;
         private readonly PlayFabRepository _playFabRepository;
 
-        public LoginUseCase(UserRecordEntity userRecordEntity, SaveDataRepository saveDataRepository, PlayFabRepository playFabRepository)
+        public LoginUseCase(UserRecordEntity userRecordEntity, AchievementMasterEntity achievementMasterEntity, SaveDataRepository saveDataRepository, PlayFabRepository playFabRepository)
         {
             _userRecordEntity = userRecordEntity;
+            _achievementMasterEntity = achievementMasterEntity;
             _saveDataRepository = saveDataRepository;
             _playFabRepository = playFabRepository;
         }
@@ -51,6 +53,9 @@ namespace Ferret.Boot.Domain.UseCase
                 userRecord.uid = response.PlayFabId;
             }
             _userRecordEntity.Set(userRecord);
+
+            var achievementMaster = _playFabRepository.FetchAchievementMaster(response.InfoResultPayload.TitleData);
+            _achievementMasterEntity.Set(achievementMaster);
 
             return _userRecordEntity.IsSync();
         }
