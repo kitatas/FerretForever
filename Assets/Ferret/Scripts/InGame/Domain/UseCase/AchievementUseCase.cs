@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Ferret.Common;
 using Ferret.Common.Data.DataStore;
 using Ferret.Common.Data.Entity;
+using Ferret.InGame.Domain.Repository;
 
 namespace Ferret.InGame.Domain.UseCase
 {
@@ -10,17 +11,26 @@ namespace Ferret.InGame.Domain.UseCase
     {
         private readonly AchievementMasterEntity _achievementMasterEntity;
         private readonly UserRecordEntity _userRecordEntity;
+        private readonly AchievementRankRepository _achievementRankRepository;
 
-        public AchievementUseCase(AchievementMasterEntity achievementMasterEntity, UserRecordEntity userRecordEntity)
+        public AchievementUseCase(AchievementMasterEntity achievementMasterEntity, UserRecordEntity userRecordEntity,
+            AchievementRankRepository achievementRankRepository)
         {
             _achievementMasterEntity = achievementMasterEntity;
             _userRecordEntity = userRecordEntity;
+            _achievementRankRepository = achievementRankRepository;
         }
 
         public IEnumerable<AchievementData> GetAchievementStatus()
         {
             foreach (var data in _achievementMasterEntity.Get())
             {
+                var tableData = _achievementRankRepository.Find(data.rank);
+                if (tableData != null)
+                {
+                    data.color = tableData.color;
+                }
+
                 switch (data.type)
                 {
                     case AchievementType.HighScore:

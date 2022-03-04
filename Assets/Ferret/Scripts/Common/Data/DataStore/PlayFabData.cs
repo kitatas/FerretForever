@@ -1,5 +1,6 @@
 using System.Linq;
 using PlayFab.ClientModels;
+using UnityEngine;
 
 namespace Ferret.Common.Data.DataStore
 {
@@ -64,5 +65,6 @@ namespace Ferret.Common.Data.DataStore
         public int value;
         public bool isAchieve;
         public string detail;
+        public Color color;
     }
 }

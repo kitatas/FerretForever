@@ -15,6 +15,7 @@ namespace Ferret.InGame
 {
     public sealed class InGameInstaller : LifetimeScope
     {
+        [SerializeField] private AchievementRankTable achievementRankTable = default;
         [SerializeField] private BalloonTable balloonTable = default;
         [SerializeField] private EffectTable effectTable = default;
         [SerializeField] private EnemyTable enemyTable = default;
@@ -39,6 +40,7 @@ namespace Ferret.InGame
             builder.Register<PlayerContainer>(Lifetime.Scoped);
 
             // DataStore
+            builder.RegisterInstance<AchievementRankTable>(achievementRankTable);
             builder.RegisterInstance<BalloonTable>(balloonTable);
             builder.RegisterInstance<EffectTable>(effectTable);
             builder.RegisterInstance<EnemyTable>(enemyTable);
@@ -57,6 +59,7 @@ namespace Ferret.InGame
             builder.Register<PlayerFactory>(Lifetime.Scoped);
 
             // Repository
+            builder.Register<AchievementRankRepository>(Lifetime.Scoped);
             builder.Register<BalloonRepository>(Lifetime.Scoped);
             builder.Register<EffectRepository>(Lifetime.Scoped);
             builder.Register<EnemyRepository>(Lifetime.Scoped);
