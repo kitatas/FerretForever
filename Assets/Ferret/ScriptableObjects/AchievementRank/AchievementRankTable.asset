@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52af15406b634ea9896b1e79a162da13, type: 3}
+  m_Name: AchievementRankTable
+  m_EditorClassIdentifier: 
+  dataList:
+  - {fileID: 11400000, guid: 2b7c152bbaf414bd88960bc8d1375c14, type: 2}
+  - {fileID: 11400000, guid: 76c16c8071b104ae991f5060fa05b032, type: 2}
+  - {fileID: 11400000, guid: cf6af860f03c84f568307dd1bef320c1, type: 2}
+  - {fileID: 11400000, guid: a9dd03820c2d1497d9da9ec192ef005b, type: 2}
