@@ -31,9 +31,10 @@ namespace Ferret.Common
     public enum AchievementType
     {
         None        = 0,
-        HighScore   = 1,
-        TotalScore  = 2,
-        TotalVictim = 3,
+        PlayCount   = 1,
+        HighScore   = 2,
+        TotalScore  = 3,
+        TotalVictim = 4,
     }
 
     public enum AchievementRank

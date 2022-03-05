@@ -33,6 +33,10 @@ namespace Ferret.InGame.Domain.UseCase
 
                 switch (data.type)
                 {
+                    case AchievementType.PlayCount:
+                        data.isAchieve = _userRecordEntity.Get().playCount >= data.value;
+                        data.detail = $"{data.value.ToString()}回プレイした！";
+                        break;
                     case AchievementType.HighScore:
                         data.isAchieve = _userRecordEntity.Get().highRecord.score >= data.value;
                         data.detail = $"ハイスコアで{data.value.ToString()}m以上の記録を出した！";
