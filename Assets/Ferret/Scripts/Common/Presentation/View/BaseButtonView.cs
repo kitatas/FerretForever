@@ -1,36 +1,41 @@
 using System;
 using DG.Tweening;
+using EFUK;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace Ferret.Common.Presentation.View
 {
-    [RequireComponent(typeof(Button))]
     public class BaseButtonView : MonoBehaviour
     {
         public Action push;
 
         public void Init()
         {
-            var button = GetComponent<Button>();
+            var rectTransform = transform.ConvertRectTransform();
             var scale = transform.localScale;
 
             push += () =>
             {
                 DOTween.Sequence()
-                    .Append(button.image.rectTransform
+                    .Append(rectTransform
                         .DOScale(scale * 0.8f, UiConfig.BUTTON_ANIMATION_TIME))
-                    .Append(button.image.rectTransform
+                    .Append(rectTransform
                         .DOScale(scale, UiConfig.BUTTON_ANIMATION_TIME))
                     .SetLink(gameObject);
             };
 
-            button
+            GetComponent<UIBehaviour>()
                 .OnPointerClickAsObservable()
                 .Subscribe(_ => push?.Invoke())
                 .AddTo(this);
+        }
+
+        public void Activate(bool value)
+        {
+            gameObject.SetActive(value);
         }
     }
 }

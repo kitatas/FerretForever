@@ -12,8 +12,8 @@ namespace Ferret.InGame.Presentation.View
     {
         [SerializeField] private TextMeshProUGUI uidText = default;
         [SerializeField] private TMP_InputField nameField = default;
-        [SerializeField] private BaseUiButtonView changeButton = default;
-        [SerializeField] private BaseUiButtonView closeButton = default;
+        [SerializeField] private BaseButtonView changeButton = default;
+        [SerializeField] private BaseButtonView closeButton = default;
         [SerializeField] private TextMeshProUGUI noticeText = default;
         private string _prevUserName;
 

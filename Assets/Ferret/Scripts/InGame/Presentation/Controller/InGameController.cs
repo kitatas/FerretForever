@@ -36,12 +36,6 @@ namespace Ferret.InGame.Presentation.Controller
                 button.push += () => _seController.Play(SeType.Button);
             }
 
-            foreach (var button in Object.FindObjectsOfType<BaseUiButtonView>())
-            {
-                button.Init();
-                button.push += () => _seController.Play(SeType.Button);
-            }
-
             InitVolume();
             _bgmController.Play(BgmType.Title, true);
         }
