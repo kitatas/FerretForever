@@ -18,6 +18,8 @@ namespace Ferret.Common.Domain.UseCase
 
         public float GetSeVolume() => _saveData.seVolume;
 
+        public LanguageType GetLanguageType() => _saveData.language;
+
         public void SaveBgmVolume(float value)
         {
             _saveData.bgmVolume = value;
@@ -27,6 +29,12 @@ namespace Ferret.Common.Domain.UseCase
         public void SaveSeVolume(float value)
         {
             _saveData.seVolume = value;
+            _saveDataRepository.Save(_saveData);
+        }
+
+        public void SaveLanguage(LanguageType type)
+        {
+            _saveData.language = type;
             _saveDataRepository.Save(_saveData);
         }
     }

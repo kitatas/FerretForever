@@ -45,4 +45,11 @@ namespace Ferret.Common
         Silver = 3,
         Gold   = 4,
     }
+
+    public enum LanguageType
+    {
+        None,
+        English,
+        Japanese,
+    }
 }

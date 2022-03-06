@@ -24,6 +24,7 @@ namespace Ferret.Common.Domain.Repository
                 uid = "",
                 bgmVolume = 0.5f,
                 seVolume = 0.5f,
+                language = LanguageType.None,
             };
             Save(newData);
 
