@@ -48,8 +48,8 @@ namespace Ferret.Common
 
     public enum LanguageType
     {
-        None,
-        English,
-        Japanese,
+        None     = 0,
+        English  = 1,
+        Japanese = 2,
     }
 }
