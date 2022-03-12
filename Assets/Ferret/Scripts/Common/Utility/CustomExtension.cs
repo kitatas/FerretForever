@@ -36,5 +36,15 @@ namespace Ferret.Common
             if (exception is CustomPlayFabException) return ErrorConfig.CONNECTION;
             return ErrorConfig.DEFAULT_ERROR;
         }
+
+        public static LanguageType ConvertLanguage(this int index)
+        {
+            return index switch
+            {
+                0 => LanguageType.English,
+                1 => LanguageType.Japanese,
+                _ => throw new ArgumentOutOfRangeException(nameof(index), index, null)
+            };
+        }
     }
 }

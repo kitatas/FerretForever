@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Ferret.Boot.Domain.UseCase;
 using Ferret.Boot.Presentation.View;
 using Ferret.Common;
+using Ferret.Common.Domain.UseCase;
 using Ferret.Common.Presentation.Controller;
 using Ferret.Common.Presentation.Controller.Interface;
 using Ferret.Common.Presentation.View;
@@ -14,32 +15,44 @@ namespace Ferret.Boot.Presentation.Controller
 {
     public sealed class BootController : IPostInitializable, IDisposable
     {
+        private readonly LanguageUseCase _languageUseCase;
         private readonly LoginUseCase _loginUseCase;
+        private readonly SaveDataUseCase _saveDataUseCase;
         private readonly LoadingView _loadingView;
         private readonly ErrorPopupView _errorPopupView;
+        private readonly LanguageView _languageView;
+        private readonly LanguageSelectView _languageSelectView;
         private readonly NameRegistrationView _nameRegistrationView;
         private readonly IBgmController _bgmController;
         private readonly ISeController _seController;
         private readonly SceneLoader _sceneLoader;
         private readonly CancellationTokenSource _tokenSource;
 
-        public BootController(LoginUseCase loginUseCase, LoadingView loadingView, ErrorPopupView errorPopupView,
-            NameRegistrationView nameRegistrationView, IBgmController bgmController, ISeController seController,
-            SceneLoader sceneLoader)
+        public BootController(LanguageUseCase languageUseCase, LoginUseCase loginUseCase, SaveDataUseCase saveDataUseCase,
+            LoadingView loadingView, ErrorPopupView errorPopupView, LanguageView languageView,
+            LanguageSelectView languageSelectView, NameRegistrationView nameRegistrationView,
+            IBgmController bgmController, ISeController seController, SceneLoader sceneLoader)
         {
+            _languageUseCase = languageUseCase;
             _loginUseCase = loginUseCase;
+            _saveDataUseCase = saveDataUseCase;
             _loadingView = loadingView;
             _errorPopupView = errorPopupView;
+            _languageView = languageView;
+            _languageSelectView = languageSelectView;
             _nameRegistrationView = nameRegistrationView;
             _bgmController = bgmController;
             _seController = seController;
             _sceneLoader = sceneLoader;
             _tokenSource = new CancellationTokenSource();
+
+            _loadingView.Activate(false);
         }
 
         public void PostInitialize()
         {
             _errorPopupView.Init();
+            _languageSelectView.Init();
             _nameRegistrationView.Init();
             foreach (var button in Object.FindObjectsOfType<BaseButtonView>())
             {
@@ -73,6 +86,12 @@ namespace Ferret.Boot.Presentation.Controller
                 // 新規ユーザーの場合
                 else
                 {
+                    // 言語選択
+                    var language = await _languageSelectView.DecisionLanguageAsync(token);
+                    _saveDataUseCase.SaveLanguage(language);
+                    _languageView.SetTextData(_languageUseCase.FindBootData(language));
+
+                    // 名前入力
                     await CheckNameAsync(token);
                 }
 
@@ -82,6 +101,7 @@ namespace Ferret.Boot.Presentation.Controller
             }
             catch (Exception e)
             {
+                UnityEngine.Debug.LogWarning($"{e}");
                 _loadingView.Activate(false);
                 await _errorPopupView.PopupAsync($"{e.ConvertErrorMessage()}", token);
                 await BootAsync(token);
