@@ -27,6 +27,7 @@ namespace Ferret.InGame
         [SerializeField] private BridgeAxisView bridgeAxisView = default;
         [SerializeField] private BridgeView bridgeView = default;
         [SerializeField] private InputView inputView = default;
+        [SerializeField] private LanguageView languageView = default;
         [SerializeField] private PlayerCountView playerCountView = default;
         [SerializeField] private ResultView resultView = default;
         [SerializeField] private ScoreView scoreView = default;
@@ -71,6 +72,8 @@ namespace Ferret.InGame
             builder.Register<EffectPoolUseCase>(Lifetime.Scoped);
             builder.Register<EnemyPoolUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
+            builder.Register<LanguageUseCase>(Lifetime.Scoped);
+            builder.Register<LanguageTypeUseCase>(Lifetime.Scoped);
             builder.Register<PlayerPoolUseCase>(Lifetime.Scoped);
             builder.Register<PlayerContainerUseCase>(Lifetime.Scoped);
             builder.Register<PlayerCountUseCase>(Lifetime.Scoped);
@@ -91,6 +94,7 @@ namespace Ferret.InGame
             // Presenter
             builder.RegisterEntryPoint<AchievementPresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<GameStatePresenter>(Lifetime.Scoped);
+            builder.RegisterEntryPoint<LanguagePresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<PlayerCountPresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<ScorePresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<UserInfoPresenter>(Lifetime.Scoped);
@@ -100,6 +104,7 @@ namespace Ferret.InGame
             builder.RegisterInstance<BridgeAxisView>(bridgeAxisView);
             builder.RegisterInstance<BridgeView>(bridgeView);
             builder.RegisterInstance<InputView>(inputView);
+            builder.RegisterInstance<LanguageView>(languageView);
             builder.RegisterInstance<PlayerCountView>(playerCountView);
             builder.RegisterInstance<ResultView>(resultView);
             builder.RegisterInstance<ScoreView>(scoreView);
