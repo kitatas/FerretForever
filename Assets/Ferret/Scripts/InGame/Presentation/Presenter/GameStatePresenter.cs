@@ -16,7 +16,6 @@ namespace Ferret.InGame.Presentation.Presenter
         private readonly GameStateController _gameStateController;
         private readonly ErrorPopupView _errorPopupView;
         private readonly LoadingView _loadingView;
-        private readonly CompositeDisposable _disposable;
         private readonly CancellationTokenSource _tokenSource;
 
         public GameStatePresenter(GameStateUseCase gameStateUseCase, GameStateController gameStateController,
@@ -26,7 +25,6 @@ namespace Ferret.InGame.Presentation.Presenter
             _gameStateController = gameStateController;
             _errorPopupView = errorPopupView;
             _loadingView = loadingView;
-            _disposable = new CompositeDisposable();
             _tokenSource = new CancellationTokenSource();
         }
 
@@ -39,7 +37,7 @@ namespace Ferret.InGame.Presentation.Presenter
                 {
                     ExecStateAsync(x, _tokenSource.Token).Forget();
                 })
-                .AddTo(_disposable);
+                .AddTo(_tokenSource.Token);
         }
 
         private async UniTask ExecStateAsync(GameState state, CancellationToken token)
@@ -59,7 +57,6 @@ namespace Ferret.InGame.Presentation.Presenter
 
         public void Dispose()
         {
-            _disposable?.Dispose();
             _tokenSource?.Cancel();
             _tokenSource?.Dispose();
         }

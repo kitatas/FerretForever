@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace Ferret.InGame.Presentation.Controller
 {
-    public sealed class InGameController : IPostInitializable, IDisposable
+    public sealed class InGameController : IPostInitializable
     {
         private readonly AchievementUseCase _achievementUseCase;
         private readonly LanguageUseCase _languageUseCase;
@@ -22,7 +22,6 @@ namespace Ferret.InGame.Presentation.Controller
         private readonly AchievementView _achievementView;
         private readonly LanguageView _languageView;
         private readonly VolumeView _volumeView;
-        private readonly CompositeDisposable _disposable;
 
         public InGameController(AchievementUseCase achievementUseCase, LanguageUseCase languageUseCase,
             LanguageTypeUseCase languageTypeUseCase, SaveDataUseCase saveDataUseCase, IBgmController bgmController,
@@ -38,7 +37,6 @@ namespace Ferret.InGame.Presentation.Controller
             _achievementView = achievementView;
             _languageView = languageView;
             _volumeView = volumeView;
-            _disposable = new CompositeDisposable();
         }
 
         public void PostInitialize()
@@ -66,18 +64,18 @@ namespace Ferret.InGame.Presentation.Controller
 
             _volumeView.bgmValueChanged
                 .Subscribe(_bgmController.SetVolume)
-                .AddTo(_disposable);
+                .AddTo(_volumeView);
 
             _volumeView.seValueChanged
                 .Subscribe(_seController.SetVolume)
-                .AddTo(_disposable);
+                .AddTo(_volumeView);
 
             _volumeView.bgmSliderPointerUp
                 .Subscribe(_ =>
                 {
                     _saveDataUseCase.SaveBgmVolume(_volumeView.bgmVolume);
                 })
-                .AddTo(_disposable);
+                .AddTo(_volumeView);
 
             _volumeView.seSliderPointerUp
                 .Subscribe(x =>
@@ -85,7 +83,7 @@ namespace Ferret.InGame.Presentation.Controller
                     _seController.Play(SeType.Button);
                     _saveDataUseCase.SaveSeVolume(_volumeView.seVolume);
                 })
-                .AddTo(_disposable);
+                .AddTo(_volumeView);
         }
 
         private void InitLanguage()
@@ -129,11 +127,6 @@ namespace Ferret.InGame.Presentation.Controller
                 AchievementType.TotalVictim => screen.totalVictimCount,
                 _ => throw new ArgumentOutOfRangeException(nameof(achievement), achievement, null)
             };
-        }
-
-        public void Dispose()
-        {
-            _disposable?.Dispose();
         }
     }
 }
