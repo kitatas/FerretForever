@@ -18,4 +18,9 @@ namespace Ferret.InGame
         public const string VICTIM = "Victim";
         public const string CHARA = "Chara";
     }
+
+    public sealed class AchievementConfig
+    {
+        public const string DETAIL_SECRET = "???";
+    }
 }

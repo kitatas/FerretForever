@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ferret.Common;
 using Ferret.Common.Data.DataStore;
 using Ferret.Common.Data.Entity;
@@ -21,7 +22,7 @@ namespace Ferret.InGame.Domain.UseCase
             _achievementRankRepository = achievementRankRepository;
         }
 
-        public IEnumerable<AchievementData> GetAchievementStatus()
+        public List<AchievementData> GetAchievementStatus()
         {
             foreach (var data in _achievementMasterEntity.Get())
             {
@@ -31,30 +32,17 @@ namespace Ferret.InGame.Domain.UseCase
                     data.color = tableData.color;
                 }
 
-                switch (data.type)
+                data.isAchieve = data.type switch
                 {
-                    case AchievementType.PlayCount:
-                        data.isAchieve = _userRecordEntity.Get().playCount >= data.value;
-                        data.detail = $"{data.value.ToString()}回プレイした！";
-                        break;
-                    case AchievementType.HighScore:
-                        data.isAchieve = _userRecordEntity.Get().highRecord.score >= data.value;
-                        data.detail = $"ハイスコアで{data.value.ToString()}m以上の記録を出した！";
-                        break;
-                    case AchievementType.TotalScore:
-                        data.isAchieve = _userRecordEntity.Get().totalRecord.score >= data.value;
-                        data.detail = $"合計で{data.value.ToString()}m以上走った！";
-                        break;
-                    case AchievementType.TotalVictim:
-                        data.isAchieve = _userRecordEntity.Get().totalRecord.victimCount >= data.value;
-                        data.detail = $"合計で{data.value.ToString()}匹以上を犠牲にした...";
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(data.type), data.type, null);
-                }
+                    AchievementType.PlayCount   => _userRecordEntity.Get().playCount >= data.value,
+                    AchievementType.HighScore   => _userRecordEntity.Get().highRecord.score >= data.value,
+                    AchievementType.TotalScore  => _userRecordEntity.Get().totalRecord.score >= data.value,
+                    AchievementType.TotalVictim => _userRecordEntity.Get().totalRecord.victimCount >= data.value,
+                    _ => throw new ArgumentOutOfRangeException(nameof(data.type), data.type, null)
+                };
             }
 
-            return _achievementMasterEntity.Get();
+            return _achievementMasterEntity.Get().ToList();
         }
     }
 }

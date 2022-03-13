@@ -13,20 +13,30 @@ namespace Ferret.InGame.Presentation.Controller
 {
     public sealed class InGameController : IPostInitializable, IDisposable
     {
+        private readonly AchievementUseCase _achievementUseCase;
+        private readonly LanguageUseCase _languageUseCase;
         private readonly LanguageTypeUseCase _languageTypeUseCase;
         private readonly SaveDataUseCase _saveDataUseCase;
         private readonly IBgmController _bgmController;
         private readonly ISeController _seController;
+        private readonly AchievementView _achievementView;
+        private readonly LanguageView _languageView;
         private readonly VolumeView _volumeView;
         private readonly CompositeDisposable _disposable;
 
-        public InGameController(LanguageTypeUseCase languageTypeUseCase, SaveDataUseCase saveDataUseCase,
-            IBgmController bgmController, ISeController seController, VolumeView volumeView)
+        public InGameController(AchievementUseCase achievementUseCase, LanguageUseCase languageUseCase,
+            LanguageTypeUseCase languageTypeUseCase, SaveDataUseCase saveDataUseCase, IBgmController bgmController,
+            ISeController seController, AchievementView achievementView, LanguageView languageView,
+            VolumeView volumeView)
         {
+            _achievementUseCase = achievementUseCase;
+            _languageUseCase = languageUseCase;
             _languageTypeUseCase = languageTypeUseCase;
             _saveDataUseCase = saveDataUseCase;
             _bgmController = bgmController;
             _seController = seController;
+            _achievementView = achievementView;
+            _languageView = languageView;
             _volumeView = volumeView;
             _disposable = new CompositeDisposable();
         }
@@ -40,11 +50,7 @@ namespace Ferret.InGame.Presentation.Controller
 
                 if (button is LanguageButtonView languageButton)
                 {
-                    languageButton.InitButton(x =>
-                    {
-                        _languageTypeUseCase.SetLanguage(x);
-                        _saveDataUseCase.SaveLanguage(x);
-                    });
+                    languageButton.push += () => _languageTypeUseCase.SetLanguage(languageButton.languageType);
                 }
             }
 
@@ -85,6 +91,44 @@ namespace Ferret.InGame.Presentation.Controller
         private void InitLanguage()
         {
             _languageTypeUseCase.SetLanguage(_saveDataUseCase.GetLanguageType());
+
+            _languageTypeUseCase.language
+                .Subscribe(x =>
+                {
+                    var (mainSceneData, hintImage) = _languageUseCase.FindData(x);
+                    _languageView.Display(mainSceneData);
+                    _languageView.SetHint(hintImage);
+                    
+                    _saveDataUseCase.SaveLanguage(x);
+                    InitAchievement(x);
+                })
+                .AddTo(_languageView);
+        }
+
+        private void InitAchievement(LanguageType type)
+        {
+            var achievementData = _achievementUseCase.GetAchievementStatus();
+            foreach (var data in achievementData)
+            {
+                data.detail = data.isAchieve
+                    ? string.Format(GetAchievementDetail(data.type, type), data.value.ToString())
+                    : AchievementConfig.DETAIL_SECRET;
+            }
+
+            _achievementView.SetData(achievementData);
+        }
+
+        private string GetAchievementDetail(AchievementType achievement, LanguageType languageType)
+        {
+            var screen = _languageUseCase.FindData(languageType).Item1.achievement;
+            return achievement switch
+            {
+                AchievementType.PlayCount   => screen.playCount,
+                AchievementType.HighScore   => screen.highScore,
+                AchievementType.TotalScore  => screen.totalScore,
+                AchievementType.TotalVictim => screen.totalVictimCount,
+                _ => throw new ArgumentOutOfRangeException(nameof(achievement), achievement, null)
+            };
         }
 
         public void Dispose()

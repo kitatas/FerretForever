@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using EFUK;
 using Ferret.Common.Data.DataStore;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ namespace Ferret.InGame.Presentation.View
 
         public void SetData(IEnumerable<AchievementData> achievementData)
         {
+            viewPort.gameObject.DestroyChildren();
+
             foreach (var data in achievementData)
             {
                 var detail = Instantiate(detailView, viewPort);
