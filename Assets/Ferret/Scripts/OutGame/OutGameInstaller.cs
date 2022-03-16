@@ -10,6 +10,7 @@ namespace Ferret.OutGame
     public sealed class OutGameInstaller : LifetimeScope
     {
         [SerializeField] private InputView inputView = default;
+        [SerializeField] private LanguageView languageView = default;
         [SerializeField] private RankingView rankingView = default;
         [SerializeField] private RecordView recordView = default;
         [SerializeField] private TweetButtonView tweetButtonView = default;
@@ -17,6 +18,7 @@ namespace Ferret.OutGame
         protected override void Configure(IContainerBuilder builder)
         {
             // UseCase
+            builder.Register<LanguageUseCase>(Lifetime.Scoped);
             builder.Register<RankingDataUseCase>(Lifetime.Scoped);
             builder.Register<UserRecordUseCase>(Lifetime.Scoped);
 
@@ -26,6 +28,7 @@ namespace Ferret.OutGame
 
             // View
             builder.RegisterInstance<InputView>(inputView);
+            builder.RegisterInstance<LanguageView>(languageView);
             builder.RegisterInstance<RankingView>(rankingView);
             builder.RegisterInstance<RecordView>(recordView);
             builder.RegisterInstance<TweetButtonView>(tweetButtonView);

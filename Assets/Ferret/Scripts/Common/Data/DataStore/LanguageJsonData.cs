@@ -73,6 +73,7 @@ namespace Ferret.Common.Data.DataStore
         public string ranking;
         public string highScore;
         public string score;
+        public string tweet;
     }
 
     [Serializable]

@@ -10,20 +10,24 @@ namespace Ferret.OutGame.Presentation.Controller
 {
     public sealed class ResultController
     {
+        private readonly LanguageUseCase _languageUseCase;
         private readonly RankingDataUseCase _rankingDataUseCase;
         private readonly UserRecordUseCase _userRecordUseCase;
+        private readonly LanguageView _languageView;
         private readonly RankingView _rankingView;
         private readonly RecordView _recordView;
         private readonly TweetButtonView _tweetButtonView;
         private readonly ErrorPopupView _errorPopupView;
         private readonly LoadingView _loadingView;
 
-        public ResultController(RankingDataUseCase rankingDataUseCase, UserRecordUseCase userRecordUseCase,
-            RankingView rankingView, RecordView recordView, TweetButtonView tweetButtonView,
-            ErrorPopupView errorPopupView, LoadingView loadingView)
+        public ResultController(LanguageUseCase languageUseCase, RankingDataUseCase rankingDataUseCase,
+            UserRecordUseCase userRecordUseCase, LanguageView languageView, RankingView rankingView, RecordView recordView,
+            TweetButtonView tweetButtonView, ErrorPopupView errorPopupView, LoadingView loadingView)
         {
+            _languageUseCase = languageUseCase;
             _rankingDataUseCase = rankingDataUseCase;
             _userRecordUseCase = userRecordUseCase;
+            _languageView = languageView;
             _rankingView = rankingView;
             _recordView = recordView;
             _tweetButtonView = tweetButtonView;
@@ -41,8 +45,17 @@ namespace Ferret.OutGame.Presentation.Controller
                 var rankingData = await _rankingDataUseCase.GetRankDataAsync(token);
                 _rankingView.SetData(rankingData, _userRecordUseCase.GetUid());
 
-                _recordView.SetRecord(_userRecordUseCase.GetHighRecord(), _userRecordUseCase.GetCurrentRecord());
-                _tweetButtonView.Init(_userRecordUseCase.GetCurrentRecord().score);
+                var currentRecord = _userRecordUseCase.GetCurrentRecord();
+                _recordView.SetRecord(_userRecordUseCase.GetHighRecord(), currentRecord);
+
+                var resultScene = _languageUseCase.GetResultSceneData();
+                _languageView.Display(resultScene);
+
+                var tweetMessage = string.Format(resultScene.tweet,
+                    currentRecord.victimCount.ToString(), currentRecord.score.ToString("F2"));
+                _tweetButtonView.InitTweet(tweetMessage);
+
+                _loadingView.Activate(false);
             }
             catch (Exception e)
             {

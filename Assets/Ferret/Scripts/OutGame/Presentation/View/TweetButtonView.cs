@@ -7,9 +7,10 @@ namespace Ferret.OutGame.Presentation.View
 {
     public sealed class TweetButtonView : BaseButtonView
     {
-        public void Init(float score)
+        public void InitTweet(string tweetMessage)
         {
-            var tweetText = $"{score.ToString("F2")}m\n" + $"#{GameConfig.GAME_ID}\n";
+            var tweetText = $"{tweetMessage}";
+            tweetText += $"#{GameConfig.GAME_ID}\n";
             tweetText += $"{GameConfig.APP_URL}";
             var url = $"https://twitter.com/intent/tweet?text={UnityWebRequest.EscapeURL(tweetText)}";
 
