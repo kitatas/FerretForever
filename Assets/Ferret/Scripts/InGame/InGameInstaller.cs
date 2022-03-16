@@ -95,7 +95,6 @@ namespace Ferret.InGame
             builder.RegisterEntryPoint<GameStatePresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<PlayerCountPresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<ScorePresenter>(Lifetime.Scoped);
-            builder.RegisterEntryPoint<UserInfoPresenter>(Lifetime.Scoped);
 
             // View
             builder.RegisterInstance<AchievementView>(achievementView);

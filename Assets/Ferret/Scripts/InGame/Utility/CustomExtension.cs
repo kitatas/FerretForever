@@ -1,5 +1,6 @@
 using System;
 using Ferret.Common;
+using Ferret.Common.Data.DataStore;
 using UnityEngine;
 
 namespace Ferret.InGame
@@ -34,6 +35,18 @@ namespace Ferret.InGame
                 WebviewType.Credit  => WebviewConfig.URL_CREDIT,
                 WebviewType.License => WebviewConfig.URL_LICENSE,
                 WebviewType.Policy  => WebviewConfig.URL_POLICY,
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+        }
+
+        public static string ConvertDetail(this AchievementType type, AchievementScreen screen)
+        {
+            return type switch
+            {
+                AchievementType.PlayCount   => screen.playCount,
+                AchievementType.HighScore   => screen.highScore,
+                AchievementType.TotalScore  => screen.totalScore,
+                AchievementType.TotalVictim => screen.totalVictimCount,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }

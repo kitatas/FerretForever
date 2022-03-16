@@ -7,7 +7,6 @@ namespace Ferret.InGame.Presentation.View
     public sealed class LanguageView : MonoBehaviour
     {
         [SerializeField] private OptionScreenView optionScreenView = default;
-        [SerializeField] private UpdateScreenView updateScreenView = default;
         [SerializeField] private AchievementScreenView achievementScreenView = default;
         [SerializeField] private InformationScreenView informationScreenView = default;
         [SerializeField] private Image hint = default;
@@ -15,7 +14,6 @@ namespace Ferret.InGame.Presentation.View
         public void Display(MainScene mainScene)
         {
             optionScreenView.Display(mainScene.option);
-            updateScreenView.Display(mainScene.update);
             achievementScreenView.Display(mainScene.achievement);
             informationScreenView.Display(mainScene.information);
         }

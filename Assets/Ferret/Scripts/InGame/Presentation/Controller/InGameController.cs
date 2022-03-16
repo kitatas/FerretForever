@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Ferret.Common;
 using Ferret.Common.Domain.UseCase;
 using Ferret.Common.Presentation.Controller.Interface;
@@ -11,32 +13,39 @@ using Object = UnityEngine.Object;
 
 namespace Ferret.InGame.Presentation.Controller
 {
-    public sealed class InGameController : IPostInitializable
+    public sealed class InGameController : IPostInitializable, IDisposable
     {
         private readonly AchievementUseCase _achievementUseCase;
         private readonly LanguageUseCase _languageUseCase;
         private readonly LanguageTypeUseCase _languageTypeUseCase;
         private readonly SaveDataUseCase _saveDataUseCase;
+        private readonly UserRecordUseCase _userRecordUseCase;
         private readonly IBgmController _bgmController;
         private readonly ISeController _seController;
         private readonly AchievementView _achievementView;
         private readonly LanguageView _languageView;
+        private readonly UserInfoView _userInfoView;
         private readonly VolumeView _volumeView;
+        private readonly CancellationTokenSource _tokenSource;
 
         public InGameController(AchievementUseCase achievementUseCase, LanguageUseCase languageUseCase,
-            LanguageTypeUseCase languageTypeUseCase, SaveDataUseCase saveDataUseCase, IBgmController bgmController,
-            ISeController seController, AchievementView achievementView, LanguageView languageView,
-            VolumeView volumeView)
+            LanguageTypeUseCase languageTypeUseCase, SaveDataUseCase saveDataUseCase,
+            UserRecordUseCase userRecordUseCase, IBgmController bgmController, ISeController seController,
+            AchievementView achievementView, LanguageView languageView, VolumeView volumeView,
+            UserInfoView userInfoView)
         {
             _achievementUseCase = achievementUseCase;
             _languageUseCase = languageUseCase;
             _languageTypeUseCase = languageTypeUseCase;
             _saveDataUseCase = saveDataUseCase;
+            _userRecordUseCase = userRecordUseCase;
             _bgmController = bgmController;
             _seController = seController;
             _achievementView = achievementView;
             _languageView = languageView;
             _volumeView = volumeView;
+            _userInfoView = userInfoView;
+            _tokenSource = new CancellationTokenSource();
         }
 
         public void PostInitialize()
@@ -54,6 +63,7 @@ namespace Ferret.InGame.Presentation.Controller
 
             InitVolume();
             InitLanguage();
+            InitUserInfo();
             _bgmController.Play(BgmType.Title, true);
         }
 
@@ -88,45 +98,61 @@ namespace Ferret.InGame.Presentation.Controller
 
         private void InitLanguage()
         {
-            _languageTypeUseCase.SetLanguage(_saveDataUseCase.GetLanguageType());
+            var achievementData = _achievementUseCase.GetAchievementStatus();
 
+            _languageTypeUseCase.SetLanguage(_saveDataUseCase.GetLanguageType());
             _languageTypeUseCase.language
                 .Subscribe(x =>
                 {
-                    var (mainSceneData, hintImage) = _languageUseCase.FindData(x);
-                    _languageView.Display(mainSceneData);
-                    _languageView.SetHint(hintImage);
-                    
                     _saveDataUseCase.SaveLanguage(x);
-                    InitAchievement(x);
+
+                    var (mainScene, hintImage) = _languageUseCase.FindData(x);
+                    _languageView.Display(mainScene);
+                    _languageView.SetHint(hintImage);
+                    _userInfoView.SetLanguage(mainScene.update);
+
+                    foreach (var data in achievementData)
+                    {
+                        data.detail = data.isAchieve
+                            ? string.Format(data.type.ConvertDetail(mainScene.achievement), data.value.ToString())
+                            : AchievementConfig.DETAIL_SECRET;
+                    }
+                    _achievementView.SetData(achievementData);
                 })
                 .AddTo(_languageView);
         }
 
-        private void InitAchievement(LanguageType type)
+        private void InitUserInfo()
         {
-            var achievementData = _achievementUseCase.GetAchievementStatus();
-            foreach (var data in achievementData)
-            {
-                data.detail = data.isAchieve
-                    ? string.Format(GetAchievementDetail(data.type, type), data.value.ToString())
-                    : AchievementConfig.DETAIL_SECRET;
-            }
-
-            _achievementView.SetData(achievementData);
+            _userInfoView.SetUserData(_userRecordUseCase.GetUserRecord());
+            _userInfoView.InitButton(x => { UpdateNameAsync(x, _tokenSource.Token).Forget(); });
         }
 
-        private string GetAchievementDetail(AchievementType achievement, LanguageType languageType)
+        private async UniTaskVoid UpdateNameAsync(string name, CancellationToken token)
         {
-            var screen = _languageUseCase.FindData(languageType).Item1.achievement;
-            return achievement switch
+            try
             {
-                AchievementType.PlayCount   => screen.playCount,
-                AchievementType.HighScore   => screen.highScore,
-                AchievementType.TotalScore  => screen.totalScore,
-                AchievementType.TotalVictim => screen.totalVictimCount,
-                _ => throw new ArgumentOutOfRangeException(nameof(achievement), achievement, null)
-            };
+                var isSuccess = await _userRecordUseCase.UpdateUserNameAsync(name, token);
+                if (isSuccess)
+                {
+                    _userInfoView.UpdateSuccessUserName();
+                }
+                else
+                {
+                    _userInfoView.UpdateFailedUserName();
+                }
+            }
+            catch (Exception e)
+            {
+                _userInfoView.UpdateFailedUserName();
+                throw;
+            }
+        }
+
+        public void Dispose()
+        {
+            _tokenSource?.Cancel();
+            _tokenSource?.Dispose();
         }
     }
 }
