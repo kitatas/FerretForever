@@ -125,7 +125,10 @@ namespace Ferret.InGame.Presentation.Controller
         private void InitUserInfo()
         {
             _userInfoView.SetUserData(_userRecordUseCase.GetUserRecord());
-            _userInfoView.InitButton(x => { UpdateNameAsync(x, _tokenSource.Token).Forget(); });
+            _userInfoView.InitButton(x =>
+            {
+                UpdateNameAsync(x, _tokenSource.Token).Forget();
+            });
         }
 
         private async UniTaskVoid UpdateNameAsync(string name, CancellationToken token)
