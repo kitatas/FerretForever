@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a14f472b0c643c8861c048168a4214a, type: 3}
+  m_Name: BgmTable
+  m_EditorClassIdentifier: 
+  list:
+  - {fileID: 11400000, guid: 61916111043a34fb3b3864966af26b62, type: 2}
+  - {fileID: 11400000, guid: de5734057ed4249dba0a2ed8be7dd7bb, type: 2}
+  - {fileID: 11400000, guid: af690bb8dce394de893958a5a0348c21, type: 2}
