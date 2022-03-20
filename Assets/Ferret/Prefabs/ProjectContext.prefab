@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -47,4 +48,6 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  transitionMaskView: {fileID: 0}
+  bgmTable: {fileID: 11400000, guid: 0748d17ca03714398ba1e53204a3aa17, type: 2}
+  seTable: {fileID: 11400000, guid: 76474818a240b4b8092b3f5cc89466ed, type: 2}
+  languageTable: {fileID: 11400000, guid: fb49cf4ec7c7b4df1b8c93fb7a23fbee, type: 2}
