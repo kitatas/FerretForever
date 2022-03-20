@@ -48,6 +48,7 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  isCriSound: 1
   bgmTable: {fileID: 11400000, guid: 0748d17ca03714398ba1e53204a3aa17, type: 2}
   seTable: {fileID: 11400000, guid: 76474818a240b4b8092b3f5cc89466ed, type: 2}
   languageTable: {fileID: 11400000, guid: fb49cf4ec7c7b4df1b8c93fb7a23fbee, type: 2}

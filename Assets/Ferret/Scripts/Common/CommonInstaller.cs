@@ -13,6 +13,7 @@ namespace Ferret.Common
 {
     public sealed class CommonInstaller : LifetimeScope
     {
+        [SerializeField] private bool isCriSound = default;
         [SerializeField] private BgmTable bgmTable = default;
         [SerializeField] private SeTable seTable = default;
         [SerializeField] private LanguageTable languageTable = default;
@@ -24,40 +25,56 @@ namespace Ferret.Common
             builder.Register<UserRecordEntity>(Lifetime.Singleton);
 
             // DataStore
-            builder.RegisterInstance<BgmTable>(bgmTable);
-            builder.RegisterInstance<SeTable>(seTable);
             builder.RegisterInstance<LanguageTable>(languageTable);
 
             // Repository
             builder.Register<PlayFabRepository>(Lifetime.Singleton);
             builder.Register<SaveDataRepository>(Lifetime.Singleton);
             builder.Register<LanguageRepository>(Lifetime.Singleton);
-            builder.Register<SoundRepository>(Lifetime.Singleton);
 
             // UseCase
             builder.Register<SaveDataUseCase>(Lifetime.Singleton);
-            builder.Register<SoundUseCase>(Lifetime.Singleton).AsImplementedInterfaces();
 
             // Controller
             builder.Register<SceneLoader>(Lifetime.Singleton);
 
             // MonoBehaviour
             FindObjectOfType<DontDestroyController>().Init();
-            // builder.RegisterInstance<CriBgmController>(FindObjectOfType<CriBgmController>()).AsImplementedInterfaces();
-            // builder.RegisterInstance<CriSeController>(FindObjectOfType<CriSeController>()).AsImplementedInterfaces();
-            var bgm = FindObjectOfType<BgmController>();
-            var se = FindObjectOfType<SeController>();
-            builder.RegisterInstance<BgmController>(bgm).AsImplementedInterfaces();
-            builder.RegisterInstance<SeController>(se).AsImplementedInterfaces();
+            var (bgm, se) = ConfigureSound(builder);
             builder.RegisterInstance<ErrorPopupView>(FindObjectOfType<ErrorPopupView>());
             builder.RegisterInstance<LoadingView>(FindObjectOfType<LoadingView>());
             builder.RegisterInstance<TransitionMaskView>(FindObjectOfType<TransitionMaskView>());
 
             autoInjectGameObjects = new List<GameObject>
             {
-                bgm.gameObject,
-                se.gameObject,
+                bgm,
+                se,
             };
+        }
+
+        private (GameObject, GameObject) ConfigureSound(IContainerBuilder builder)
+        {
+            if (isCriSound)
+            {
+                var bgm = FindObjectOfType<CriBgmController>();
+                var se = FindObjectOfType<CriSeController>();
+                builder.RegisterInstance<CriBgmController>(bgm).AsImplementedInterfaces();
+                builder.RegisterInstance<CriSeController>(se).AsImplementedInterfaces();
+                return (bgm.gameObject, se.gameObject);
+            }
+            else
+            {
+                builder.RegisterInstance<BgmTable>(bgmTable);
+                builder.RegisterInstance<SeTable>(seTable);
+                builder.Register<SoundRepository>(Lifetime.Singleton);
+                builder.Register<SoundUseCase>(Lifetime.Singleton).AsImplementedInterfaces();
+                
+                var bgm = FindObjectOfType<BgmController>();
+                var se = FindObjectOfType<SeController>();
+                builder.RegisterInstance<BgmController>(bgm).AsImplementedInterfaces();
+                builder.RegisterInstance<SeController>(se).AsImplementedInterfaces();
+                return (bgm.gameObject, se.gameObject);
+            }
         }
     }
 }
