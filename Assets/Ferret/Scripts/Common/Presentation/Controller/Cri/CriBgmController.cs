@@ -1,6 +1,7 @@
 using System.Threading;
 using CriWare;
 using Cysharp.Threading.Tasks;
+using EFUK;
 using Ferret.Common.Presentation.Controller.Interface;
 
 namespace Ferret.Common.Presentation.Controller
@@ -21,7 +22,8 @@ namespace Ferret.Common.Presentation.Controller
             }
 
             SetLoop(isLoop);
-            PlayCue(bgmType.ConvertCueName());
+            // loop設定直後に反映されないための措置
+            this.DelayFrame(15, () => PlayCue(bgmType.ConvertCueName()));
         }
 
         public void Stop()
