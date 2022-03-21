@@ -1,4 +1,5 @@
 using System;
+using Ferret.Common.Data.DataStore;
 
 namespace Ferret.Common
 {
@@ -31,10 +32,10 @@ namespace Ferret.Common
             };
         }
 
-        public static string ConvertErrorMessage(this Exception exception)
+        public static string ConvertErrorMessage(this Exception exception, CommonError commonError)
         {
-            if (exception is CustomPlayFabException) return ErrorConfig.CONNECTION;
-            return ErrorConfig.DEFAULT_ERROR;
+            if (exception is CustomPlayFabException) return commonError.connection;
+            return commonError.occurred;
         }
 
         public static LanguageType ConvertLanguage(this int index)

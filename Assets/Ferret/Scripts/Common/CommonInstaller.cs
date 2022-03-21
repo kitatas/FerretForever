@@ -34,9 +34,11 @@ namespace Ferret.Common
 
             // UseCase
             builder.Register<SaveDataUseCase>(Lifetime.Singleton);
+            builder.Register<LanguageUseCase>(Lifetime.Singleton);
 
             // Controller
             builder.Register<SceneLoader>(Lifetime.Singleton);
+            builder.Register<ErrorController>(Lifetime.Singleton);
 
             // MonoBehaviour
             FindObjectOfType<DontDestroyController>().Init();
