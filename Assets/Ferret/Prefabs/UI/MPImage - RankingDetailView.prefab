@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.5, b: 0.5, a: 0.29803923}
+  m_Color: {r: 1, g: 0.5, b: 0.5, a: 0.2}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ff47e48809b49909bd4b2ca2c693549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  background: {fileID: 7689689432273668355}
   rank: {fileID: 3324756261405448391}
   userName: {fileID: 2678621939226703665}
   score: {fileID: 9191270531552232572}
