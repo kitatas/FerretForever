@@ -72,7 +72,6 @@ namespace Ferret.InGame
             builder.Register<EffectPoolUseCase>(Lifetime.Scoped);
             builder.Register<EnemyPoolUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
-            builder.Register<LanguageUseCase>(Lifetime.Scoped);
             builder.Register<LanguageTypeUseCase>(Lifetime.Scoped);
             builder.Register<PlayerPoolUseCase>(Lifetime.Scoped);
             builder.Register<PlayerContainerUseCase>(Lifetime.Scoped);

@@ -1,8 +1,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Ferret.Common;
-using Ferret.Common.Presentation.View;
+using Ferret.Common.Presentation.Controller;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.Controller;
 using UniRx;
@@ -14,17 +13,15 @@ namespace Ferret.InGame.Presentation.Presenter
     {
         private readonly GameStateUseCase _gameStateUseCase;
         private readonly GameStateController _gameStateController;
-        private readonly ErrorPopupView _errorPopupView;
-        private readonly LoadingView _loadingView;
+        private readonly ErrorController _errorController;
         private readonly CancellationTokenSource _tokenSource;
 
         public GameStatePresenter(GameStateUseCase gameStateUseCase, GameStateController gameStateController,
-            ErrorPopupView errorPopupView, LoadingView loadingView)
+            ErrorController errorController)
         {
             _gameStateUseCase = gameStateUseCase;
             _gameStateController = gameStateController;
-            _errorPopupView = errorPopupView;
-            _loadingView = loadingView;
+            _errorController = errorController;
             _tokenSource = new CancellationTokenSource();
         }
 
@@ -49,8 +46,7 @@ namespace Ferret.InGame.Presentation.Presenter
             }
             catch (Exception e)
             {
-                _loadingView.Activate(false);
-                await _errorPopupView.PopupAsync($"{e.ConvertErrorMessage()}", token);
+                await _errorController.PopupErrorAsync(e, token);
                 await ExecStateAsync(_gameStateUseCase.currentState, token);
             }
         }

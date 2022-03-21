@@ -106,7 +106,7 @@ namespace Ferret.InGame.Presentation.Controller
                 {
                     _saveDataUseCase.SaveLanguage(x);
 
-                    var (mainScene, hintImage) = _languageUseCase.FindData(x);
+                    var (mainScene, hintImage) = _languageUseCase.FindMainData(x);
                     _languageView.Display(mainScene);
                     _languageView.SetHint(hintImage);
                     _userInfoView.SetLanguage(mainScene.update);

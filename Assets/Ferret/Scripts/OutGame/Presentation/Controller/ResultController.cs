@@ -1,7 +1,8 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Ferret.Common;
+using Ferret.Common.Domain.UseCase;
+using Ferret.Common.Presentation.Controller;
 using Ferret.Common.Presentation.View;
 using Ferret.OutGame.Domain.UseCase;
 using Ferret.OutGame.Presentation.View;
@@ -12,26 +13,29 @@ namespace Ferret.OutGame.Presentation.Controller
     {
         private readonly LanguageUseCase _languageUseCase;
         private readonly RankingDataUseCase _rankingDataUseCase;
+        private readonly SaveDataUseCase _saveDataUseCase;
         private readonly UserRecordUseCase _userRecordUseCase;
         private readonly LanguageView _languageView;
         private readonly RankingView _rankingView;
         private readonly RecordView _recordView;
         private readonly TweetButtonView _tweetButtonView;
-        private readonly ErrorPopupView _errorPopupView;
+        private readonly ErrorController _errorController;
         private readonly LoadingView _loadingView;
 
         public ResultController(LanguageUseCase languageUseCase, RankingDataUseCase rankingDataUseCase,
-            UserRecordUseCase userRecordUseCase, LanguageView languageView, RankingView rankingView, RecordView recordView,
-            TweetButtonView tweetButtonView, ErrorPopupView errorPopupView, LoadingView loadingView)
+            SaveDataUseCase saveDataUseCase, UserRecordUseCase userRecordUseCase, ErrorController errorController,
+            LanguageView languageView, RankingView rankingView, RecordView recordView, TweetButtonView tweetButtonView,
+            LoadingView loadingView)
         {
             _languageUseCase = languageUseCase;
             _rankingDataUseCase = rankingDataUseCase;
+            _saveDataUseCase = saveDataUseCase;
             _userRecordUseCase = userRecordUseCase;
+            _errorController = errorController;
             _languageView = languageView;
             _rankingView = rankingView;
             _recordView = recordView;
             _tweetButtonView = tweetButtonView;
-            _errorPopupView = errorPopupView;
             _loadingView = loadingView;
         }
 
@@ -48,7 +52,7 @@ namespace Ferret.OutGame.Presentation.Controller
                 var currentRecord = _userRecordUseCase.GetCurrentRecord();
                 _recordView.SetRecord(_userRecordUseCase.GetHighRecord(), currentRecord);
 
-                var resultScene = _languageUseCase.GetResultSceneData();
+                var resultScene = _languageUseCase.FindResultScene(_saveDataUseCase.GetLanguageType());
                 _languageView.Display(resultScene);
 
                 var tweetMessage = string.Format(resultScene.tweet,
@@ -59,8 +63,7 @@ namespace Ferret.OutGame.Presentation.Controller
             }
             catch (Exception e)
             {
-                _loadingView.Activate(false);
-                await _errorPopupView.PopupAsync($"{e.ConvertErrorMessage()}", token);
+                await _errorController.PopupErrorAsync(e, token);
                 await InitViewAsync(token);
             }
         }

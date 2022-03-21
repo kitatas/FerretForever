@@ -19,30 +19,29 @@ namespace Ferret.Boot.Presentation.Controller
         private readonly LoginUseCase _loginUseCase;
         private readonly SaveDataUseCase _saveDataUseCase;
         private readonly LoadingView _loadingView;
-        private readonly ErrorPopupView _errorPopupView;
         private readonly LanguageView _languageView;
         private readonly LanguageSelectView _languageSelectView;
         private readonly NameRegistrationView _nameRegistrationView;
         private readonly IBgmController _bgmController;
         private readonly ISeController _seController;
+        private readonly ErrorController _errorController;
         private readonly SceneLoader _sceneLoader;
         private readonly CancellationTokenSource _tokenSource;
 
         public BootController(LanguageUseCase languageUseCase, LoginUseCase loginUseCase, SaveDataUseCase saveDataUseCase,
-            LoadingView loadingView, ErrorPopupView errorPopupView, LanguageView languageView,
-            LanguageSelectView languageSelectView, NameRegistrationView nameRegistrationView,
-            IBgmController bgmController, ISeController seController, SceneLoader sceneLoader)
+            LoadingView loadingView, LanguageView languageView, LanguageSelectView languageSelectView, NameRegistrationView nameRegistrationView,
+            IBgmController bgmController, ISeController seController, ErrorController errorController, SceneLoader sceneLoader)
         {
             _languageUseCase = languageUseCase;
             _loginUseCase = loginUseCase;
             _saveDataUseCase = saveDataUseCase;
             _loadingView = loadingView;
-            _errorPopupView = errorPopupView;
             _languageView = languageView;
             _languageSelectView = languageSelectView;
             _nameRegistrationView = nameRegistrationView;
             _bgmController = bgmController;
             _seController = seController;
+            _errorController = errorController;
             _sceneLoader = sceneLoader;
             _tokenSource = new CancellationTokenSource();
 
@@ -51,7 +50,6 @@ namespace Ferret.Boot.Presentation.Controller
 
         public void PostInitialize()
         {
-            _errorPopupView.Init();
             _languageSelectView.Init();
             _nameRegistrationView.Init();
             foreach (var button in Object.FindObjectsOfType<BaseButtonView>())
@@ -102,8 +100,8 @@ namespace Ferret.Boot.Presentation.Controller
             catch (Exception e)
             {
                 UnityEngine.Debug.LogWarning($"{e}");
-                _loadingView.Activate(false);
-                await _errorPopupView.PopupAsync($"{e.ConvertErrorMessage()}", token);
+                await _errorController.PopupErrorAsync(e, token);
+
                 await BootAsync(token);
             }
         }
@@ -125,7 +123,7 @@ namespace Ferret.Boot.Presentation.Controller
                     break;
                 }
 
-                await _errorPopupView.PopupAsync(ErrorConfig.REGISTRATION_NAME, token);
+                await _errorController.PopupRegistrationErrorAsync(token);
                 _nameRegistrationView.ResetName();
             }
         }
