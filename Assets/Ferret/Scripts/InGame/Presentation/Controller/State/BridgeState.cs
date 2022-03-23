@@ -34,6 +34,7 @@ namespace Ferret.InGame.Presentation.Controller
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
             _serController.Play(SeType.Fall);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
 
             // 橋形成
             var victimCount = _playerContainerUseCase.GetVictimCount();
@@ -46,6 +47,13 @@ namespace Ferret.InGame.Presentation.Controller
 
                 _serController.Play(SeType.Build);
                 height += 0.8f;
+            }
+
+            // 10匹で橋形成ができなかった時、BGMの辻褄合わせを行う
+            var adjustTime = (InGameConfig.MAX_VICTIM_COUNT - victimCount) * InGameConfig.CONVERT_BRIDGE_TIME;
+            if (adjustTime > 0.0f)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(adjustTime), cancellationToken: token);
             }
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);

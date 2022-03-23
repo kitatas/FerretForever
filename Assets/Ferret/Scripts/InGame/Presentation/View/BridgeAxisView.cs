@@ -34,11 +34,12 @@ namespace Ferret.InGame.Presentation.View
             _victims.Add(victim);
             victim.SetUpBridge();
 
+            var animationTime = InGameConfig.CONVERT_BRIDGE_TIME / 2;
             await DOTween.Sequence()
                 .Append(victim.transform
-                    .DOLocalMoveX(0.0f, 0.05f))
+                    .DOLocalMoveX(0.0f, animationTime))
                 .Append(victim.transform
-                    .DOLocalMoveY(height, 0.05f))
+                    .DOLocalMoveY(height, animationTime))
                 .WithCancellation(token);
         }
 
@@ -46,10 +47,10 @@ namespace Ferret.InGame.Presentation.View
         {
             await DOTween.Sequence()
                 .Append(transform
-                    .DOLocalRotate(_rotateVector, 1.0f)
+                    .DOLocalRotate(_rotateVector, InGameConfig.BUILD_BRIDGE_TIME)
                     .SetEase(Ease.InCirc))
                 .Join(transform
-                    .DOLocalMoveY(-1.9f, 1.0f)
+                    .DOLocalMoveY(-1.9f, InGameConfig.BUILD_BRIDGE_TIME)
                     .SetEase(Ease.InCirc))
                 .WithCancellation(token);
 
@@ -63,7 +64,7 @@ namespace Ferret.InGame.Presentation.View
         {
             await DOTween.Sequence()
                 .Append(transform
-                    .DOLocalRotate(_rotateVector, 0.6f)
+                    .DOLocalRotate(_rotateVector, InGameConfig.BUILD_BRIDGE_TIME)
                     .SetEase(Ease.InCirc))
                 .WithCancellation(token);
 

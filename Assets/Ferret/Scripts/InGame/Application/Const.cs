@@ -4,6 +4,8 @@ namespace Ferret.InGame
     {
         public const int INIT_PLAYER_COUNT = 5;
         public const int MAX_VICTIM_COUNT = 10;
+        public const float CONVERT_BRIDGE_TIME = 0.1f;
+        public const float BUILD_BRIDGE_TIME = 1.0f;
     }
 
     public sealed class TagConfig
