@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Ferret.Common;
-using Ferret.Common.Presentation.Controller.Interface;
+using Ferret.Common.Presentation.Controller;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
 

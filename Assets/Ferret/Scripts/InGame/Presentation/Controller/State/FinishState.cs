@@ -1,6 +1,6 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Ferret.Common.Presentation.Controller.Interface;
+using Ferret.Common.Presentation.Controller;
 using Ferret.InGame.Presentation.View;
 
 namespace Ferret.InGame.Presentation.Controller

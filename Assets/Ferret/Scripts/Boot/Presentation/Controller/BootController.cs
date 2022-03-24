@@ -6,7 +6,6 @@ using Ferret.Boot.Presentation.View;
 using Ferret.Common;
 using Ferret.Common.Domain.UseCase;
 using Ferret.Common.Presentation.Controller;
-using Ferret.Common.Presentation.Controller.Interface;
 using Ferret.Common.Presentation.View;
 using VContainer.Unity;
 using Object = UnityEngine.Object;

@@ -3,7 +3,6 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Ferret.Common;
 using Ferret.Common.Presentation.Controller;
-using Ferret.Common.Presentation.Controller.Interface;
 using Ferret.Common.Presentation.View;
 using Ferret.OutGame.Presentation.View;
 using VContainer.Unity;

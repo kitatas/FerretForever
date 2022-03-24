@@ -1,7 +1,6 @@
 using System.Threading;
 using CriWare;
 using Cysharp.Threading.Tasks;
-using Ferret.Common.Presentation.Controller.Interface;
 
 namespace Ferret.Common.Presentation.Controller
 {

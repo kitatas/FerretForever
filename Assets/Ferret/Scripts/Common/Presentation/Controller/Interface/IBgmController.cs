@@ -1,7 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Ferret.Common.Presentation.Controller.Interface
+namespace Ferret.Common.Presentation.Controller
 {
     public interface IBgmController
     {

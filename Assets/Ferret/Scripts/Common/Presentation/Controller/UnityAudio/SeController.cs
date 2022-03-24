@@ -1,7 +1,6 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Ferret.Common.Domain.UseCase.Interface;
-using Ferret.Common.Presentation.Controller.Interface;
 using VContainer;
 
 namespace Ferret.Common.Presentation.Controller

@@ -1,4 +1,4 @@
-using Ferret.Common.Presentation.Controller.Interface;
+using Ferret.Common.Presentation.Controller;
 using Ferret.InGame.Presentation.Controller;
 using UniRx.Toolkit;
 using UnityEngine;
