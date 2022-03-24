@@ -129,7 +129,7 @@ namespace Ferret.Boot.Presentation.Controller
 
         public void Dispose()
         {
-            _tokenSource.Cancel();
+            _tokenSource?.Cancel();
             _tokenSource?.Dispose();
         }
     }

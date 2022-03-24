@@ -4,11 +4,11 @@ namespace Ferret.Common.Presentation.Controller
 {
     public sealed class DontDestroyController : MonoBehaviour
     {
-        public static DontDestroyController Instance { get; private set; }
+        private static DontDestroyController _instance;
 
-        private void Start()
+        private void Awake()
         {
-            if (Instance != this)
+            if (_instance != this)
             {
                 Destroy(gameObject);
             }
@@ -16,7 +16,7 @@ namespace Ferret.Common.Presentation.Controller
 
         public void Init()
         {
-            Instance = this;
+            _instance = this;
 
             DontDestroyOnLoad(gameObject);
         }

@@ -26,6 +26,11 @@ namespace Ferret.InGame.Presentation.View
                 .DOAnchorPosY(-160.0f, _animationTime)
                 .WithCancellation(token);
 
+            SetTapScreen();
+        }
+
+        private void SetTapScreen()
+        {
             tapScreen.color = tapScreen.color.SetAlpha(1.0f);
             tapScreen
                 .DOFade(0.0f, _animationTime)

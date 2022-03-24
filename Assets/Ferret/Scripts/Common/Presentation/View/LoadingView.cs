@@ -9,7 +9,7 @@ namespace Ferret.Common.Presentation.View
         [SerializeField] private TextMeshProUGUI loadText = default;
         [SerializeField] private GameObject icon = default;
 
-        private void Start()
+        private void Awake()
         {
             var animator = new DOTweenTMPAnimator(loadText);
             var offset = Vector3.up * 5.0f;
