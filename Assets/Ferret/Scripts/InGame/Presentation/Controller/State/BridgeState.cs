@@ -13,6 +13,7 @@ namespace Ferret.InGame.Presentation.Controller
         private readonly PlayerContainerUseCase _playerContainerUseCase;
         private readonly PlayerCountUseCase _playerCountUseCase;
         private readonly ISeController _serController;
+        private readonly CameraController _cameraController;
         private readonly BridgeAxisView _bridgeAxisView;
 
         public BridgeState(PlayerContainerUseCase playerContainerUseCase, PlayerCountUseCase playerCountUseCase,
@@ -21,6 +22,7 @@ namespace Ferret.InGame.Presentation.Controller
             _playerContainerUseCase = playerContainerUseCase;
             _playerCountUseCase = playerCountUseCase;
             _serController = seController;
+            _cameraController = UnityEngine.Object.FindObjectOfType<CameraController>();
             _bridgeAxisView = bridgeAxisView;
         }
 
@@ -62,11 +64,16 @@ namespace Ferret.InGame.Presentation.Controller
             if (victimCount == InGameConfig.MAX_VICTIM_COUNT)
             {
                 await _bridgeAxisView.BuildBridgeAsync(token);
+                _cameraController.Shake();
                 _serController.Play(SeType.Ground);
             }
             else
             {
                 await _bridgeAxisView.BuildBridgeFailedAsync(token);
+                for (int i = 0; i < victimCount; i++)
+                {
+                    _serController.Play(SeType.Scream);
+                }
             }
 
             if (_playerContainerUseCase.IsNone())

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,13 @@ namespace Ferret.Common.Presentation.Controller
             {
                 GetComponent<Camera>().orthographicSize *= d;
             }
+        }
+
+        public void Shake()
+        {
+            transform
+                .DOShakePosition(0.5f, 1.5f)
+                .SetLink(gameObject);
         }
     }
 }
