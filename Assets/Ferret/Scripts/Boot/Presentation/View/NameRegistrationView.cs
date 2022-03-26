@@ -54,6 +54,8 @@ namespace Ferret.Boot.Presentation.View
                     .SetEase(Ease.OutQuart))
                 .SetLink(panel.gameObject)
                 .WithCancellation(token);
+
+            Init();
         }
 
         public void ResetName()

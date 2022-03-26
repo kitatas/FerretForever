@@ -55,6 +55,8 @@ namespace Ferret.Boot.Presentation.View
                 .SetLink(panel.gameObject)
                 .WithCancellation(token);
 
+            Init();
+
             return index.ConvertLanguage();
         }
     }
