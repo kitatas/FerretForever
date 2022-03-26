@@ -11,53 +11,56 @@ namespace Ferret.Boot.Domain.UseCase
     {
         private readonly UserRecordEntity _userRecordEntity;
         private readonly AchievementMasterEntity _achievementMasterEntity;
-        private readonly SaveDataRepository _saveDataRepository;
         private readonly PlayFabRepository _playFabRepository;
 
-        public LoginUseCase(UserRecordEntity userRecordEntity, AchievementMasterEntity achievementMasterEntity, SaveDataRepository saveDataRepository, PlayFabRepository playFabRepository)
+        public LoginUseCase(UserRecordEntity userRecordEntity, AchievementMasterEntity achievementMasterEntity, PlayFabRepository playFabRepository)
         {
             _userRecordEntity = userRecordEntity;
             _achievementMasterEntity = achievementMasterEntity;
-            _saveDataRepository = saveDataRepository;
             _playFabRepository = playFabRepository;
         }
 
-        public async UniTask<LoginResult> LoginAsync(CancellationToken token)
+        public async UniTask<bool> IsLoginAsync(string uid, CancellationToken token)
         {
-            var saveData = _saveDataRepository.Load();
-            if (string.IsNullOrEmpty(saveData.uid))
-            {
-                var (response, uid) = await _playFabRepository.CreateUserDataAsync(token);
+            var response = await _playFabRepository.LoadUserDataAsync(uid, token);
+            FetchData(response);
 
-                saveData.uid = uid;
-                _saveDataRepository.Save(saveData);
-
-                return response;
-            }
-            else
-            {
-                return await _playFabRepository.LoadUserDataAsync(saveData.uid, token);
-            }
+            return _userRecordEntity.IsSync();
         }
 
-        public bool SyncUserRecord(LoginResult response)
+        public async UniTask<string> CreateUidAsync(CancellationToken token)
+        {
+            var (response, uid) = await _playFabRepository.CreateUserDataAsync(token);
+            FetchData(response);
+
+            return uid;
+        }
+
+        private void FetchData(LoginResult response)
         {
             if (response.InfoResultPayload == null)
             {
                 throw new Exception($"response.InfoResultPayload is null.");
             }
 
+            FetchMasterData(response);
+            FetchUserData(response);
+        }
+
+        private void FetchMasterData(LoginResult response)
+        {
+            var achievementMaster = _playFabRepository.FetchAchievementMaster(response.InfoResultPayload.TitleData);
+            _achievementMasterEntity.Set(achievementMaster);
+        }
+
+        private void FetchUserData(LoginResult response)
+        {
             var userRecord = _playFabRepository.FetchUserRecord(response.InfoResultPayload.UserData);
             if (string.IsNullOrEmpty(userRecord.uid))
             {
                 userRecord.uid = response.PlayFabId;
             }
             _userRecordEntity.Set(userRecord);
-
-            var achievementMaster = _playFabRepository.FetchAchievementMaster(response.InfoResultPayload.TitleData);
-            _achievementMasterEntity.Set(achievementMaster);
-
-            return _userRecordEntity.IsSync();
         }
 
         public async UniTask<bool> RegisterUserNameAsync(string userName, CancellationToken token)

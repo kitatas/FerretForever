@@ -71,9 +71,9 @@ namespace Ferret.Common.Domain.Repository
 
         public IEnumerable<AchievementData> FetchAchievementMaster(Dictionary<string, string> titleData)
         {
-            return JsonConvert
-                .DeserializeObject<AchievementData[]>(titleData[MasterConfig.ACHIEVEMENT_NAME])
-                .ToList();
+            return titleData.TryGetValue(MasterConfig.ACHIEVEMENT_NAME, out var achievement)
+                ? JsonConvert.DeserializeObject<AchievementData[]>(achievement)
+                : throw new InvalidOperationException();
         }
 
         public async UniTask<bool> UpdateDisplayNameAsync(string name, CancellationToken token)

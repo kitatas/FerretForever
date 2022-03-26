@@ -66,30 +66,33 @@ namespace Ferret.Boot.Presentation.Controller
             {
                 _loadingView.Activate(true);
 
-                var response = await _loginUseCase.LoginAsync(token);
-
                 await (
                     _bgmController.InitAsync(token),
                     _seController.InitAsync(token)
                 );
 
-                _loadingView.Activate(false);
-
                 // 既存ユーザーの場合
-                if (_loginUseCase.SyncUserRecord(response))
+                if (_saveDataUseCase.HasUid())
                 {
+                    var isLogin = await _loginUseCase.IsLoginAsync(_saveDataUseCase.GetUid(), token);
 
+                    _loadingView.Activate(false);
+
+                    // ユーザー名が未登録の場合
+                    if (isLogin == false)
+                    {
+                        await RegisterAsync(token);
+                    }
                 }
                 // 新規ユーザーの場合
                 else
                 {
-                    // 言語選択
-                    var language = await _languageSelectView.DecisionLanguageAsync(token);
-                    _saveDataUseCase.SaveLanguage(language);
-                    _languageView.SetTextData(_languageUseCase.FindBootData(language));
+                    var uid = await _loginUseCase.CreateUidAsync(token);
+                    _saveDataUseCase.SaveUid(uid);
 
-                    // 名前入力
-                    await CheckNameAsync(token);
+                    _loadingView.Activate(false);
+
+                    await RegisterAsync(token);
                 }
 
                 await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
@@ -105,7 +108,18 @@ namespace Ferret.Boot.Presentation.Controller
             }
         }
 
-        private async UniTask CheckNameAsync(CancellationToken token)
+        private async UniTask RegisterAsync(CancellationToken token)
+        {
+            // 言語選択
+            var language = await _languageSelectView.DecisionLanguageAsync(token);
+            _saveDataUseCase.SaveLanguage(language);
+            _languageView.SetTextData(_languageUseCase.FindBootData(language));
+
+            // 名前入力
+            await RegisterNameAsync(token);
+        }
+
+        private async UniTask RegisterNameAsync(CancellationToken token)
         {
             while (true)
             {

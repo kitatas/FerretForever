@@ -14,11 +14,21 @@ namespace Ferret.Common.Domain.UseCase
             _saveData = _saveDataRepository.Load();
         }
 
+        public bool HasUid() => string.IsNullOrEmpty(_saveData.uid) == false;
+
+        public string GetUid() => _saveData.uid;
+
         public float GetBgmVolume() => _saveData.bgmVolume;
 
         public float GetSeVolume() => _saveData.seVolume;
 
         public LanguageType GetLanguageType() => _saveData.language;
+
+        public void SaveUid(string uid)
+        {
+            _saveData.uid = uid;
+            _saveDataRepository.Save(_saveData);
+        }
 
         public void SaveBgmVolume(float value)
         {
