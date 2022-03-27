@@ -18,6 +18,12 @@ namespace Ferret.Common.Presentation.View
             var loopInterval = length * rate + 0.5f;
             for (int i = 0; i < length; i++)
             {
+                // 警告が出ないようにwhite spaceは除外する
+                if (char.IsWhiteSpace(loadText.text[i]))
+                {
+                    continue;
+                }
+
                 var interval = i * 0.1f;
                 DOTween.Sequence()
                     .AppendInterval(0.5f)
