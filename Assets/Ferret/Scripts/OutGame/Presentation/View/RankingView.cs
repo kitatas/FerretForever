@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Ferret.Common.Data.DataStore;
 using UnityEngine;
 
@@ -8,15 +9,12 @@ namespace Ferret.OutGame.Presentation.View
         [SerializeField] private RectTransform viewport = default;
         [SerializeField] private RankingDetailView detailView = default;
 
-        public void SetData(RankingData[] rankingData, string uid)
+        public void SetData(IEnumerable<RankingData> rankingData)
         {
-            var length = Mathf.Min(rankingData.Length, RankingConfig.SHOW_MAX_RANK);
-
-            for (int i = 0; i < length; i++)
+            foreach (var data in rankingData)
             {
                 var detail = Instantiate(detailView, viewport);
-                var isSelf = rankingData[i].playerId.Equals(uid);
-                detail.SetData(rankingData[i], isSelf);
+                detail.SetData(data);
             }
         }
     }

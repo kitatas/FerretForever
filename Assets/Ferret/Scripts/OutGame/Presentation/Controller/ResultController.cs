@@ -12,9 +12,8 @@ namespace Ferret.OutGame.Presentation.Controller
     public sealed class ResultController
     {
         private readonly LanguageUseCase _languageUseCase;
-        private readonly RankingDataUseCase _rankingDataUseCase;
         private readonly SaveDataUseCase _saveDataUseCase;
-        private readonly UserRecordUseCase _userRecordUseCase;
+        private readonly ResultUseCase _resultUseCase;
         private readonly LanguageView _languageView;
         private readonly RankingView _rankingView;
         private readonly RecordView _recordView;
@@ -22,15 +21,13 @@ namespace Ferret.OutGame.Presentation.Controller
         private readonly ErrorController _errorController;
         private readonly LoadingView _loadingView;
 
-        public ResultController(LanguageUseCase languageUseCase, RankingDataUseCase rankingDataUseCase,
-            SaveDataUseCase saveDataUseCase, UserRecordUseCase userRecordUseCase, ErrorController errorController,
-            LanguageView languageView, RankingView rankingView, RecordView recordView, TweetButtonView tweetButtonView,
-            LoadingView loadingView)
+        public ResultController(LanguageUseCase languageUseCase, SaveDataUseCase saveDataUseCase,
+            ResultUseCase resultUseCase, ErrorController errorController, LanguageView languageView,
+            RankingView rankingView, RecordView recordView, TweetButtonView tweetButtonView, LoadingView loadingView)
         {
             _languageUseCase = languageUseCase;
-            _rankingDataUseCase = rankingDataUseCase;
             _saveDataUseCase = saveDataUseCase;
-            _userRecordUseCase = userRecordUseCase;
+            _resultUseCase = resultUseCase;
             _errorController = errorController;
             _languageView = languageView;
             _rankingView = rankingView;
@@ -41,23 +38,24 @@ namespace Ferret.OutGame.Presentation.Controller
 
         public async UniTask InitViewAsync(CancellationToken token)
         {
+            _loadingView.Activate(true);
+
             // ランキング更新待ち
             await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
 
             try
             {
-                var rankingData = await _rankingDataUseCase.GetRankDataAsync(token);
-                _rankingView.SetData(rankingData, _userRecordUseCase.GetUid());
+                // ランキングリストの作成
+                var rankingData = await _resultUseCase.GetRankDataAsync(token);
+                _rankingView.SetData(rankingData);
 
-                var currentRecord = _userRecordUseCase.GetCurrentRecord();
-                _recordView.SetRecord(_userRecordUseCase.GetHighRecord(), currentRecord);
+                // 自身のスコアを設定
+                _recordView.SetRecord(_resultUseCase.GetSelfRecord());
 
+                // 選択中の言語から文言を設定
                 var resultScene = _languageUseCase.FindResultScene(_saveDataUseCase.GetLanguageType());
                 _languageView.Display(resultScene);
-
-                var tweetMessage = string.Format(resultScene.tweet,
-                    currentRecord.victimCount.ToString(), currentRecord.score.ToString("F2"));
-                _tweetButtonView.InitTweet(tweetMessage);
+                _tweetButtonView.InitTweet(_resultUseCase.BuildTweetMessage(resultScene));
 
                 _loadingView.Activate(false);
             }

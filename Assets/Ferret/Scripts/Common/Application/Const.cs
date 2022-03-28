@@ -14,6 +14,7 @@ namespace Ferret.Common
         public const string RANKING_NAME = "";
         public const string ACHIEVEMENT_NAME = "";
         public const int SCORE_RATE = 1000;
+        public const int SHOW_MAX_RANK = 100;
     }
 
     public sealed class UiConfig

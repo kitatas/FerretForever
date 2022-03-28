@@ -141,8 +141,9 @@ namespace Ferret.Common.Domain.Repository
                 ProfileConstraints = new PlayerProfileViewConstraints
                 {
                     ShowDisplayName = true,
-                    ShowStatistics = true
-                }
+                    ShowStatistics = true,
+                },
+                MaxResultsCount = MasterConfig.SHOW_MAX_RANK,
             };
 
             var response = await PlayFabClientAPI.GetLeaderboardAsync(request);

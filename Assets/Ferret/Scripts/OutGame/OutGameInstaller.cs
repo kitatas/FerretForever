@@ -18,8 +18,7 @@ namespace Ferret.OutGame
         protected override void Configure(IContainerBuilder builder)
         {
             // UseCase
-            builder.Register<RankingDataUseCase>(Lifetime.Scoped);
-            builder.Register<UserRecordUseCase>(Lifetime.Scoped);
+            builder.Register<ResultUseCase>(Lifetime.Scoped);
 
             // Controller
             builder.RegisterEntryPoint<OutGameController>(Lifetime.Scoped);

@@ -1,4 +1,3 @@
-using Ferret.Common;
 using Ferret.Common.Data.DataStore;
 using TMPro;
 using UnityEngine;
@@ -13,19 +12,17 @@ namespace Ferret.OutGame.Presentation.View
         [SerializeField] private TextMeshProUGUI userName = default;
         [SerializeField] private TextMeshProUGUI score = default;
 
-        public void SetData(RankingData rankingData, bool isSelf)
+        public void SetData(RankingData rankingData)
         {
             // 自身のラベルのみ色を変更
-            if (isSelf)
+            if (rankingData.isSelf)
             {
                 background.color = RankingConfig.SELF_BACKGROUND_COLOR;
             }
 
             rank.text = $"{rankingData.playerRank.ToString()}";
             userName.text = $"{rankingData.playerName}";
-
-            var highScore = rankingData.highScore / MasterConfig.SCORE_RATE;
-            score.text = $"{highScore.ToString("F2")}";
+            score.text = $"{rankingData.displayScore.ToString("F2")}";
         }
     }
 }

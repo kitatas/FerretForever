@@ -48,6 +48,8 @@ namespace Ferret.Common.Data.DataStore
         public int playerRank;
         public string playerName;
         public float highScore;
+        public float displayScore;
+        public bool isSelf;
 
         public RankingData(PlayerLeaderboardEntry entry)
         {

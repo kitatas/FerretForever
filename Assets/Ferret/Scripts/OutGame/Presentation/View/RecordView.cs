@@ -1,5 +1,4 @@
-using EFUK;
-using Ferret.Common.Data.DataStore;
+using Ferret.OutGame.Data.Entity;
 using TMPro;
 using UnityEngine;
 
@@ -12,17 +11,13 @@ namespace Ferret.OutGame.Presentation.View
         [SerializeField] private TextMeshProUGUI highScore = default;
         [SerializeField] private TextMeshProUGUI score = default;
 
-        public void SetRecord(RecordData highRecord, RecordData currentRecord)
+        public void SetRecord(ResultRecordEntity record)
         {
-            var highScoreValue = highRecord.score;
-            var scoreValue = currentRecord.score;
+            newRecordLabel.SetActive(record.isNewRecord);
+            background.SetActive(record.isNewRecord);
 
-            var isNewRecord = scoreValue.Equal(highScoreValue);
-            newRecordLabel.SetActive(isNewRecord);
-            background.SetActive(isNewRecord);
-
-            highScore.text = $"{highScoreValue.ToString("F2")}";
-            score.text = $"{scoreValue.ToString("F2")}";
+            highScore.text = $"{record.highScore.ToString("F2")}";
+            score.text = $"{record.currentScore.ToString("F2")}";
         }
     }
 }
