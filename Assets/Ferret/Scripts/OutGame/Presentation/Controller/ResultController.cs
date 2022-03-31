@@ -53,7 +53,7 @@ namespace Ferret.OutGame.Presentation.Controller
                 _recordView.SetRecord(_resultUseCase.GetSelfRecord());
 
                 // 選択中の言語から文言を設定
-                var resultScene = _languageUseCase.FindResultScene(_saveDataUseCase.GetLanguageType());
+                var resultScene = _languageUseCase.FindResultScene(_saveDataUseCase.languageType);
                 _languageView.Display(resultScene);
                 _tweetButtonView.InitTweet(_resultUseCase.BuildTweetMessage(resultScene));
 

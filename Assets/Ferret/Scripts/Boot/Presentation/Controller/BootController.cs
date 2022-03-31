@@ -74,7 +74,7 @@ namespace Ferret.Boot.Presentation.Controller
                 // 既存ユーザーの場合
                 if (_saveDataUseCase.HasUid())
                 {
-                    var isLogin = await _loginUseCase.IsLoginAsync(_saveDataUseCase.GetUid(), token);
+                    var isLogin = await _loginUseCase.IsLoginAsync(_saveDataUseCase.uid, token);
 
                     _loadingView.Activate(false);
 

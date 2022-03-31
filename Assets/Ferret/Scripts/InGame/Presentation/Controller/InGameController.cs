@@ -69,8 +69,7 @@ namespace Ferret.InGame.Presentation.Controller
 
         private void InitVolume()
         {
-            _volumeView.SetBgmVolume(_saveDataUseCase.GetBgmVolume());
-            _volumeView.SetSeVolume(_saveDataUseCase.GetSeVolume());
+            _volumeView.SetVolume(_saveDataUseCase.volume);
 
             _volumeView.bgmValueChanged
                 .Subscribe(_bgmController.SetVolume)
@@ -100,7 +99,7 @@ namespace Ferret.InGame.Presentation.Controller
         {
             var achievementData = _achievementUseCase.GetAchievementStatus();
 
-            _languageTypeUseCase.SetLanguage(_saveDataUseCase.GetLanguageType());
+            _languageTypeUseCase.SetLanguage(_saveDataUseCase.languageType);
             _languageTypeUseCase.language
                 .Subscribe(x =>
                 {

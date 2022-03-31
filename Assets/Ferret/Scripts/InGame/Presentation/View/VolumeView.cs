@@ -23,5 +23,11 @@ namespace Ferret.InGame.Presentation.View
 
         public void SetBgmVolume(float value) => bgmSlider.value = value;
         public void SetSeVolume(float value) => seSlider.value = value;
+
+        public void SetVolume((float bgm, float se) volume)
+        {
+            SetBgmVolume(volume.bgm);
+            SetSeVolume(volume.se);
+        }
     }
 }

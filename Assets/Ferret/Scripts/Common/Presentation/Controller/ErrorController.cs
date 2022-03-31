@@ -27,14 +27,14 @@ namespace Ferret.Common.Presentation.Controller
         public async UniTask PopupErrorAsync(Exception exception, CancellationToken token)
         {
             _loadingView.Activate(false);
-            var commonError = _languageUseCase.FindCommonError(_saveDataUseCase.GetLanguageType());
+            var commonError = _languageUseCase.FindCommonError(_saveDataUseCase.languageType);
             await _errorPopupView.PopupAsync($"{exception.ConvertErrorMessage(commonError)}", token);
         }
 
         public async UniTask PopupRegistrationErrorAsync(CancellationToken token)
         {
             _loadingView.Activate(false);
-            var commonError = _languageUseCase.FindCommonError(_saveDataUseCase.GetLanguageType());
+            var commonError = _languageUseCase.FindCommonError(_saveDataUseCase.languageType);
             await _errorPopupView.PopupAsync(commonError.registration, token);
         }
     }
