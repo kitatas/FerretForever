@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
 using EFUK;
 using Ferret.Common.Domain.Repository;
-using Ferret.Common.Domain.UseCase.Interface;
 using UnityEngine;
 
 namespace Ferret.Common.Domain.UseCase

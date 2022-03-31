@@ -87,7 +87,7 @@ namespace Ferret.InGame.Presentation.Controller
                 .AddTo(_volumeView);
 
             _volumeView.seSliderPointerUp
-                .Subscribe(x =>
+                .Subscribe(_ =>
                 {
                     _seController.Play(SeType.Button);
                     _saveDataUseCase.SaveSeVolume(_volumeView.seVolume);

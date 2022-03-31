@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Ferret.Common.Domain.UseCase.Interface
+namespace Ferret.Common.Domain.UseCase
 {
     public interface IBgmUseCase
     {
