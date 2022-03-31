@@ -97,7 +97,7 @@ namespace Ferret.Boot.Presentation.Controller
 
                 await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
 
-                _sceneLoader.LoadScene(SceneName.Main);
+                _sceneLoader.FadeLoadScene(SceneName.Main);
             }
             catch (Exception e)
             {

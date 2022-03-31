@@ -48,11 +48,11 @@ namespace Ferret.OutGame.Presentation.Controller
 
             _bgmController.Play(BgmType.Result, true);
 
-            await _sceneLoader.LoadingFadeOutAsync(token);
+            await _sceneLoader.FadeOutAsync(token);
 
             await _inputView.OnClickAsync(token);
 
-            _sceneLoader.LoadScene(SceneName.Main);
+            _sceneLoader.FadeLoadScene(SceneName.Main);
         }
 
         public void Dispose()

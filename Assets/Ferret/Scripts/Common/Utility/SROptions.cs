@@ -12,6 +12,6 @@ public partial class SROptions
     {
         var container = VContainerSettings.Instance.RootLifetimeScope.Container;
         var sceneLoader = container.Resolve(typeof(SceneLoader)) as SceneLoader;
-        sceneLoader?.LoadScene(SceneName.Main);
+        sceneLoader?.FadeLoadScene(SceneName.Main);
     }
 }
