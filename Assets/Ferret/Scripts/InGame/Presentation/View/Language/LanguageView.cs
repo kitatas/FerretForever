@@ -11,16 +11,12 @@ namespace Ferret.InGame.Presentation.View
         [SerializeField] private InformationScreenView informationScreenView = default;
         [SerializeField] private Image hint = default;
 
-        public void Display(MainScene mainScene)
+        public void Display((MainScene mainScene, Sprite hintSprite) mainData)
         {
-            optionScreenView.Display(mainScene.option);
-            achievementScreenView.Display(mainScene.achievement);
-            informationScreenView.Display(mainScene.information);
-        }
-
-        public void SetHint(Sprite sprite)
-        {
-            hint.sprite = sprite;
+            optionScreenView.Display(mainData.mainScene.option);
+            achievementScreenView.Display(mainData.mainScene.achievement);
+            informationScreenView.Display(mainData.mainScene.information);
+            hint.sprite = mainData.hintSprite;
         }
     }
 }

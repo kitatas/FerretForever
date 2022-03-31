@@ -105,15 +105,14 @@ namespace Ferret.InGame.Presentation.Controller
                 {
                     _saveDataUseCase.SaveLanguage(x);
 
-                    var (mainScene, hintImage) = _languageUseCase.FindMainData(x);
-                    _languageView.Display(mainScene);
-                    _languageView.SetHint(hintImage);
-                    _userInfoView.SetLanguage(mainScene.update);
+                    var mainData = _languageUseCase.FindMainData(x);
+                    _languageView.Display(mainData);
+                    _userInfoView.SetLanguage(mainData.mainScene.update);
 
                     foreach (var data in achievementData)
                     {
                         data.detail = data.isAchieve
-                            ? string.Format(data.type.ConvertDetail(mainScene.achievement), data.value.ToString())
+                            ? string.Format(data.type.ConvertDetail(mainData.mainScene.achievement), data.value.ToString())
                             : AchievementConfig.DETAIL_SECRET;
                     }
                     _achievementView.SetData(achievementData);

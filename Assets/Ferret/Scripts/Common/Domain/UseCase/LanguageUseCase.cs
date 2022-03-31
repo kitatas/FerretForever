@@ -18,7 +18,7 @@ namespace Ferret.Common.Domain.UseCase
             return _languageRepository.FindJsonData(type).boot;
         }
 
-        public (MainScene, Sprite) FindMainData(LanguageType type)
+        public (MainScene mainScene, Sprite hint) FindMainData(LanguageType type)
         {
             return (
                 _languageRepository.FindJsonData(type).main,
