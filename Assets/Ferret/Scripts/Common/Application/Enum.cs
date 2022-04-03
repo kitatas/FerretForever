@@ -3,6 +3,7 @@ namespace Ferret.Common
     public enum SceneName
     {
         None,
+        Boot,
         Main,
         Ranking,
     }

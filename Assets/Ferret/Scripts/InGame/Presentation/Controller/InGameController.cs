@@ -22,6 +22,7 @@ namespace Ferret.InGame.Presentation.Controller
         private readonly UserRecordUseCase _userRecordUseCase;
         private readonly IBgmController _bgmController;
         private readonly ISeController _seController;
+        private readonly SceneLoader _sceneLoader;
         private readonly AchievementView _achievementView;
         private readonly LanguageView _languageView;
         private readonly UserInfoView _userInfoView;
@@ -31,7 +32,7 @@ namespace Ferret.InGame.Presentation.Controller
         public InGameController(AchievementUseCase achievementUseCase, LanguageUseCase languageUseCase,
             LanguageTypeUseCase languageTypeUseCase, SaveDataUseCase saveDataUseCase,
             UserRecordUseCase userRecordUseCase, IBgmController bgmController, ISeController seController,
-            AchievementView achievementView, LanguageView languageView, VolumeView volumeView,
+            SceneLoader sceneLoader, AchievementView achievementView, LanguageView languageView, VolumeView volumeView,
             UserInfoView userInfoView)
         {
             _achievementUseCase = achievementUseCase;
@@ -41,6 +42,7 @@ namespace Ferret.InGame.Presentation.Controller
             _userRecordUseCase = userRecordUseCase;
             _bgmController = bgmController;
             _seController = seController;
+            _sceneLoader = sceneLoader;
             _achievementView = achievementView;
             _languageView = languageView;
             _volumeView = volumeView;
@@ -55,9 +57,21 @@ namespace Ferret.InGame.Presentation.Controller
                 button.Init();
                 button.push += () => _seController.Play(SeType.Button);
 
-                if (button is LanguageButtonView languageButton)
+                switch (button)
                 {
-                    languageButton.push += () => _languageTypeUseCase.SetLanguage(languageButton.languageType);
+                    case LanguageButtonView languageButton:
+                        languageButton.InitButton(_languageTypeUseCase.SetLanguage);
+                        break;
+                    case DeleteButtonView deleteButton:
+                        deleteButton.InitButton(_saveDataUseCase.DeleteSaveData);
+                        break;
+                    case LoadButtonView loadButton:
+                        loadButton.InitButton(x =>
+                        {
+                            _sceneLoader.FadeLoadScene(x);
+                            _bgmController.Stop();
+                        });
+                        break;
                 }
             }
 

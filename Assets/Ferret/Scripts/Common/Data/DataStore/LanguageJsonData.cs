@@ -25,6 +25,7 @@ namespace Ferret.Common.Data.DataStore
     {
         public OptionScreen option;
         public UpdateScreen update;
+        public AccountScreen account;
         public AchievementScreen achievement;
         public InformationScreen information;
     }
@@ -37,6 +38,7 @@ namespace Ferret.Common.Data.DataStore
         public string placeHolder;
         public string language;
         public string soundVolume;
+        public string deleteAccount;
     }
 
     [Serializable]
@@ -45,6 +47,13 @@ namespace Ferret.Common.Data.DataStore
         public string updating;
         public string success;
         public string failed;
+    }
+
+    [Serializable]
+    public sealed class AccountScreen
+    {
+        public string deleteConfirm;
+        public string deleteComplete;
     }
 
     [Serializable]

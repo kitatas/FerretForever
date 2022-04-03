@@ -36,5 +36,11 @@ namespace Ferret.Common.Domain.Repository
             var data = JsonUtility.ToJson(saveData);
             ES3.Save(MasterConfig.SAVE_KEY, data);
         }
+
+        public SaveData Delete()
+        {
+            // 既存データを新規データで上書く
+            return Create();
+        }
     }
 }

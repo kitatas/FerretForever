@@ -11,6 +11,7 @@ namespace Ferret.InGame.Presentation.View
         [SerializeField] private TextMeshProUGUI placeholder = default;
         [SerializeField] private TextMeshProUGUI language = default;
         [SerializeField] private TextMeshProUGUI soundVolume = default;
+        [SerializeField] private TextMeshProUGUI deleteAccount = default;
 
         public void Display(OptionScreen optionScreen)
         {
@@ -19,6 +20,7 @@ namespace Ferret.InGame.Presentation.View
             placeholder.text = optionScreen.placeHolder;
             language.text = optionScreen.language;
             soundVolume.text = optionScreen.soundVolume;
+            deleteAccount.text = optionScreen.deleteAccount;
         }
     }
 }

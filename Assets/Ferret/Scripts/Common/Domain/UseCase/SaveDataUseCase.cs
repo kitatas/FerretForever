@@ -5,7 +5,7 @@ namespace Ferret.Common.Domain.UseCase
 {
     public sealed class SaveDataUseCase
     {
-        private readonly SaveData _saveData;
+        private SaveData _saveData;
         private readonly SaveDataRepository _saveDataRepository;
 
         public SaveDataUseCase(SaveDataRepository saveDataRepository)
@@ -48,6 +48,11 @@ namespace Ferret.Common.Domain.UseCase
         {
             _saveData.language = type;
             _saveDataRepository.Save(_saveData);
+        }
+
+        public void DeleteSaveData()
+        {
+            _saveData = _saveDataRepository.Delete();
         }
     }
 }
