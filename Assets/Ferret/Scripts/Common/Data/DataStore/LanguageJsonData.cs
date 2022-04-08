@@ -73,6 +73,7 @@ namespace Ferret.Common.Data.DataStore
         public string credit;
         public string license;
         public string policy;
+        public string other;
     }
 
     [Serializable]

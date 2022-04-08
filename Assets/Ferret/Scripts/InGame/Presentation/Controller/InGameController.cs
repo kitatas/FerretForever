@@ -72,6 +72,9 @@ namespace Ferret.InGame.Presentation.Controller
                             _bgmController.Stop();
                         });
                         break;
+                    case AppUrlButtonView appUrlButtonView:
+                        appUrlButtonView.InitButton();
+                        break;
                 }
             }
 

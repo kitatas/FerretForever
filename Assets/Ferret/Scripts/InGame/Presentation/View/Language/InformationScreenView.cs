@@ -10,6 +10,7 @@ namespace Ferret.InGame.Presentation.View
         [SerializeField] private TextMeshProUGUI credit = default;
         [SerializeField] private TextMeshProUGUI license = default;
         [SerializeField] private TextMeshProUGUI policy = default;
+        [SerializeField] private TextMeshProUGUI other = default;
 
         public void Display(InformationScreen informationScreen)
         {
@@ -17,6 +18,7 @@ namespace Ferret.InGame.Presentation.View
             credit.text = informationScreen.credit;
             license.text = informationScreen.license;
             policy.text = informationScreen.policy;
+            other.text = informationScreen.other;
         }
     }
 }
