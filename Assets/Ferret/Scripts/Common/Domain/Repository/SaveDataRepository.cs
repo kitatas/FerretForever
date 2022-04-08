@@ -25,6 +25,7 @@ namespace Ferret.Common.Domain.Repository
                 bgmVolume = 0.5f,
                 seVolume = 0.5f,
                 language = LanguageType.None,
+                iconColor = IconColor.White,
             };
             Save(newData);
 

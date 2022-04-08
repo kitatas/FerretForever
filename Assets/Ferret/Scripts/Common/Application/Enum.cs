@@ -53,4 +53,11 @@ namespace Ferret.Common
         English  = 1,
         Japanese = 2,
     }
+
+    public enum IconColor
+    {
+        White,
+        Gray,
+        Brown,
+    }
 }

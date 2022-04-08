@@ -6,5 +6,6 @@ namespace Ferret.Common.Data.DataStore
         public float bgmVolume;
         public float seVolume;
         public LanguageType language;
+        public IconColor iconColor;
     }
 }
