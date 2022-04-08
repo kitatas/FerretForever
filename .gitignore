@@ -72,3 +72,7 @@ Assets/QHierarchy*
 Assets/StompyRobot*
 Assets/StreamingAssets*
 Assets/TextMesh Pro*
+
+# Other
+/Materials/
+/Recordings/
