@@ -36,6 +36,7 @@ namespace Ferret.InGame.Domain.UseCase
                 {
                     AchievementType.PlayCount   => _userRecordEntity.Get().playCount >= data.value,
                     AchievementType.HighScore   => _userRecordEntity.Get().highRecord.score >= data.value,
+                    AchievementType.HighVictim  => _userRecordEntity.Get().highRecord.victimCount >= data.value,
                     AchievementType.TotalScore  => _userRecordEntity.Get().totalRecord.score >= data.value,
                     AchievementType.TotalVictim => _userRecordEntity.Get().totalRecord.victimCount >= data.value,
                     _ => throw new ArgumentOutOfRangeException(nameof(data.type), data.type, null)

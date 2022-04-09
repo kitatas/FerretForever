@@ -45,6 +45,7 @@ namespace Ferret.InGame
             {
                 AchievementType.PlayCount   => screen.playCount,
                 AchievementType.HighScore   => screen.highScore,
+                AchievementType.HighVictim  => screen.highVictimCount,
                 AchievementType.TotalScore  => screen.totalScore,
                 AchievementType.TotalVictim => screen.totalVictimCount,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)

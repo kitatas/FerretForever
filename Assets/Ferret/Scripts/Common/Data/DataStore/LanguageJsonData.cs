@@ -62,6 +62,7 @@ namespace Ferret.Common.Data.DataStore
         public string title;
         public string playCount;
         public string highScore;
+        public string highVictimCount;
         public string totalScore;
         public string totalVictimCount;
     }

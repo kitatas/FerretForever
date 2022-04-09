@@ -34,8 +34,9 @@ namespace Ferret.Common
         None        = 0,
         PlayCount   = 1,
         HighScore   = 2,
-        TotalScore  = 3,
-        TotalVictim = 4,
+        HighVictim  = 3,
+        TotalScore  = 4,
+        TotalVictim = 5,
     }
 
     public enum AchievementRank
