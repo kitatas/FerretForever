@@ -1,0 +1,55 @@
+{
+  "type": 2,
+  "boot": {
+    "nameRegisterTitle": "名前登録",
+    "placeholder": "名前を入力...",
+    "caption1": "* 3〜25字で入力してください。",
+    "caption2": "* 登録済みの名前は使用できません。"
+  },
+  "main": {
+    "option": {
+      "title": "オプション",
+      "userName": "ユーザー名",
+      "placeHolder": "名前を入力...",
+      "language": "言語",
+      "soundVolume": "音量",
+      "deleteAccount": "アカウント削除"
+    },
+    "update": {
+      "updating": "更新中...",
+      "success": "成功しました！",
+      "failed": "失敗しました..."
+    },
+    "account": {
+      "deleteConfirm": "アカウントを削除してもよろしいですか？",
+      "deleteComplete": "アカウントの削除が完了しました。"
+    },
+    "achievement": {
+      "title": "アチーブメント",
+      "playCount": "{0}回プレイした！",
+      "highScore": "ハイスコアで{0}m以上の記録を出した！",
+      "highVictimCount": "最高で{0}匹以上を犠牲にした...",
+      "totalScore": "合計で{0}m以上走った！",
+      "totalVictimCount": "合計で{0}匹以上を犠牲にした..."
+    },
+    "information": {
+      "title": "インフォメーション",
+      "credit": "クレジット",
+      "license": "ライセンス",
+      "policy": "プライバシーポリシー",
+      "other": "その他のアプリ"
+    }
+  },
+  "result": {
+    "title": "リザルト",
+    "ranking": "オンラインランキング",
+    "highScore": "最高記録",
+    "score": "今回の記録",
+    "tweet": "{0}匹犠牲にして{1}m走った！\nフェレットよ永遠に...\n"
+  },
+  "error": {
+    "registration": "登録に失敗しました",
+    "connection": "通信に失敗しました",
+    "occurred": "エラーが発生しました"
+  }
+}

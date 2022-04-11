@@ -1,0 +1,55 @@
+{
+  "type": 1,
+  "boot": {
+    "nameRegisterTitle": "Name Registration",
+    "placeholder": "Enter Name...",
+    "caption1": "* Please enter within 3 to 25 characters.",
+    "caption2": "* Names already registered cannot be used."
+  },
+  "main": {
+    "option": {
+      "title": "Option",
+      "userName": "User Name",
+      "placeHolder": "Enter Name...",
+      "language": "Language",
+      "soundVolume": "Sound Volume",
+      "deleteAccount": "Account Delete"
+    },
+    "update": {
+      "updating": "Now Updating...",
+      "success": "Update Success!!",
+      "failed": "Update Failed..."
+    },
+    "account": {
+      "deleteConfirm": "Can I delete your account?",
+      "deleteComplete": "Deleted your account."
+    },
+    "achievement": {
+      "title": "Achievement",
+      "playCount": "Played {0} times!!",
+      "highScore": "Recorded a high score of {0}m or higher!!",
+      "highVictimCount": "Sacrificed more than {0} in best...",
+      "totalScore": "Ran more than {0}m in total!!",
+      "totalVictimCount": "Sacrificed more than {0} in total..."
+    },
+    "information": {
+      "title": "Information",
+      "credit": "Credit",
+      "license": "License",
+      "policy": "Privacy Policy",
+      "other": "Other App"
+    }
+  },
+  "result": {
+    "title": "Result",
+    "ranking": "Online Ranking",
+    "highScore": "High Score",
+    "score": "Score",
+    "tweet": "I ran {1}m at the expense of {0} ferrets!\nFerret Forever...\n"
+  },
+  "error": {
+    "registration": "Registration Failed...",
+    "connection": "Connection Failed...",
+    "occurred": "Error Occurred..."
+  }
+}
