@@ -9057,6 +9057,7 @@ MonoBehaviour:
   credit: {fileID: 1109651602}
   license: {fileID: 153698094}
   policy: {fileID: 1369351962}
+  other: {fileID: 1961359569}
 --- !u!114 &894155040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10485,7 +10486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6242996132665307246, guid: 504a95f75e5d244b8af6bcea62c23645, type: 3}
       propertyPath: m_text
-      value: 0.1.4
+      value: 1.0.0
       objectReference: {fileID: 0}
     - target: {fileID: 6242996132665307246, guid: 504a95f75e5d244b8af6bcea62c23645, type: 3}
       propertyPath: m_fontSize
@@ -10831,7 +10832,7 @@ GameObject:
   - component: {fileID: 990297501}
   - component: {fileID: 990297500}
   - component: {fileID: 990297498}
-  - component: {fileID: 990297499}
+  - component: {fileID: 990297502}
   m_Layer: 0
   m_Name: Button - Other
   m_TagString: Untagged
@@ -10904,18 +10905,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &990297499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 990297496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdbbe61d138b4c5ca2d2bcfe4188ac60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &990297500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11029,6 +11018,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990297496}
   m_CullTransparentMesh: 1
+--- !u!114 &990297502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990297496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9128f38fbe40cab7c2b56770c5dd2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1021366794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23198,7 +23199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6242996132665307246, guid: 504a95f75e5d244b8af6bcea62c23645, type: 3}
       propertyPath: m_text
-      value: coming soon...
+      value: Other App
       objectReference: {fileID: 0}
     - target: {fileID: 6242996132665307246, guid: 504a95f75e5d244b8af6bcea62c23645, type: 3}
       propertyPath: m_fontSize
@@ -23315,6 +23316,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7108812054366066387, guid: 504a95f75e5d244b8af6bcea62c23645, type: 3}
   m_PrefabInstance: {fileID: 1961359567}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1961359569 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6242996132665307246, guid: 504a95f75e5d244b8af6bcea62c23645, type: 3}
+  m_PrefabInstance: {fileID: 1961359567}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1963304756
 GameObject:
   m_ObjectHideFlags: 0
