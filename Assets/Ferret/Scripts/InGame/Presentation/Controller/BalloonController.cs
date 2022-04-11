@@ -50,7 +50,7 @@ namespace Ferret.InGame.Presentation.Controller
             _isActive = true;
 
             transform
-                .SetPositionY(Random.Range(2.3f, 6.3f))
+                .SetPositionY(Random.Range(2.3f, 5.8f))
                 .SetLocalPositionX(0.0f);
         }
 

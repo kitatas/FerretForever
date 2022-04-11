@@ -25,7 +25,7 @@ namespace Ferret.Common.Presentation.Controller
         public void Shake()
         {
             transform
-                .DOShakePosition(0.5f, 1.5f)
+                .DOShakePosition(0.5f, 0.5f)
                 .SetLink(gameObject);
         }
     }

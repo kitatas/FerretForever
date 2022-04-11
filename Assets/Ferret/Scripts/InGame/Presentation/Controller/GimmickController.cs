@@ -22,7 +22,7 @@ namespace Ferret.InGame.Presentation.Controller
         private int _counter;
         private int _initCounter;
 
-        private readonly int _interval = 86;
+        private readonly int _interval = 85;
 
         public GimmickController(BalloonPoolUseCase balloonPoolUseCase, EffectPoolUseCase effectPoolUseCase,
             EnemyPoolUseCase enemyPoolUseCase, PlayerPoolUseCase playerPoolUseCase, PlayerCountUseCase playerCountUseCase,
