@@ -41,10 +41,13 @@ namespace Ferret.InGame.Domain.UseCase
             return true;
         }
 
-        public async UniTask UpdateScoreAsync(CancellationToken token)
+        public void UpdateScore()
         {
             _userRecordEntity.UpdateScore(_scoreEntity.Get(), _victimCountEntity.Get());
+        }
 
+        public async UniTask SendScoreAsync(CancellationToken token)
+        {
             await UniTask.WhenAll(
                 _playFabRepository.UpdateUserRecordAsync(_userRecordEntity.Get(), token),
                 _playFabRepository.SendRankDataAsync(_userRecordEntity.Get().highRecord.score, token)
