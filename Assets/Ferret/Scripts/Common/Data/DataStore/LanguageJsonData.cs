@@ -36,6 +36,8 @@ namespace Ferret.Common.Data.DataStore
         public string title;
         public string userName;
         public string placeHolder;
+        public string caption1;
+        public string caption2;
         public string language;
         public string soundVolume;
         public string deleteAccount;

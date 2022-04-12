@@ -11,6 +11,8 @@
       "title": "オプション",
       "userName": "ユーザー名",
       "placeHolder": "名前を入力...",
+      "caption1": "* 3〜25字で入力してください。",
+      "caption2": "* 登録済みの名前は使用できません。",
       "language": "言語",
       "soundVolume": "音量",
       "deleteAccount": "アカウント削除"

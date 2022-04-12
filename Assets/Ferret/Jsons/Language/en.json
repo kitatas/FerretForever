@@ -11,6 +11,8 @@
       "title": "Option",
       "userName": "User Name",
       "placeHolder": "Enter Name...",
+      "caption1": "* Please enter within 3 to 25 characters.",
+      "caption2": "* Names already registered cannot be used.",
       "language": "Language",
       "soundVolume": "Sound Volume",
       "deleteAccount": "Account Delete"
