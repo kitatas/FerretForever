@@ -28,7 +28,7 @@
     },
     "achievement": {
       "title": "Achievement",
-      "playCount": "Played {0} times!!",
+      "playCount": "Played more than {0} in total!!",
       "highScore": "Recorded a high score of {0}m or higher!!",
       "highVictimCount": "Sacrificed more than {0} in best...",
       "totalScore": "Ran more than {0}m in total!!",

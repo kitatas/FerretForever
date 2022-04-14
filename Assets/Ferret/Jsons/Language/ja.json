@@ -28,7 +28,7 @@
     },
     "achievement": {
       "title": "アチーブメント",
-      "playCount": "{0}回プレイした！",
+      "playCount": "{0}回以上プレイした！",
       "highScore": "ハイスコアで{0}m以上の記録を出した！",
       "highVictimCount": "最高で{0}匹以上を犠牲にした...",
       "totalScore": "合計で{0}m以上走った！",
