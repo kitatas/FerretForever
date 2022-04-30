@@ -9,6 +9,7 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
+/[Uu]ser[Ss]ettings/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -72,6 +73,7 @@ Assets/QHierarchy*
 Assets/StompyRobot*
 Assets/StreamingAssets*
 Assets/TextMesh Pro*
+Assets/FerretForever-Assets*
 
 # Other
 /Materials/
