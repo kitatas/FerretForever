@@ -1,6 +1,6 @@
 using System;
 using DG.Tweening;
-using EFUK;
+using UniEx;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -14,7 +14,7 @@ namespace Ferret.Common.Presentation.View
 
         public void Init()
         {
-            var rectTransform = transform.ConvertRectTransform();
+            var rectTransform = transform.ToRectTransform();
             var scale = transform.localScale;
 
             push += () =>

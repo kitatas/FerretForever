@@ -1,5 +1,5 @@
-using EFUK;
 using Ferret.InGame.Data.DataStore;
+using UniEx;
 
 namespace Ferret.InGame.Domain.Repository
 {
@@ -14,7 +14,7 @@ namespace Ferret.InGame.Domain.Repository
 
         public PlayerData Get()
         {
-            return _playerTable.list.GetRandomParam();
+            return _playerTable.list.GetRandom();
         }
     }
 }

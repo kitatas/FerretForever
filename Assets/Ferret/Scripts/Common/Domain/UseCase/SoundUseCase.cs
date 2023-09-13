@@ -1,6 +1,6 @@
 using System;
-using EFUK;
 using Ferret.Common.Domain.Repository;
+using UniEx;
 using UnityEngine;
 
 namespace Ferret.Common.Domain.UseCase
@@ -32,7 +32,7 @@ namespace Ferret.Common.Domain.UseCase
                 case SeType.Ground:
                     return _soundRepository.FindSe(type).audioClip;
                 case SeType.Scream:
-                    return _soundRepository.FindAllSe(type).GetRandomParam().audioClip;
+                    return _soundRepository.FindAllSe(type).GetRandom().audioClip;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }

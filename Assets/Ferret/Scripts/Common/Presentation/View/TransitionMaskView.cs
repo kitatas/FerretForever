@@ -1,7 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using EFUK;
+using UniEx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +31,7 @@ namespace Ferret.Common.Presentation.View
         {
             raycastBlocker.raycastTarget = true;
 
-            if (mask.rectTransform.anchoredPosition.x.Equal(0.0f) == false)
+            if (mask.rectTransform.anchoredPosition.x.IsZero() == false)
             {
                 Hide();
             }

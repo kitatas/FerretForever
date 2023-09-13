@@ -1,6 +1,6 @@
-using EFUK;
 using Ferret.Common;
 using Ferret.Common.Presentation.View;
+using UniEx;
 using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View

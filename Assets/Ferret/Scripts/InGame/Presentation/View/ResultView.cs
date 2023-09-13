@@ -1,8 +1,8 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using EFUK;
 using TMPro;
+using UniEx;
 using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View
@@ -31,7 +31,7 @@ namespace Ferret.InGame.Presentation.View
 
         private void SetTapScreen()
         {
-            tapScreen.color = tapScreen.color.SetAlpha(1.0f);
+            tapScreen.SetColorA(1.0f);
             tapScreen
                 .DOFade(0.0f, _animationTime)
                 .SetEase(Ease.InQuad)

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using EFUK;
 using Ferret.InGame.Presentation.Controller;
+using UniEx;
 using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View

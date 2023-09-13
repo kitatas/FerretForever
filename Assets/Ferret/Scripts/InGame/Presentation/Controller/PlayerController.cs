@@ -1,9 +1,9 @@
 using System;
-using EFUK;
 using Ferret.Common;
 using Ferret.Common.Presentation.Controller;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
+using UniEx;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;

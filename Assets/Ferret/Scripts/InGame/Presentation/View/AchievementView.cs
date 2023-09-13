@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using EFUK;
 using Ferret.Common.Data.DataStore;
+using UniEx;
 using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View

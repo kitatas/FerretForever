@@ -1,8 +1,8 @@
-using EFUK;
 using Ferret.Common;
 using Ferret.Common.Presentation.Controller;
 using Ferret.InGame.Domain.UseCase;
 using Ferret.InGame.Presentation.View;
+using UniEx;
 using UnityEngine;
 
 namespace Ferret.InGame.Presentation.Controller

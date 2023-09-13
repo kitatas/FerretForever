@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using EFUK;
 using Ferret.Common;
 using Ferret.Common.Data.DataStore;
 using Ferret.Common.Data.Entity;
 using Ferret.Common.Domain.Repository;
 using Ferret.OutGame.Data.Entity;
+using UniEx;
 
 namespace Ferret.OutGame.Domain.UseCase
 {
@@ -41,7 +41,7 @@ namespace Ferret.OutGame.Domain.UseCase
             return new ResultRecordEntity(
                 highScore,
                 currentScore,
-                highScore.Equal(currentScore)
+                highScore.IsEqual(currentScore)
             );
         }
 

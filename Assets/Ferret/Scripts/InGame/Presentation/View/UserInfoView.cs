@@ -1,9 +1,9 @@
 using System;
-using EFUK;
 using Ferret.Common;
 using Ferret.Common.Data.DataStore;
 using Ferret.Common.Presentation.View;
 using TMPro;
+using UniEx;
 using UnityEngine;
 
 namespace Ferret.InGame.Presentation.View
