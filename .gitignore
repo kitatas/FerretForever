@@ -61,6 +61,7 @@ crashlytics-build.properties
 
 # JetBrains
 .idea
+*.DotSettings
 
 # Assets
 Assets/ConsolePro*
