@@ -12,7 +12,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "50a67d8f419b6cea0398eff6c19cf0bbe11ed609"
+      "hash": "6f5d81854456a351ff99a5d8dca85d49cf6f6a0d"
     },
     "com.kitatas.playfab-csharpsdk": {
       "version": "https://github.com/kitatas/PlayFab-CSharpSDK.git?path=/PlayFabSDK/source#feature/upm",
@@ -21,7 +21,7 @@
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.1.0"
       },
-      "hash": "27b47e797ac8d7b9014e66f7f90d79e41e5a7423"
+      "hash": "9d41742182293fb665f22c81730bf0578c5c48d6"
     },
     "com.kitatas.uniex": {
       "version": "https://github.com/kitatas/UniEx.git?path=/Assets/UniEx",
@@ -38,7 +38,7 @@
       "hash": "284d5c50d3f1ddd9fa7df3d382ea904732a9c2ff"
     },
     "com.unity.2d.animation": {
-      "version": "9.0.3",
+      "version": "9.0.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -69,15 +69,6 @@
       "source": "builtin",
       "dependencies": {}
     },
-    "com.unity.ai.navigation": {
-      "version": "1.1.4",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.modules.ai": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
     "com.unity.burst": {
       "version": "1.8.8",
       "depth": 2,
@@ -105,7 +96,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.24",
+      "version": "3.0.26",
       "depth": 0,
       "source": "registry",
       "dependencies": {
