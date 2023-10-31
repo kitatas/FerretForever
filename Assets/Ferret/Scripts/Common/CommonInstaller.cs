@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Ferret.Common.Data.DataStore;
 using Ferret.Common.Data.Entity;
 using Ferret.Common.Domain.Repository;
@@ -42,19 +41,13 @@ namespace Ferret.Common
 
             // MonoBehaviour
             FindObjectOfType<DontDestroyController>().Init();
-            var (bgm, se) = ConfigureSound(builder);
+            ConfigureSound(builder);
             builder.RegisterInstance<ErrorPopupView>(FindObjectOfType<ErrorPopupView>());
             builder.RegisterInstance<LoadingView>(FindObjectOfType<LoadingView>());
             builder.RegisterInstance<TransitionMaskView>(FindObjectOfType<TransitionMaskView>());
-
-            autoInjectGameObjects = new List<GameObject>
-            {
-                bgm,
-                se,
-            };
         }
 
-        private (GameObject, GameObject) ConfigureSound(IContainerBuilder builder)
+        private void ConfigureSound(IContainerBuilder builder)
         {
             if (isCriSound)
             {
@@ -62,7 +55,6 @@ namespace Ferret.Common
                 var se = FindObjectOfType<CriSeController>();
                 builder.RegisterInstance<CriBgmController>(bgm).AsImplementedInterfaces();
                 builder.RegisterInstance<CriSeController>(se).AsImplementedInterfaces();
-                return (bgm.gameObject, se.gameObject);
             }
             else
             {
@@ -70,12 +62,11 @@ namespace Ferret.Common
                 builder.RegisterInstance<SeTable>(seTable);
                 builder.Register<SoundRepository>(Lifetime.Singleton);
                 builder.Register<SoundUseCase>(Lifetime.Singleton).AsImplementedInterfaces();
-                
+
                 var bgm = FindObjectOfType<BgmController>();
                 var se = FindObjectOfType<SeController>();
                 builder.RegisterInstance<BgmController>(bgm).AsImplementedInterfaces();
                 builder.RegisterInstance<SeController>(se).AsImplementedInterfaces();
-                return (bgm.gameObject, se.gameObject);
             }
         }
     }

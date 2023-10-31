@@ -62,7 +62,7 @@ namespace Ferret.Common.Domain.Repository
             return response.Result;
         }
 
-        public UserRecord FetchUserRecord(Dictionary<string, UserData> userData)
+        public UserRecord FetchUserRecord(Dictionary<string, UserDataRecord> userData)
         {
             return userData.TryGetValue(MasterConfig.USER_KEY, out var user)
                 ? JsonConvert.DeserializeObject<UserRecord>(user.Value)

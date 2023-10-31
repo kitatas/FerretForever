@@ -101,7 +101,6 @@ namespace Ferret.Boot.Presentation.Controller
             }
             catch (Exception e)
             {
-                UnityEngine.Debug.LogWarning($"{e}");
                 await _errorController.PopupErrorAsync(e, token);
 
                 await BootAsync(token);

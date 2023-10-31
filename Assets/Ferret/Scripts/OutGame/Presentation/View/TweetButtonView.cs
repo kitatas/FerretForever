@@ -9,9 +9,7 @@ namespace Ferret.OutGame.Presentation.View
     {
         public void InitTweet(string tweetMessage)
         {
-            var tweetText = $"{tweetMessage}";
-            tweetText += $"#{GameConfig.GAME_ID}\n";
-            tweetText += $"{GameConfig.APP_URL}";
+            var tweetText = $"{tweetMessage}#{GameConfig.GAME_ID}\n{GameConfig.APP_URL}";
             var url = $"https://twitter.com/intent/tweet?text={UnityWebRequest.EscapeURL(tweetText)}";
 
             push += () => Application.OpenURL(url);

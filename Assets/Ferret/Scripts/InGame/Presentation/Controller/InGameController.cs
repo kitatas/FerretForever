@@ -160,7 +160,7 @@ namespace Ferret.InGame.Presentation.Controller
                     _userInfoView.UpdateFailedUserName();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 _userInfoView.UpdateFailedUserName();
                 throw;

@@ -44,6 +44,9 @@ namespace Ferret.InGame.Presentation.Presenter
                 var nextState = await _gameStateController.TickAsync(state, token);
                 _gameStateUseCase.SetState(nextState);
             }
+            catch (OperationCanceledException)
+            {
+            }
             catch (Exception e)
             {
                 await _errorController.PopupErrorAsync(e, token);

@@ -24,7 +24,9 @@ namespace Ferret.Common.Domain.UseCase
 
         public (float bgm, float se) volume => (bgmVolume, seVolume);
 
-        public LanguageType languageType => _saveData.language;
+        public LanguageType languageType => _saveData.language != LanguageType.None
+            ? _saveData.language
+            : LanguageType.English;
 
         public void SaveUid(string value)
         {
