@@ -40,19 +40,19 @@ namespace Ferret.Common
             builder.Register<ErrorController>(Lifetime.Singleton);
 
             // MonoBehaviour
-            FindObjectOfType<DontDestroyController>().Init();
+            FindAnyObjectByType<DontDestroyController>().Init();
             ConfigureSound(builder);
-            builder.RegisterInstance<ErrorPopupView>(FindObjectOfType<ErrorPopupView>());
-            builder.RegisterInstance<LoadingView>(FindObjectOfType<LoadingView>());
-            builder.RegisterInstance<TransitionMaskView>(FindObjectOfType<TransitionMaskView>());
+            builder.RegisterInstance<ErrorPopupView>(FindAnyObjectByType<ErrorPopupView>());
+            builder.RegisterInstance<LoadingView>(FindAnyObjectByType<LoadingView>());
+            builder.RegisterInstance<TransitionMaskView>(FindAnyObjectByType<TransitionMaskView>());
         }
 
         private void ConfigureSound(IContainerBuilder builder)
         {
             if (isCriSound)
             {
-                var bgm = FindObjectOfType<CriBgmController>();
-                var se = FindObjectOfType<CriSeController>();
+                var bgm = FindAnyObjectByType<CriBgmController>();
+                var se = FindAnyObjectByType<CriSeController>();
                 builder.RegisterInstance<CriBgmController>(bgm).AsImplementedInterfaces();
                 builder.RegisterInstance<CriSeController>(se).AsImplementedInterfaces();
             }
@@ -63,8 +63,8 @@ namespace Ferret.Common
                 builder.Register<SoundRepository>(Lifetime.Singleton);
                 builder.Register<SoundUseCase>(Lifetime.Singleton).AsImplementedInterfaces();
 
-                var bgm = FindObjectOfType<BgmController>();
-                var se = FindObjectOfType<SeController>();
+                var bgm = FindAnyObjectByType<BgmController>();
+                var se = FindAnyObjectByType<SeController>();
                 builder.RegisterInstance<BgmController>(bgm).AsImplementedInterfaces();
                 builder.RegisterInstance<SeController>(se).AsImplementedInterfaces();
             }

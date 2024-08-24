@@ -22,7 +22,7 @@ namespace Ferret.InGame.Presentation.Controller
             _playerContainerUseCase = playerContainerUseCase;
             _playerCountUseCase = playerCountUseCase;
             _serController = seController;
-            _cameraController = UnityEngine.Object.FindObjectOfType<CameraController>();
+            _cameraController = UnityEngine.Object.FindAnyObjectByType<CameraController>();
             _bridgeAxisView = bridgeAxisView;
         }
 

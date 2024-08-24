@@ -7,6 +7,7 @@ using Ferret.Common;
 using Ferret.Common.Domain.UseCase;
 using Ferret.Common.Presentation.Controller;
 using Ferret.Common.Presentation.View;
+using UnityEngine;
 using VContainer.Unity;
 using Object = UnityEngine.Object;
 
@@ -51,7 +52,7 @@ namespace Ferret.Boot.Presentation.Controller
         {
             _languageSelectView.Init();
             _nameRegistrationView.Init();
-            foreach (var button in Object.FindObjectsOfType<BaseButtonView>())
+            foreach (var button in Object.FindObjectsByType<BaseButtonView>(FindObjectsSortMode.None))
             {
                 button.Init();
                 button.push += () => _seController.Play(SeType.Button);
