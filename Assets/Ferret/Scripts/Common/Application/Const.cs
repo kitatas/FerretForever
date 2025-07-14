@@ -7,6 +7,13 @@ namespace Ferret.Common
         public const string DEVELOPER_APP_URL = "https://play.google.com/store/apps/developer?id=KitaLab";
     }
 
+    public sealed class VersionConfig
+    {
+        public const int MAJOR_VERSION = 1;
+        public const int MIDDLE_VERSION = 0;
+        public const int MINOR_VERSION = 3;
+    }
+
     public sealed class MasterConfig
     {
         public const string TITLE_ID = "";
