@@ -10,8 +10,7 @@ namespace Ferret.Common
     public sealed class VersionConfig
     {
         public const int MAJOR_VERSION = 1;
-        public const int MIDDLE_VERSION = 0;
-        public const int MINOR_VERSION = 4;
+        public const int MINOR_VERSION = 1;
     }
 
     public sealed class MasterConfig

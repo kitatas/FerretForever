@@ -10,8 +10,7 @@ namespace Ferret.InGame.Presentation.View
 
         private void Awake()
         {
-            version.text =
-                $"{VersionConfig.MAJOR_VERSION}.{VersionConfig.MIDDLE_VERSION}.{VersionConfig.MINOR_VERSION}";
+            version.text = $"{VersionConfig.MAJOR_VERSION}.{VersionConfig.MINOR_VERSION}";
         }
     }
 }
